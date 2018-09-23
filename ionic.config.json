@@ -1,0 +1,7 @@
+{
+  "name": "SpringApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
