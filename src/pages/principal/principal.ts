@@ -4,10 +4,10 @@ import { MenuController } from 'ionic-angular/components/app/menu-controller';
 
 @IonicPage()
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-principal',
+  templateUrl: 'principal.html'
 })
-export class HomePage {
+export class PrincipalPage {
 
   constructor(public navCtrl: NavController, public menu: MenuController) {
  
@@ -19,10 +19,19 @@ export class HomePage {
     this.menu.swipeEnable(true);
   }
 
+  cadastrar(){
 
-  login(){
+    this.navCtrl.push("CadastrarPage");
 
-    this.navCtrl.push("PrincipalPage");
+  }
+  remover(){
+
+    this.navCtrl.push("PecasPage");
+
+  }
+  visualizar(){
+
+    this.navCtrl.push("PecasPage");
 
   }
 }

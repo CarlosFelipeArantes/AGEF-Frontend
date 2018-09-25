@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Cadastrar Peça</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding="true">
+<ion-grid>
+  <ion-row>
+    <ion-col col-12>
+        <ion-item>
+            <ion-label floating>Nome</ion-label>
+            <ion-input  name="nome" [(ngModel)]="peca.nome" type="text"></ion-input>
+          </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+      <ion-col col-12>
+          <ion-item>
+              <ion-label floating>Tamanho</ion-label>
+              <ion-input name="tamanho" [(ngModel)]="peca.tamanho" type="text"></ion-input>
+            </ion-item>
+      </ion-col>
+  </ion-row>
+  <br>
+  <br>
+  <ion-row text-center>
+      <ion-col col-12>
+          <button ion-button round (click)="confirmar()" >Confirmar</button>
+      </ion-col>
+  </ion-row>
+</ion-grid>      
+</ion-content>

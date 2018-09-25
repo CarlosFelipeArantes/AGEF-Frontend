@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { CategoriaService } from '../../services/domain/categoria.service';
-import { CategoriaDTO } from '../../models/categoria.dto';
+import { PecaService } from '../../../services/domain/peca.service';
+import { PecaDTO } from '../../../models/peca.dto';
 
 /**
  * Generated class for the CategoriasPage page.
@@ -12,21 +12,21 @@ import { CategoriaDTO } from '../../models/categoria.dto';
 
 @IonicPage()
 @Component({
-  selector: 'page-categorias',
-  templateUrl: 'categorias.html',
+  selector: 'page-pecas',
+  templateUrl: 'pecas.html',
 })
-export class CategoriasPage {
+export class PecasPage {
 
-  items: CategoriaDTO[];
+  items: PecaDTO[];
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public categoriaService: CategoriaService){
+    public pecaService: PecaService){
   }
 
   ionViewDidLoad() {
-    this.categoriaService.findAll()
+    this.pecaService.findAll()
       .subscribe( response => {
         this.items = response;
       },
