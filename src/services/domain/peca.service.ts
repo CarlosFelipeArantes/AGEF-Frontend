@@ -11,7 +11,7 @@ export class PecaService{
     } 
 
     findAll() : Observable<PecaDTO[]> {
-        return this.http.get<PecaDTO[]>(`${API_CONFIG.baseUrl}/pecas`);
+        return this.http.get<PecaDTO[]>(`${API_CONFIG.baseUrl}/peca/listar`);
     }
     save( argumento : string ){
         return this.http.get<PecaDTO[]>(`${API_CONFIG.baseUrl}/peca/${argumento.valueOf}`);
