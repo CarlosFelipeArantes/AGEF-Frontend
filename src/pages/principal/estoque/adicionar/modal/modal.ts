@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PecaService } from '../../../../../services/domain/peca.service';
+import { PecaFeiraService } from '../../../../../services/domain/pecaFeira.service';
 import { PecaDTO } from '../../../../../models/peca.dto';
 import { PecaFeiraDTO } from '../../../../../models/pecaFeira.dto';
 
@@ -26,13 +26,13 @@ export class ModalPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public pecaService: PecaService) {
+    public pecaFeiraService: PecaFeiraService) {
     this.peca = navParams.get('peca');
+    this.pecaFeira.peca=this.peca;
   }
 
   confirmar() {
-    //if (this.peca.nome.valueOf() != '' && this.peca.tamanho.valueOf() != '')
-      this.pecaService.save(this.peca)
+      this.pecaFeiraService.save(this.pecaFeira)
         .subscribe(response => {
           console.log(response);
         },

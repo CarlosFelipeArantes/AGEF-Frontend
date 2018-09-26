@@ -32,6 +32,6 @@ export class PrincipalPage {
   }
 
   visualizarEstoque(){
-    this.navCtrl.push("asdasdas");
+    this.navCtrl.push("showEstoquePage");
   }
 }
