@@ -18,20 +18,20 @@ export class PrincipalPage {
   ionViewDidLeave() {
     this.menu.swipeEnable(true);
   }
-
+  
   cadastrar(){
-
     this.navCtrl.push("CadastrarPage");
-
   }
-  remover(){
 
-    this.navCtrl.push("PecasPage");
-
-  }
   visualizar(){
-
     this.navCtrl.push("PecasPage");
+  }
 
+  addEstoque(){
+    this.navCtrl.push("AddEstoquePage");
+  }
+
+  visualizarEstoque(){
+    this.navCtrl.push("asdasdas");
   }
 }

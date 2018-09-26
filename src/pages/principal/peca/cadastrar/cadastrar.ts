@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PecaService } from '../../../services/domain/peca.service';
-import { PecaDTO } from '../../../models/peca.dto';
+import { PecaService } from '../../../../services/domain/peca.service';
+import { PecaDTO } from '../../../../models/peca.dto';
 
 /**
  * Generated class for the CategoriasPage page.
@@ -30,9 +30,13 @@ export class CadastrarPage {
   }
 
   confirmar(){
-    console.log(this.peca);
-
+    if(this.peca.nome.valueOf()!='' && this.peca.tamanho.valueOf()!='' )
+      this.pecaService.save(this.peca)
+        .subscribe(response => {
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        });
   }
-
-
 }
