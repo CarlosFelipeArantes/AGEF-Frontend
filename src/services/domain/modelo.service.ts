@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { API_CONFIG } from "../../config/api.config";
-import { PecaDTO } from "../../models/peca.dto";
+import { ModeloDTO } from "../../models/modelo.dto";
 import { Observable } from "rxjs/Observable";
 import { Injectable } from "@angular/core";
 
 @Injectable()
-export class PecaService{
+export class ModeloService{
 
     public name: string;
     public tamanho: string;
@@ -15,16 +15,16 @@ export class PecaService{
     constructor ( public http: HttpClient ){
     } 
 
-    findAll() : Observable<PecaDTO[]> {
-        return this.http.get<PecaDTO[]>(`${API_CONFIG.baseUrl}/peca/listar`);
+    findAll() : Observable<ModeloDTO[]> {
+        return this.http.get<ModeloDTO[]>(`${API_CONFIG.baseUrl}/modelo/`);
     }
-    save(peca:PecaDTO){
+    save(modelo:ModeloDTO){
         this.headers = new HttpHeaders();
         this.headers.set('Content-Type', 'application/json');
-        return this.http.post(`${API_CONFIG.baseUrl}/peca/adicionar`, peca,{headers:this.headers});
+        return this.http.post(`${API_CONFIG.baseUrl}/modelo/`, modelo,{headers:this.headers});
     }
-    remove(peca:PecaDTO){
-        return this.http.delete(`${API_CONFIG.baseUrl}/peca/remover/${peca.id}`,{});
+    remove(modelo:ModeloDTO){
+        return this.http.delete(`${API_CONFIG.baseUrl}/modelo/${modelo.id}`,{});
     }
 
 }

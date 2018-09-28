@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PecaFeiraService } from '../../../../../services/domain/pecaFeira.service';
-import { PecaDTO } from '../../../../../models/peca.dto';
-import { PecaFeiraDTO } from '../../../../../models/pecaFeira.dto';
+import { pecaFeiraService } from '../../../../../services/domain/pecaFeira.service';
+import { ModeloDTO } from '../../../../../models/modelo.dto';
+import { pecaFeiraDTO } from '../../../../../models/pecaFeira.dto';
 
 @IonicPage()
 @Component({
@@ -11,10 +11,10 @@ import { PecaFeiraDTO } from '../../../../../models/pecaFeira.dto';
 })
 export class ModalPage {
 
-  peca: PecaDTO;
-  pecaFeira: PecaFeiraDTO = {
+  modelo: ModeloDTO;
+  pecaFeira: pecaFeiraDTO = {
     id: '',
-    peca: {
+    modelo: {
       id: '',
       nome: '',
       tamanho: ''
@@ -26,9 +26,9 @@ export class ModalPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public pecaFeiraService: PecaFeiraService) {
-    this.peca = navParams.get('peca');
-    this.pecaFeira.peca=this.peca;
+    public pecaFeiraService: pecaFeiraService) {
+    this.modelo = navParams.get('modelo');
+    this.pecaFeira.modelo=this.modelo;
   }
 
   confirmar() {

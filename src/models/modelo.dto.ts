@@ -1,4 +1,4 @@
-export interface PecaDTO {
+export interface ModeloDTO {
     id: string;
     nome: string;
     tamanho: string;

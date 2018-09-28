@@ -23,8 +23,8 @@ export class PrincipalPage {
     this.navCtrl.push("CadastrarPage");
   }
 
-  visualizar(){
-    this.navCtrl.push("PecasPage");
+  modelos(){
+    this.navCtrl.push("ModelosPage");
   }
 
   addEstoque(){

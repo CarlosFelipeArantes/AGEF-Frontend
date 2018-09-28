@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PecaService } from '../../../../services/domain/peca.service';
-import { PecaDTO } from '../../../../models/peca.dto';
+import { ModeloService } from '../../../../services/domain/modelo.service';
+import { ModeloDTO } from '../../../../models/modelo.dto';
 
 /**
  * Generated class for the CategoriasPage page.
@@ -17,7 +17,7 @@ import { PecaDTO } from '../../../../models/peca.dto';
 })
 export class CadastrarPage {
 
-  peca: PecaDTO = {
+  modelo: ModeloDTO = {
     id: '',
     nome: '',
     tamanho: ''
@@ -26,12 +26,12 @@ export class CadastrarPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public pecaService: PecaService){
+    public modeloService: ModeloService){
   }
 
   confirmar(){
-    if(this.peca.nome.valueOf()!='' && this.peca.tamanho.valueOf()!='' )
-      this.pecaService.save(this.peca)
+    if(this.modelo.nome.valueOf()!='' && this.modelo.tamanho.valueOf()!='' )
+      this.modeloService.save(this.modelo)
         .subscribe(response => {
           console.log(response);
         },

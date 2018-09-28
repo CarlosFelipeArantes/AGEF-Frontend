@@ -1,30 +1,30 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PecaService } from '../../../../services/domain/peca.service';
-import { PecaDTO } from '../../../../models/peca.dto';
+import { ModeloService } from '../../../../services/domain/modelo.service';
+import { ModeloDTO } from '../../../../models/modelo.dto';
 import { Events } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-pecas',
-  templateUrl: 'pecas.html',
+  selector: 'page-modelos',
+  templateUrl: 'modelos.html',
 })
-export class PecasPage {
+export class ModelosPage {
 
-  items: PecaDTO[];
-  peca: PecaDTO;
+  items: ModeloDTO[];
+  modelo: ModeloDTO;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public pecaService: PecaService,
+    public modeloService: ModeloService,
     public events: Events,
     private toastCtrl: ToastController
   ){
       
       this.events.subscribe('updateScreen', () => {
-        this.pecaService.findAll()
+        this.modeloService.findAll()
             .subscribe( response => {
               this.items = response;
             },
@@ -35,7 +35,7 @@ export class PecasPage {
   }
 
   ionViewDidLoad() {
-    this.pecaService.findAll()
+    this.modeloService.findAll()
       .subscribe( response => {
         this.items = response;
       },
@@ -44,8 +44,8 @@ export class PecasPage {
         });
   }
 
-  remove(peca:PecaDTO){
-    this.pecaService.remove(peca)
+  remove(modelo:ModeloDTO){
+    this.modeloService.remove(modelo)
       .subscribe( response => {
         this.events.publish('updateScreen');
       },
