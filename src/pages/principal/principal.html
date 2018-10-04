@@ -2,32 +2,25 @@
 </ion-header>
 <ion-content padding class="master">
   <div class="logo center">AGEF</div>
+  <div class="subtitulo center">Aplicativo de Gerenciamento de Estoque e Faturamento</div>
   <ion-card class="estoque">
     <ion-card-header>
-      Estoque
+      <b>Estoque</b>
     </ion-card-header>  
     <ion-card-content>
       <ion-grid>
-        <ion-row>
+        <ion-row text-center>
           <ion-col col-6>
-            <ion-card>
-              <ion-card-header>
-                <div class="center">Vendidas</div>
-              </ion-card-header>
-              <ion-card-content>
-                <h1 class="center"><b>20</b></h1>
-              </ion-card-content>
-            </ion-card>
+            <ion-badge item-end>
+              <ion-icon name="logo-twitter" item-start></ion-icon>
+              <div class="center">Vendidas:<b>20</b></div>
+            </ion-badge>
           </ion-col>
           <ion-col col-6>
-            <ion-card>
-              <ion-card-header>
-                <div class="center">Disponíveis</div>
-              </ion-card-header>
-              <ion-card-content>
-                <h1 class="center"><b>18</b></h1>
-              </ion-card-content>
-            </ion-card>
+            <ion-badge item-end>
+              <ion-icon name="logo-twitter" item-start></ion-icon>
+              <div class="center">Disponíveis:<b>18</b></div>
+            </ion-badge>
           </ion-col>
         </ion-row>
         <ion-row text-center>
@@ -40,7 +33,7 @@
   </ion-card>
   <ion-card class="modelos">
     <ion-card-header>
-        Modelos
+      <b>Modelos</b>
     </ion-card-header>  
     <ion-card-content>
       <ion-grid>
