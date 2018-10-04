@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
+import { Network } from '@ionic-native/network';
 
 @IonicPage()
 @Component({
@@ -9,7 +10,11 @@ import { MenuController } from 'ionic-angular/components/app/menu-controller';
 })
 export class PrincipalPage {
 
-  constructor(public navCtrl: NavController, public menu: MenuController) {
+  constructor(
+    public navCtrl: NavController, 
+    public menu: MenuController,
+    private network: Network
+    ){
  
   }
   ionViewWillEnter() {

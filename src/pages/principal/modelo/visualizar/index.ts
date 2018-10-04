@@ -5,6 +5,7 @@ import { ModeloDTO } from '../../../../models/modelo.dto';
 import { Events } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import { LoadingController } from 'ionic-angular';
 
 
 @IonicPage()
@@ -16,6 +17,9 @@ export class ModelosPage {
 
   items: ModeloDTO[];
   modelo: ModeloDTO;
+  loading = this.loadingCtrl.create({
+    content: 'Por favor aguarde...'
+  });
 
   constructor(
     public navCtrl: NavController, 
@@ -23,7 +27,8 @@ export class ModelosPage {
     public modeloService: ModeloService,
     public events: Events,
     private toastCtrl: ToastController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
   ){
       
       this.events.subscribe('updateScreen', () => {
@@ -37,10 +42,22 @@ export class ModelosPage {
         });
   }
 
+  presentLoading(apear:boolean) {
+    
+    if(apear){
+      this.loading.present();
+    }else{
+      this.loading.dismiss();
+    }
+
+  }
+
   ionViewDidLoad() {
+    this.presentLoading(true);
     this.modeloService.findAll()
       .subscribe( response => {
         this.items = response;
+        this.presentLoading(false);
       },
         error => {
          console.log(error);
