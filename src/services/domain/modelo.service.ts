@@ -26,5 +26,10 @@ export class ModeloService{
     remove(modelo:ModeloDTO){
         return this.http.delete(`${API_CONFIG.baseUrl}/modelo/${modelo.id}`,{});
     }
+    update(modelo:ModeloDTO){
+        this.headers = new HttpHeaders();
+        this.headers.set('Content-Type', 'application/json');
+        return this.http.put(`${API_CONFIG.baseUrl}/modelo/`+modelo.id, modelo,{headers:this.headers});
+    }
 
 }

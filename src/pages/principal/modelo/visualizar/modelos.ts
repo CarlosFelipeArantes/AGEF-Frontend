@@ -4,6 +4,8 @@ import { ModeloService } from '../../../../services/domain/modelo.service';
 import { ModeloDTO } from '../../../../models/modelo.dto';
 import { Events } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
+
 
 @IonicPage()
 @Component({
@@ -20,7 +22,8 @@ export class ModelosPage {
     public navParams: NavParams,
     public modeloService: ModeloService,
     public events: Events,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController
   ){
       
       this.events.subscribe('updateScreen', () => {
@@ -50,7 +53,111 @@ export class ModelosPage {
         this.events.publish('updateScreen');
       },
        error => {
-         this.presentToast();
+         this.alertaRemoverErro(modelo);
+       });
+  }
+
+  alertaRemoverErro(modelo:ModeloDTO) {
+    let alert = this.alertCtrl.create({
+      title: 'Erro',
+      subTitle: 'Não é possível remover o modelo "'+ modelo.nome + '", pois está em estoque.\n Remova primeiro do estoque.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+  
+  editarPrompt(modelo:ModeloDTO) {
+    let alert = this.alertCtrl.create({
+      title: 'Editar:',
+      message: "Aqui você pode editar o seu modelo",
+      inputs: [
+        {
+          name: 'nome',
+          placeholder: modelo.nome
+        },
+        {
+          name: 'tamanho',
+          placeholder: modelo.tamanho
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Confirmar',
+          handler: data => {
+            modelo.nome = data.nome;
+            modelo.tamanho = data.tamanho;
+            this.updateModelo(modelo);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  updateModelo(modelo:ModeloDTO){
+    this.modeloService.update(modelo).subscribe( response => {
+      this.events.publish('updateScreen');
+    },
+     error => {
+       //this.alertaRemoverErro(modelo);
+     });
+  }
+
+  addPrompt(){
+
+    this.modelo = {
+      id: '',
+      nome: '',
+      tamanho: ''
+    };
+    let alert = this.alertCtrl.create({
+      title: 'Cadastrar',
+      message: "Aqui você pode adicionar o seu modelo",
+      inputs: [
+        {
+          name: 'nome',
+          placeholder: 'Nome'
+        },
+        {
+          name: 'tamanho',
+          placeholder: 'Tamanho'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Confirmar',
+          handler: data => {
+            this.modelo.nome = data.nome;
+            this.modelo.tamanho = data.tamanho;
+            this.addModelo(this.modelo);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  addModelo(modelo:ModeloDTO){
+    this.modeloService.save(modelo)
+      .subscribe( response => {
+        this.events.publish('updateScreen');
+      },
+       error => {
+         //this.alertaRemoverErro(modelo);
        });
   }
 
