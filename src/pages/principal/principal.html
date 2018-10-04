@@ -2,53 +2,40 @@
 </ion-header>
 <ion-content padding>
   <div class="logo center">AGEF</div>
-    <ion-grid>
-      <ion-row>
-        <ion-col col-6>
-          <ion-card>
-            <ion-card-header>
-              <div class="center">Vendidas</div>
-            </ion-card-header>
-            <ion-card-content>
-              <h1 class="center"><b>20</b></h1>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-        <ion-col col-6>
-          <ion-card>
-            <ion-card-header>
-              <div class="center">Disponíveis</div>
-            </ion-card-header>
-            <ion-card-content>
-              <h1 class="center"><b>18</b></h1>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6>
+        <ion-card>
+          <ion-card-header>
+            <div class="center">Vendidas</div>
+          </ion-card-header>
+          <ion-card-content>
+            <h1 class="center"><b>20</b></h1>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card>
+          <ion-card-header>
+            <div class="center">Disponíveis</div>
+          </ion-card-header>
+          <ion-card-content>
+            <h1 class="center"><b>18</b></h1>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row text-center>
+      <ion-col col-12>
+        <button ion-button full round (click)="visualizarEstoque()"><b>Visualizar Estoque</b></button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
       <ion-row text-center>
         <ion-col col-12>
-          <button ion-button round (click)="addEstoque()"><b>Adicionar no Estoque</b></button>
-        </ion-col>
-        <ion-col col-12>
-          <button ion-button round (click)="visualizarEstoque()"><b>Visualizar Estoque</b></button>
+          <button ion-button full round (click)="modelos()"><b>Modelos</b></button>
         </ion-col>
       </ion-row>
-    </ion-grid>
-  <ion-card>
-    <ion-card-header>
-      <div class="center">Peça Resource</div>
-    </ion-card-header>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-row text-center>
-            <ion-col col-12>
-              <button ion-button round (click)="modelos()"><b>Modelos</b></button>
-              <button ion-button round (click)="modelos2()"><b>Modelos 2</b></button>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
+  </ion-grid>
 </ion-content>

@@ -12,18 +12,35 @@
       <ion-grid>
         <ion-row>
           <ion-col col-4>
-            <h2>{{item.modelo.nome}}</h2>
-            <h3>Tam:<b>{{item.modelo.tamanho}}</b></h3>
+            <h2 class="vertical-center-text">{{item.modelo.nome}}</h2>
           </ion-col>
           <ion-col col-4>
-            <h2>Qtd:<b>{{item.quantidade}}</b></h2>
-            <h2>Preço:R$<b>{{item.preco}}</b></h2>
+            <h2 class="vertical-center-text">Qtd:<b>{{item.quantidade}}</b></h2>
           </ion-col>
           <ion-col col-4>
             <button ion-button small block color="danger" round (click)="remove(item)">Remover</button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4>
+              <h3>Tam:<b>{{item.modelo.tamanho}}</b></h3>
+          </ion-col>
+          <ion-col col-4>
+              <h2>Preço:R$<b>{{item.preco}}</b></h2>
+          </ion-col>
+          <ion-col col-4>
+              <button ion-button small block color="primary" round (click)="edit(item)">Editar</button>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-item>
   </ion-list>
 </ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <button ion-button full item-end icon-start color="secondary" (click)="addEstoque()">
+            <ion-icon name="add-circle"></ion-icon>
+            Adicionar
+        </button>
+    </ion-toolbar>
+  </ion-footer>

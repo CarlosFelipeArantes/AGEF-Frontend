@@ -52,5 +52,8 @@ export class showEstoquePage {
        });
   }
 
+  addEstoque(){
+    this.navCtrl.push("AddEstoquePage");
+  }
 
 }

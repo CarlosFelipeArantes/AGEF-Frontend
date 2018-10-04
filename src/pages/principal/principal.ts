@@ -26,13 +26,6 @@ export class PrincipalPage {
   modelos(){
     this.navCtrl.push("ModelosPage");
   }
-  modelos2(){
-    this.navCtrl.push("Modelos2Page");
-  }
-
-  addEstoque(){
-    this.navCtrl.push("AddEstoquePage");
-  }
 
   visualizarEstoque(){
     this.navCtrl.push("showEstoquePage");

@@ -10,7 +10,7 @@ import { AlertController } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-modelos',
-  templateUrl: 'modelos.html',
+  templateUrl: 'index.html',
 })
 export class ModelosPage {
 
