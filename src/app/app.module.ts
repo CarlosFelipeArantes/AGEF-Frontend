@@ -7,6 +7,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ModeloService } from '../services/domain/modelo.service';
 import { pecaFeiraService } from '../services/domain/pecaFeira.service';
+import { Network } from '@ionic-native/network';
+import { NetworkInjector } from '../injectables/network';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { pecaFeiraService } from '../services/domain/pecaFeira.service';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ModeloService,
-    pecaFeiraService
+    pecaFeiraService,
+    Network,
+    NetworkInjector
   ]
 })
 export class AppModule {}
