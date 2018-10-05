@@ -16,16 +16,21 @@ export class ModeloService{
     } 
 
     findAll() : Observable<ModeloDTO[]> {
-        return this.http.get<ModeloDTO[]>(`${API_CONFIG.baseUrl}/modelo/`);
+        this.headers = new HttpHeaders();
+        this.headers.set('Content-Type', 'application/json');
+        return this.http.get<ModeloDTO[]>(`${API_CONFIG.baseUrl}/modelo/`,{headers:this.headers});
     }
+    
     save(modelo:ModeloDTO){
         this.headers = new HttpHeaders();
         this.headers.set('Content-Type', 'application/json');
         return this.http.post(`${API_CONFIG.baseUrl}/modelo/`, modelo,{headers:this.headers});
     }
+
     remove(modelo:ModeloDTO){
         return this.http.delete(`${API_CONFIG.baseUrl}/modelo/${modelo.id}`,{});
     }
+
     update(modelo:ModeloDTO){
         this.headers = new HttpHeaders();
         this.headers.set('Content-Type', 'application/json');

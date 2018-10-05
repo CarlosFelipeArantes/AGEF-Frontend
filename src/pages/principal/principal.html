@@ -9,21 +9,19 @@
     </ion-card-header>  
     <ion-card-content>
       <ion-grid>
-        <ion-row text-center>
+        <ion-row>
           <ion-col col-6>
-            <ion-badge item-end>
-              <ion-icon name="logo-twitter" item-start></ion-icon>
-              <div class="center">Vendidas:<b>20</b></div>
+            <ion-badge item-end color="danger">
+              <div class="texto">Vendidas:<b>20</b></div>
             </ion-badge>
           </ion-col>
           <ion-col col-6>
-            <ion-badge item-end>
-              <ion-icon name="logo-twitter" item-start></ion-icon>
-              <div class="center">Disponíveis:<b>18</b></div>
+            <ion-badge item-end color="danger">
+              <div class="texto">Disponíveis:<b>18</b></div>
             </ion-badge>
           </ion-col>
         </ion-row>
-        <ion-row text-center>
+        <ion-row>
           <ion-col col-12>
             <button ion-button full round (click)="visualizarEstoque()"><b>Visualizar</b></button>
           </ion-col>
@@ -38,16 +36,11 @@
     <ion-card-content>
       <ion-grid>
           <ion-row text-center>
-              <ion-col col-12>
-                  <ion-card>
-                    <ion-card-header>
-                      <div class="center">Cadastrados</div>
-                    </ion-card-header>
-                    <ion-card-content>
-                      <h1 class="center"><b>18</b></h1>
-                    </ion-card-content>
-                  </ion-card>
-                </ion-col>
+            <ion-col col-12>
+              <ion-badge item-end color="danger">
+                  <div class="texto">Cadastrados<b>18</b></div>
+              </ion-badge>
+            </ion-col>
           </ion-row>
           <ion-row text-center>
             <ion-col col-12>
