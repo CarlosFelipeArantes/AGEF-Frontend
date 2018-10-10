@@ -13,8 +13,9 @@ import { VendaDTO } from '../../../../models/venda.dto';
 })
 export class vendaPage {
 
-  items: VendaDTO[];
+  items: pecaFeiraDTO[];
   pecaFeira: pecaFeiraDTO;
+  venda:VendaDTO;
 
   constructor(
     public navCtrl: NavController, 
@@ -27,7 +28,7 @@ export class vendaPage {
       this.events.subscribe('updateScreen', () => {
         this.pecaFeiraService.findAll()
             .subscribe( response => {
-              //this.items = response;
+              this.items = response;
             },
               error => {
                 console.log(error);
@@ -38,25 +39,36 @@ export class vendaPage {
   ionViewDidEnter(){
     this.pecaFeiraService.findAll()
     .subscribe( response => {
-      //this.items = response;
+      this.items = response;
+
     },
       error => {
        console.log(error);
       });
   }
 
-  remove(pecaFeira:pecaFeiraDTO){
-    this.pecaFeiraService.remove(pecaFeira)
+  selecionar(pecaFeira:pecaFeiraDTO){
+    const DATE:Date = new Date();
+    var dia = DATE.getDate();
+    var mes = DATE.getDay();
+    var ano = DATE.getFullYear();
+    this.venda = {
+      id: pecaFeira.id,
+      nome: pecaFeira.modelo.nome,
+      tamanho: pecaFeira.modelo.tamanho,
+      preco: pecaFeira.preco,
+      quantidade: pecaFeira.quantidade,
+      data: dia+'-'+mes+'-'+ano,
+    }
+    this.vendaService.save(this.venda)
       .subscribe( response => {
-        this.events.publish('updateScreen');
-      },
-       error => {
-         //this.presentToast();
-       });
-  }
+        //this.items = response;
 
-  addEstoque(){
-    this.navCtrl.push("AddEstoquePage");
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
 }
