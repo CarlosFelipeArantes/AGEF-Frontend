@@ -8,6 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ModeloService } from '../services/domain/modelo.service';
 import { pecaFeiraService } from '../services/domain/pecaFeira.service';
 import { vendaService } from '../services/domain/venda.service';
+import { defeitoService } from '../services/domain/defeito.service';
 import { Network } from '@ionic-native/network';
 import { NetworkInjector } from '../injectables/network';
 
@@ -32,6 +33,7 @@ import { NetworkInjector } from '../injectables/network';
     ModeloService,
     pecaFeiraService,
     vendaService,
+    defeitoService,
     Network,
     NetworkInjector
   ]

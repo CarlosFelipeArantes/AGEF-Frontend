@@ -92,5 +92,6 @@ export class PrincipalPage {
   }
 
   defeito(){
+    this.navCtrl.push("manageDefeitosPage");
   }
 }
