@@ -28,6 +28,10 @@ export class vendaService{
         return this.http.get<VendaDTO>(`${API_CONFIG.baseUrl}/vendas/${venda}`,{});
     }
 
+    getFaturamento(inicio,fim){
+        return this.http.get<VendaDTO>(`${API_CONFIG.baseUrl}/vendas/faturamento/?dataFinal=${fim}&dataInicial=${inicio}`,{});
+    }
+
     update(venda:VendaDTO){
         this.headers = new HttpHeaders();
         this.headers.set('Content-Type', 'application/json');
