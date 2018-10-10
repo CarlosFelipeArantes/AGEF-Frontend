@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ModeloService } from '../services/domain/modelo.service';
 import { pecaFeiraService } from '../services/domain/pecaFeira.service';
+import { vendaService } from '../services/domain/venda.service';
 import { Network } from '@ionic-native/network';
 import { NetworkInjector } from '../injectables/network';
 
@@ -30,6 +31,7 @@ import { NetworkInjector } from '../injectables/network';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ModeloService,
     pecaFeiraService,
+    vendaService,
     Network,
     NetworkInjector
   ]

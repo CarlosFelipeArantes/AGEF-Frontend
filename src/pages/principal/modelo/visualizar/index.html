@@ -7,29 +7,29 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-    <ion-list>
-      <button ion-button full color="dark" *ngFor="let item of items"> 
-          <ion-grid class="center">
-              <ion-row>
-                  <ion-col col-2>
-                      <button ion-button clear icon-only (click)="editarPrompt(item)">
-                        <ion-icon name="brush"></ion-icon>
-                      </button>
-                  </ion-col>
-                <ion-col col-4>
-                  <div class="vertical-center-text">{{item.nome}}</div>
-                </ion-col>
-                <ion-col col-4>
-                    <div class="vertical-center-text">Tam:<b>{{item.tamanho}}</b></div>
-                </ion-col>
-                <ion-col col-2>
-                    <button ion-button (click)="remove(item)" color="danger" clear icon-only>
-                        <ion-icon name='trash'></ion-icon>
-                    </button>
-                </ion-col>
-              </ion-row>  
+    <ion-list *ngFor="let item of items">
+        <button ion-button full color="dark"> 
+            <ion-grid class="center">
+                <ion-row>
+                    <ion-col col-2>
+                        <button ion-button clear icon-only (click)="editarPrompt(item)">
+                            <ion-icon name="brush"></ion-icon>
+                        </button>
+                    </ion-col>
+                    <ion-col col-4>
+                        <div class="vertical-center-text">{{item.nome}}</div>
+                    </ion-col>
+                    <ion-col col-4>
+                        <div class="vertical-center-text">Tam:<b>{{item.tamanho}}</b></div>
+                    </ion-col>
+                    <ion-col col-2>
+                        <button ion-button (click)="remove(item)" color="danger" clear icon-only>
+                            <ion-icon name='trash'></ion-icon>
+                        </button>
+                    </ion-col>
+                </ion-row>  
             </ion-grid>
-      </button>
+        </button>
     </ion-list>
 </ion-content>
 <ion-footer>

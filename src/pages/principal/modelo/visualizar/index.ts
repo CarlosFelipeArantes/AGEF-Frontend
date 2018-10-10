@@ -77,7 +77,7 @@ export class ModelosPage {
   alertaRemoverErro(modelo:ModeloDTO) {
     let alert = this.alertCtrl.create({
       title: 'Erro',
-      subTitle: 'Não é possível remover o modelo "'+ modelo.nome + '", pois está em estoque.\n Remova primeiro do estoque.',
+      subTitle: 'Não é possível remover o modelo "'+ modelo.nome + '", pois está em estoque. Remova primeiro do estoque.',
       buttons: ['OK']
     });
     alert.present();

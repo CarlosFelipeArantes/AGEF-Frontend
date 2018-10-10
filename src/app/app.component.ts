@@ -4,7 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { NetworkInjector } from '../injectables/network';
 import { Network } from '@ionic-native/network';
-
+import { AlertController } from 'ionic-angular';
 
 @Component({
   templateUrl: 'app.html'
@@ -23,6 +23,7 @@ export class MyApp {
     public network: Network,
     public networkInjector: NetworkInjector,
     public events: Events,
+    private alertCtrl: AlertController
     ){
       this.initializeApp();
     // used for an example of ngFor and navigation
@@ -43,18 +44,33 @@ export class MyApp {
 
       // Offline event
     this.events.subscribe('network:offline', () => {
-        alert('network:offline ==> '+this.network.type);    
+      this.alertNoIntenet();  
     });
 
     // Online event
     this.events.subscribe('network:online', () => {
-        alert('network:online ==> '+this.network.type);        
+      this.alertInternet();
     });
 
   });
+  }
 
+  alertNoIntenet() {
+    let alert = this.alertCtrl.create({
+      title: 'Internet',
+      subTitle: 'Internet não disponível.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
 
-
+  alertInternet() {
+    let alert = this.alertCtrl.create({
+      title: 'Internet',
+      subTitle: 'Internet disponível!',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
   openPage(page) {

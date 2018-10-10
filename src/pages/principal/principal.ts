@@ -35,4 +35,12 @@ export class PrincipalPage {
   visualizarEstoque(){
     this.navCtrl.push("showEstoquePage");
   }
+
+  visualizarVendas(){
+    this.navCtrl.push("showVendasPage");
+  }
+
+  realizarVenda(){
+    this.navCtrl.push("vendaPage");
+  }
 }

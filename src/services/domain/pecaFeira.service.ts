@@ -13,15 +13,25 @@ export class pecaFeiraService{
     } 
 
     findAll() : Observable<pecaFeiraDTO[]> {
-        return this.http.get<pecaFeiraDTO[]>(`${API_CONFIG.baseUrl}/pecafeira/`);
+        return this.http.get<pecaFeiraDTO[]>(`${API_CONFIG.baseUrl}/pecasfeira/`);
     }
     save(pecaFeira:pecaFeiraDTO){
         this.headers = new HttpHeaders();
         this.headers.set('Content-Type', 'application/json');
-        return this.http.post(`${API_CONFIG.baseUrl}/pecafeira/`, pecaFeira,{headers:this.headers});
+        return this.http.post(`${API_CONFIG.baseUrl}/pecasfeira/`, pecaFeira,{headers:this.headers});
     }
-    remove(modelo:pecaFeiraDTO){
-        return this.http.delete(`${API_CONFIG.baseUrl}/pecafeira/${modelo.id}`,{});
+    remove(pecaFeira:pecaFeiraDTO){
+        return this.http.delete(`${API_CONFIG.baseUrl}/pecasfeira/${pecaFeira.id}`,{});
+    }
+
+    get(pecaFeira:string){
+        return this.http.get<pecaFeiraDTO>(`${API_CONFIG.baseUrl}/pecasfeira/${pecaFeira}`,{});
+    }
+
+    update(pecaFeira:pecaFeiraDTO){
+        this.headers = new HttpHeaders();
+        this.headers.set('Content-Type', 'application/json');
+        return this.http.put(`${API_CONFIG.baseUrl}/pecasfeira/${pecaFeira.id}`, pecaFeira,{headers:this.headers});
     }
 
 }

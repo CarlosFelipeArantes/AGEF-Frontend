@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Visualizar Vendas</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let item of items">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <h2 class="vertical-center-text">{{item.nome}}</h2>
+          </ion-col>
+          <ion-col col-4>
+            <h2 class="vertical-center-text">Qtd:<b>{{item.quantidade}}</b></h2>
+          </ion-col>
+          <ion-col col-4>
+              <h2 class="vertical-center-text">Data:<b>{{item.data}}</b></h2>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4>
+              <h3>Tam:<b>{{item.tamanho}}</b></h3>
+          </ion-col>
+          <ion-col col-4>
+              <h2>Preço:R$<b>{{item.preco}}</b></h2>
+          </ion-col>
+          <ion-col col-4>
+            <button ion-button icon-only small clear color="danger" (click)="remove(item)">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>
