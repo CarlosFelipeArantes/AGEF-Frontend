@@ -44,6 +44,15 @@ export class vendaPage {
         });
         alert.present();
       });
+
+      this.events.subscribe('sucessoVenda', () => {
+        let alert = this.alertCtrl.create({
+          title: 'Venda',
+          subTitle: 'Venda registrada com sucesso.',
+          buttons: ['Continuar']
+        });
+        alert.present();
+      });
   }
 
   ionViewDidEnter(){
@@ -59,9 +68,18 @@ export class vendaPage {
 
   selecionar(pecaFeira:pecaFeiraDTO){
     const DATE:Date = new Date();
-    var dia = DATE.getDate();
-    var mes = DATE.getDay();
-    var ano = DATE.getFullYear();
+    var dia,mes,ano;
+
+    dia = DATE.getDate();
+  
+    if(DATE.getMonth().toString.length<=1){
+      mes = '0'+DATE.getMonth();
+    }else{
+      mes = DATE.getMonth();
+    }
+
+    ano = DATE.getFullYear();
+
     let alert = this.alertCtrl.create({
       title: 'Realizar Venda',
       message: "Aqui você pode selecionar a quantidade desejada.",
@@ -104,7 +122,7 @@ export class vendaPage {
   adicionarVenda(venda:VendaDTO){
     this.vendaService.save(this.venda)
       .subscribe( response => {
-        //this.items = response;
+        this.events.publish('sucessoVenda');
       },
       error => {
         console.log(error);
