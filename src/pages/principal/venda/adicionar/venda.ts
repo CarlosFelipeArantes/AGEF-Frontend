@@ -36,6 +36,7 @@ export class vendaPage {
                 console.log(error);
               });
         });
+        
       this.events.subscribe('erroQuantidade', () => {
         let alert = this.alertCtrl.create({
           title: 'Erro na quantidade',

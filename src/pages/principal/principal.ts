@@ -23,10 +23,6 @@ export class PrincipalPage {
   ionViewDidLeave() {
     this.menu.swipeEnable(true);
   }
-  
-  cadastrar(){
-    this.navCtrl.push("CadastrarPage");
-  }
 
   modelos(){
     this.navCtrl.push("ModelosPage");
@@ -41,6 +37,10 @@ export class PrincipalPage {
   }
 
   realizarVenda(){
+    this.navCtrl.push("vendaPage");
+  }
+
+  faturamento(){
     this.navCtrl.push("vendaPage");
   }
 }

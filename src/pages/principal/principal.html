@@ -9,18 +9,11 @@
     </ion-card-header>  
     <ion-card-content>
       <ion-grid>
-          <ion-row text-center>
-            <ion-col col-12>
-              <ion-badge item-end color="danger">
-                  <div class="texto">Cadastrados<b>18</b></div>
-              </ion-badge>
-            </ion-col>
-          </ion-row>
-          <ion-row text-center>
-            <ion-col col-12>
-              <button ion-button full round (click)="modelos()"><b>Visualizar</b></button>
-            </ion-col>
-          </ion-row>
+        <ion-row text-center>
+          <ion-col col-12>
+            <button ion-button full round small (click)="modelos()"><b>Visualizar</b></button>
+          </ion-col>
+        </ion-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>
@@ -32,7 +25,7 @@
       <ion-grid>
         <ion-row>
           <ion-col col-12>
-            <button ion-button full round (click)="visualizarEstoque()"><b>Visualizar</b></button>
+            <button ion-button full round small (click)="visualizarEstoque()"><b>Visualizar</b></button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -58,12 +51,15 @@
           </ion-row>
           <ion-row>
             <ion-col col-12>
-              <button ion-button full round (click)="visualizarVendas()"><b>Visualizar</b></button>
+              <button ion-button full round small (click)="visualizarVendas()"><b>Visualizar</b></button>
             </ion-col>
           </ion-row>
           <ion-row>
               <ion-col col-12>
-                <button ion-button full round color="secondary" (click)="realizarVenda()"><b>Realizar Venda</b></button>
+                  <button ion-button full round small color="primary" (click)="faturamento()"><b>Faturamento</b></button>
+              </ion-col>
+              <ion-col col-12>
+                  <button ion-button full round small color="secondary" (click)="realizarVenda()"><b>Realizar Venda</b></button>
               </ion-col>
           </ion-row>
       </ion-grid>
