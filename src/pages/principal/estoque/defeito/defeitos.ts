@@ -49,10 +49,21 @@ export class manageDefeitosPage {
     this.defeitoService.remove(defeito)
       .subscribe( response => {
         this.events.publish('updateScreen');
+        let alert = this.alertCtrl.create({
+          title: 'Sucesso',
+          subTitle: 'Registro de defeito removido com sucesso!',
+          buttons: ['Continuar']
+        });
+        alert.present();
       },
        error => {
         if (error.status=='400'){
-          
+          let alert = this.alertCtrl.create({
+            title: 'Erro',
+            subTitle: 'Não foi possível remover o defeito.',
+            buttons: ['Continuar']
+          });
+          alert.present();
         }
        });
   }
@@ -90,10 +101,21 @@ export class manageDefeitosPage {
             this.defeitoService.update(defeito).
               subscribe( response => {
                 this.events.publish('updateScreen');
+                let alert = this.alertCtrl.create({
+                  title: 'Sucesso',
+                  subTitle: 'Defeito removido com sucesso!',
+                  buttons: ['Continuar']
+                });
+                alert.present();
               },
                 error => {
               if (error.status=='400'){
-                
+                let alert = this.alertCtrl.create({
+                  title: 'Erro',
+                  subTitle: 'Não foi possível editar o defeito.',
+                  buttons: ['Continuar']
+                });
+                alert.present();
               }
              });
           }
@@ -104,7 +126,7 @@ export class manageDefeitosPage {
   }
 
   addEstoque(){
-    this.navCtrl.push("AddEstoquePage");
+    this.navCtrl.push("showPecasPage");
   }
 
 }

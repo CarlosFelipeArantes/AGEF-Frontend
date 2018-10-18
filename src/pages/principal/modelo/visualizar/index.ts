@@ -68,6 +68,12 @@ export class ModelosPage {
     this.modeloService.remove(modelo)
       .subscribe( response => {
         this.events.publish('updateScreen');
+        let alert = this.alertCtrl.create({
+          title: 'Sucesso',
+          subTitle: 'Modelo removido com sucesso!',
+          buttons: ['Continuar']
+        });
+        alert.present();
       },
        error => {
          this.alertaRemoverErro(modelo);
@@ -108,7 +114,9 @@ export class ModelosPage {
         {
           text: 'Confirmar',
           handler: data => {
+            if (data.nome!='')
             modelo.nome = data.nome;
+            if (data.tamanho!='')
             modelo.tamanho = data.tamanho;
             this.updateModelo(modelo);
           }
@@ -121,9 +129,20 @@ export class ModelosPage {
   updateModelo(modelo:ModeloDTO){
     this.modeloService.update(modelo).subscribe( response => {
       this.events.publish('updateScreen');
+      let alert = this.alertCtrl.create({
+        title: 'Sucesso',
+        subTitle: 'Modelo editado com sucesso!',
+        buttons: ['Continuar']
+      });
+      alert.present();
     },
      error => {
-       //this.alertaRemoverErro(modelo);
+      let alert = this.alertCtrl.create({
+        title: 'Erro',
+        subTitle: 'Não foi possível editar o modelo.',
+        buttons: ['Continuar']
+      });
+      alert.present();
      });
   }
 
@@ -172,6 +191,12 @@ export class ModelosPage {
     this.modeloService.save(modelo)
       .subscribe( response => {
         this.events.publish('updateScreen');
+        let alert = this.alertCtrl.create({
+          title: 'Sucesso',
+          subTitle: 'Modelo inserido com sucesso!',
+          buttons: ['Continuar']
+        });
+        alert.present();
       },
        error => {
          //this.alertaRemoverErro(modelo);

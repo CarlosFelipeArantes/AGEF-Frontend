@@ -49,11 +49,20 @@ export class showEstoquePage {
     this.pecaFeiraService.remove(pecaFeira)
       .subscribe( response => {
         this.events.publish('updateScreen');
+        let alert = this.alertCtrl.create({
+          title: 'Sucesso',
+          subTitle: 'A peça foi removida com sucesso!',
+          buttons: ['Continuar']
+        });
+        alert.present();
       },
        error => {
-        if (error.status=='400'){
-          
-        }
+        let alert = this.alertCtrl.create({
+          title: 'Erro',
+          subTitle: 'Não foi possível remover a peça do estoque, pois existe um defeito associado a essa peça.',
+          buttons: ['Continuar']
+        });
+        alert.present();
        });
   }
 
@@ -90,11 +99,21 @@ export class showEstoquePage {
             this.pecaFeiraService.update(pecaFeira).
               subscribe( response => {
                 this.events.publish('updateScreen');
+                let alert = this.alertCtrl.create({
+                  title: 'Sucesso',
+                  subTitle: 'Peça editada com sucesso!',
+                  buttons: ['Continuar']
+                });
+                alert.present();
               },
                 error => {
-              if (error.status=='400'){
+                  let alert = this.alertCtrl.create({
+                    title: 'Erro',
+                    subTitle: 'Não foi possível editar a peça.',
+                    buttons: ['Continuar']
+                  });
+                  alert.present();
                 
-              }
              });
           }
         }
