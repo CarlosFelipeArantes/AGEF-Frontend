@@ -7,7 +7,6 @@ import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 
-
 @IonicPage()
 @Component({
   selector: 'page-modelos',
@@ -30,26 +29,27 @@ export class ModelosPage {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController
   ){
-      
-      this.events.subscribe('updateScreen', () => {
-        this.modeloService.findAll()
-            .subscribe( response => {
-              this.items = response;
-            },
-              error => {
-                console.log(error);
-              });
-        });
+      this.eventos();
+  }
+
+  eventos(){
+    this.events.subscribe('updateScreen', () => {
+      this.modeloService.findAll()
+          .subscribe( response => {
+            this.items = response;
+          },
+            error => {
+              console.log(error);
+            });
+      });
   }
 
   presentLoading(apear:boolean) {
-    
     if(apear){
       this.loading.present();
     }else{
       this.loading.dismiss();
     }
-
   }
 
   ionViewDidLoad() {
@@ -60,7 +60,7 @@ export class ModelosPage {
         this.presentLoading(false);
       },
         error => {
-         console.log(error);
+          //
         });
   }
 
@@ -214,7 +214,6 @@ export class ModelosPage {
     toast.onDidDismiss(() => {
       console.log('Dismissed toast');
     });
-  
     toast.present();
   }
 
