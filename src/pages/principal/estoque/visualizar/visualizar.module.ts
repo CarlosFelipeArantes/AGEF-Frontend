@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { showEstoquePage } from './visualizar';
+import { EstoquePage } from './visualizar';
 
 @NgModule({
   declarations: [
-    showEstoquePage,
+    EstoquePage,
   ],
   imports: [
-    IonicPageModule.forChild(showEstoquePage),
+    IonicPageModule.forChild(EstoquePage),
   ],
 })
-export class showEstoquePageModule {}
+export class EstoquePageModule {}

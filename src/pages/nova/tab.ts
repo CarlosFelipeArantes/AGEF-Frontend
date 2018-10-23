@@ -1,28 +1,32 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
+import { PrincipalPage } from '../principal/principal';
 
 @IonicPage()
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'tab.html'
 })
-export class HomePage {
+export class TabPage {
+
+  tab0Root: any = 'ModelosPage';
+  tab1Root: any = 'manageDefeitosPage';
+  tab2Root: any = 'PrincipalPage';
+  tab3Root: any = 'EstoquePage';
+  myIndex:number= 2;
 
   constructor(public navCtrl: NavController, public menu: MenuController) {
- 
+
   }
   ionViewWillEnter() {
-    this.menu.swipeEnable(false);
-  }
-  ionViewDidLeave() {
-    this.menu.swipeEnable(true);
+    this.navCtrl.resize();
   }
 
 
   login(){
 
-    this.navCtrl.push("TabPage");
+    //this.navCtrl.push("PrincipalPage");
 
   }
 }

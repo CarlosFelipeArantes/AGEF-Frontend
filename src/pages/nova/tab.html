@@ -1,0 +1,14 @@
+<ion-header>
+    <ion-navbar hideBackButton>
+        <div class="logo center">AGEF</div>
+        <div class="subtitulo center">Aplicativo de Gerenciamento de Estoque e Faturamento</div>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+<ion-tabs selectedIndex="1">
+    <ion-tab [root]="tab0Root" tabTitle="Modelos" tabIcon="contacts"></ion-tab>
+    <ion-tab [root]="tab1Root" tabTitle="Defeitos" tabIcon="contacts"></ion-tab>
+    <ion-tab [root]="tab2Root" tabTitle="Venda" tabIcon="logo-usd"></ion-tab>
+    <ion-tab [root]="tab3Root" tabTitle="Estoque" tabIcon="contacts"></ion-tab>
+  </ion-tabs>
+</ion-content>

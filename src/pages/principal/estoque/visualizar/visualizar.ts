@@ -11,7 +11,7 @@ import { AlertController } from 'ionic-angular';
   selector: 'page-visualizar',
   templateUrl: 'visualizar.html',
 })
-export class showEstoquePage {
+export class EstoquePage {
 
   items: pecaFeiraDTO[];
   pecaFeira: pecaFeiraDTO;
