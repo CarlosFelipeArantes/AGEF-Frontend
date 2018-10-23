@@ -1,55 +1,31 @@
 <ion-header>
 </ion-header>
 <ion-content padding class="master">
-  <ion-card class="estoque">
-    <ion-card-header>
-      <b>Estoque</b>
-    </ion-card-header>  
-    <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col col-12>
-            <button ion-button full round small (click)="visualizarEstoque()"><b>Visualizar</b></button>
-          </ion-col>
-          <ion-col col-12>
-            <button ion-button full round small (click)="defeito()"><b>Gerenciar Defeitos</b></button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-  <ion-card class="estoque">
-    <ion-card-header>
-        <b>Venda</b>
-      </ion-card-header>  
-    <ion-card-content>
-        <ion-grid>
-          <ion-row>
-            <ion-col col-6>
-              <ion-badge item-end color="danger">
-                <div class="texto">Vendidas:<b>20</b></div>
-              </ion-badge>
-            </ion-col>
-            <ion-col col-6>
-              <ion-badge item-end color="danger">
-                <div class="texto">Disponíveis:<b>18</b></div>
-              </ion-badge>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-12>
-              <button ion-button full round small (click)="visualizarVendas()"><b>Visualizar</b></button>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-              <ion-col col-12>
-                  <button ion-button full round small color="primary" (click)="faturamento()"><b>Faturamento</b></button>
-              </ion-col>
-              <ion-col col-12>
-                  <button ion-button full round small color="secondary" (click)="realizarVenda()"><b>Realizar Venda</b></button>
-              </ion-col>
-          </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+<ion-grid>
+  <ion-row>
+    <ion-col col-6>
+      <ion-badge item-end color="danger">
+        <div class="texto">Vendidas:<b>20</b></div>
+      </ion-badge>
+    </ion-col>
+    <ion-col col-6>
+      <ion-badge item-end color="danger">
+        <div class="texto">Disponíveis:<b>18</b></div>
+      </ion-badge>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-12>
+      <button ion-button full round small (click)="visualizarVendas()"><b>Visualizar</b></button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+      <ion-col col-12>
+          <button ion-button full round small color="primary" (click)="faturamento()"><b>Faturamento</b></button>
+      </ion-col>
+      <ion-col col-12>
+          <button ion-button full round small color="secondary" (click)="realizarVenda()"><b>Realizar Venda</b></button>
+      </ion-col>
+  </ion-row>
+</ion-grid>
 </ion-content>
