@@ -9,9 +9,9 @@ import { MenuController } from 'ionic-angular/components/app/menu-controller';
 })
 export class TabPage {
 
-  tab0Root: any = 'ModelosPage';
+  tab0Root: any = 'PrincipalPage';
   tab1Root: any = 'manageDefeitosPage';
-  tab2Root: any = 'PrincipalPage';
+  tab2Root: any = 'ModelosPage';
   tab3Root: any = 'EstoquePage';
   myIndex:number= 2;
 
