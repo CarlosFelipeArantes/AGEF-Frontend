@@ -6,12 +6,12 @@
           <ion-col col-4>
               <div class="vertical-center-text">{{item.pecaFeira.modelo.nome}}</div>
           </ion-col>
-          <ion-col col-4>
-              <div class="vertical-center-text">Qtd:<b>{{item.quantidade}}</b></div>
-          </ion-col>
           <ion-col col-2>
               <div>Tam:<b>{{item.pecaFeira.modelo.tamanho}}</b></div>
           </ion-col>
+          <ion-col col-4>
+                <div class="vertical-center-text">Qtd:<b>{{item.quantidade}}</b></div>
+            </ion-col>
           <ion-col col-2>
               <button ion-button (click)="remove(item)" color="danger" clear icon-only>
                   <ion-icon name='trash'></ion-icon>
