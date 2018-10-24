@@ -1,40 +1,87 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Visualizar Vendas</ion-title>
-  </ion-navbar>
-</ion-header>
-<ion-content padding class="master">
-  <ion-list>
-    <ion-item *ngFor="let item of items">
-      <ion-grid>
-        <ion-row>
-          <ion-col col-4>
-            <h2 class="vertical-center-text">{{item.nome}}</h2>
-          </ion-col>
-          <ion-col col-4>
-            <h2 class="vertical-center-text">Qtd:<b>{{item.quantidade}}</b></h2>
-          </ion-col>
-          <ion-col col-4>
-              <h2 class="vertical-center-text">Data:<b>{{item.data}}</b></h2>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-4>
-              <h3>Tam:<b>{{item.tamanho}}</b></h3>
-          </ion-col>
-          <ion-col col-4>
-              <h2>Preço:R$<b>{{item.preco}}</b></h2>
-          </ion-col>
-          <ion-col col-4>
-            <button ion-button icon-only small clear color="danger" (click)="remove(item)">
-              <ion-icon name="trash"></ion-icon>
+<!--<ion-header>-->
+<!--<ion-navbar>-->
+<!--<button ion-button menuToggle>-->
+<!--<ion-icon name="menu"></ion-icon>-->
+<!--</button>-->
+<!--<ion-title>Visualizar Vendas</ion-title>-->
+<!--</ion-navbar>-->
+<!--</ion-header>-->
+<!--<ion-content padding class="master">-->
+<!--<ion-list>-->
+<!--<ion-item *ngFor="let item of vendas">-->
+<!--<ion-grid>-->
+<!--<ion-row>-->
+<!--<ion-col col-4>-->
+<!--<h2 class="vertical-center-text">{{item.nome}}</h2>-->
+<!--</ion-col>-->
+<!--<ion-col col-4>-->
+<!--<h2 class="vertical-center-text">Qtd:<b>{{item.quantidade}}</b></h2>-->
+<!--</ion-col>-->
+<!--<ion-col col-4>-->
+<!--<h2 class="vertical-center-text">Data:<b>{{item.data}}</b></h2>-->
+<!--</ion-col>-->
+<!--</ion-row>-->
+<!--<ion-row>-->
+<!--<ion-col col-4>-->
+<!--<h3>Tam:<b>{{item.tamanho}}</b></h3>-->
+<!--</ion-col>-->
+<!--<ion-col col-4>-->
+<!--<h2>Preço:R$<b>{{item.preco}}</b></h2>-->
+<!--</ion-col>-->
+<!--<ion-col col-4>-->
+<!--<button ion-button icon-only small clear color="danger" (click)="remove(item)">-->
+<!--<ion-icon name="trash"></ion-icon>-->
+<!--</button>-->
+<!--</ion-col>-->
+<!--</ion-row>-->
+<!--</ion-grid>-->
+<!--</ion-item>-->
+<!--</ion-list>-->
+<!--</ion-content>-->
+
+<ion-content>
+    <ion-list>
+        <ion-item-sliding *ngFor="let venda of vendas">
+            <button ion-item>
+                <ion-grid text-center>
+                    <ion-row>
+                        <ion-col>
+                            <p>Nome:</p>
+                            <h3>{{venda.pecaFeira.modelo.nome}}</h3>
+                        </ion-col>
+                        <ion-col>
+                            <p>Tamanho:</p>
+                            <h3>{{venda.pecaFeira.modelo.tamanho}}</h3>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-col>
+                            <p>Dia da venda:</p>
+                            <h3>{{venda.data}}</h3>
+                        </ion-col>
+                        <ion-col>
+                            <p>Quantidade:</p>
+                            <h3>{{venda.quantidade}}</h3>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
             </button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-  </ion-list>
+
+            <ion-item-options side="right">
+                <button ion-button color="danger" (click)="remove(venda)">
+                    <ion-icon name="trash"></ion-icon>
+                    Apagar
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+
+    <ion-fab bottom right>
+        <button ion-fab mini>
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
 </ion-content>
+
+

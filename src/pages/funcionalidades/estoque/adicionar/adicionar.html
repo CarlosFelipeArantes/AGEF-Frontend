@@ -1,25 +1,25 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>  
-    <ion-title>Selecione Peça</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Selecione Peça</ion-title>
+    </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <ion-list>
-    <ion-item *ngFor="let item of items"> 
-      <ion-grid>
-        <ion-row>
-          <ion-col col-6>
-            <h2>{{item.nome}}</h2>
-            <h3>Tam:<b>{{item.tamanho}}</b></h3>
-          </ion-col>
-          <ion-col col-6>
-            <button ion-button small color="secondary" round (click)="select(item)"><b>Escolher</b></button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-  </ion-list>
+    <ion-list>
+        <ion-item *ngFor="let item of items">
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-6>
+                        <h2>{{item.nome}}</h2>
+                        <h3>Tam:<b>{{item.tamanho}}</b></h3>
+                    </ion-col>
+                    <ion-col col-6>
+                        <button ion-button small color="secondary" round (click)="select(item)"><b>Escolher</b></button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-list>
 </ion-content>

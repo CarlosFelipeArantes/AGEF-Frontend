@@ -1,26 +1,26 @@
 <ion-content class="master">
-  <ion-list *ngFor="let item of items">
-    <button ion-button full color="dark"> 
-      <ion-grid>
-        <ion-row>
-          <ion-col col-4>
-              <div class="vertical-center-text">{{item.pecaFeira.modelo.nome}}</div>
-          </ion-col>
-          <ion-col col-2>
-              <div>Tam:<b>{{item.pecaFeira.modelo.tamanho}}</b></div>
-          </ion-col>
-          <ion-col col-4>
-                <div class="vertical-center-text">Qtd:<b>{{item.quantidade}}</b></div>
-            </ion-col>
-          <ion-col col-2>
-              <button ion-button (click)="remove(item)" color="danger" clear icon-only>
-                  <ion-icon name='trash'></ion-icon>
-              </button>
-          </ion-col>
-        </ion-row>  
-      </ion-grid>
-    </button>
-  </ion-list>
+    <ion-list *ngFor="let item of items">
+        <button ion-button full color="dark">
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-4>
+                        <div class="vertical-center-text">{{item.pecaFeira.modelo.nome}}</div>
+                    </ion-col>
+                    <ion-col col-2>
+                        <div>Tam:<b>{{item.pecaFeira.modelo.tamanho}}</b></div>
+                    </ion-col>
+                    <ion-col col-4>
+                        <div class="vertical-center-text">Qtd:<b>{{item.quantidade}}</b></div>
+                    </ion-col>
+                    <ion-col col-2>
+                        <button ion-button (click)="remove(item)" color="danger" clear icon-only>
+                            <ion-icon name='trash'></ion-icon>
+                        </button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </button>
+    </ion-list>
 </ion-content>
 <ion-footer>
     <ion-toolbar>
@@ -29,4 +29,4 @@
             Registrar
         </button>
     </ion-toolbar>
-  </ion-footer>
+</ion-footer>

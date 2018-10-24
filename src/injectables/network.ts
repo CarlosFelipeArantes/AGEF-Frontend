@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { AlertController, Events } from 'ionic-angular';
-import { Network } from '@ionic-native/network';
+import {Injectable} from '@angular/core';
+import {AlertController, Events} from 'ionic-angular';
+import {Network} from '@ionic-native/network';
 
 export enum ConnectionStatusEnum {
     Online,
@@ -10,17 +10,17 @@ export enum ConnectionStatusEnum {
 @Injectable()
 export class NetworkInjector {
 
-  previousStatus;
+    previousStatus;
 
-  constructor(public alertCtrl: AlertController, 
-              public network: Network,
-              public eventCtrl: Events) {
+    constructor(public alertCtrl: AlertController,
+                public network: Network,
+                public eventCtrl: Events) {
 
-    console.log('Hello NetworkProvider Provider');
+        console.log('Hello NetworkProvider Provider');
 
-    this.previousStatus = ConnectionStatusEnum.Online;
-    
-  }
+        this.previousStatus = ConnectionStatusEnum.Online;
+
+    }
 
     public initializeNetworkEvents(): void {
         this.network.onDisconnect().subscribe(() => {
