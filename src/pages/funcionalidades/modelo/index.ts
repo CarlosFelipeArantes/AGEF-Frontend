@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ModeloService } from '../../../../services/domain/modelo.service';
-import { ModeloDTO } from '../../../../models/modelo.dto';
+import { ModeloService } from '../../../services/domain/modelo.service';
+import { ModeloDTO } from '../../../models/modelo.dto';
 import { Events } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';

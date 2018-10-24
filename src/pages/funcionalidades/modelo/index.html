@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content class="master">
     <ion-list *ngFor="let item of items">
         <button ion-button full color="dark"> 
             <ion-grid class="center">
@@ -26,7 +26,7 @@
 </ion-content>
 <ion-footer>
     <ion-toolbar>
-        <button ion-button full item-end icon-start color="secondary" (click)="addPrompt()">
+        <button ion-button full round item-end icon-start color="secondary" (click)="addPrompt()">
             <ion-icon name="add-circle"></ion-icon>
             Cadastrar
         </button>

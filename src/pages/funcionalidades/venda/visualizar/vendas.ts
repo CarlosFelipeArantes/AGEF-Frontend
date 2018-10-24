@@ -7,7 +7,7 @@ import { Events } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-vendas',
+  selector: 'vendas-visualizar',
   templateUrl: 'vendas.html',
 })
 export class showVendasPage {

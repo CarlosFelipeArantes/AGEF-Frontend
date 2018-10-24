@@ -3,7 +3,7 @@ import { NavController, IonicPage } from 'ionic-angular';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { Network } from '@ionic-native/network';
 import { AlertController } from 'ionic-angular';
-import { vendaService } from '../../services/domain/venda.service';
+import { vendaService } from '../../../../services/domain/venda.service';
 
 
 @IonicPage()
