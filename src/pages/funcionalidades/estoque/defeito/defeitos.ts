@@ -8,13 +8,12 @@ import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-visualizar',
+  selector: 'page-defeitos',
   templateUrl: 'defeitos.html',
 })
 export class manageDefeitosPage {
 
   items: DefeitoDTO[];
-  //pecaFeira: pecaFeiraDTO;
 
   constructor(
     public navCtrl: NavController, 
@@ -125,7 +124,7 @@ export class manageDefeitosPage {
     alert.present();
   }
 
-  addEstoque(){
+  registrar(){
     this.navCtrl.push("showPecasPage");
   }
 
