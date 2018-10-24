@@ -1,8 +1,9 @@
-import {AlertController, Events, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {Events, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {vendaService} from '../../../../services/domain/venda.service';
 import {PecaFeiraDTO} from '../../../../models/pecaFeiraDTO';
 import {VendaDTO} from '../../../../models/venda.dto';
+import {DialogoProvider} from "../../../../injectables/dialogo";
 
 @IonicPage()
 @Component({
@@ -14,26 +15,20 @@ export class showVendasPage {
     vendas: VendaDTO[];
     pecaFeira: PecaFeiraDTO;
 
-    constructor(
-        public navCtrl: NavController,
-        public navParams: NavParams,
-        public vendaService: vendaService,
-        public events: Events,
-        private alertCtrl: AlertController,
-        private toastCtrl: ToastController
-    ) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public vendaService: vendaService,
+                public events: Events, private dialogo: DialogoProvider) {
 
         this.events.subscribe('updateScreen', () => {
-            this.vendaService.findAll()
-                .subscribe(response => {
-                        this.vendas = response;
-                    },
-                    error => {
-                        console.log(error);
-                    });
+            this.vendaService.findAll().subscribe(response => {
+                    this.vendas = response;
+                },
+                error => {
+                    console.log(error);
+                });
         });
     }
 
+    // noinspection JSUnusedGlobalSymbols
     ionViewDidEnter() {
         this.vendaService.findAll()
             .subscribe(response => {
@@ -45,9 +40,9 @@ export class showVendasPage {
     }
 
     remove(venda: VendaDTO) {
-        let title = 'Confirmar Remoção';
-        let message = 'Você realmente quer apagar esse registro de venda?';
-        let alert = this.presentConfirm(title, message);
+        let mensagem = 'Você realmente quer apagar esse registro de venda?';
+        let titulo = 'Confirmar Remoção';
+        let alert = this.dialogo.exibirDialogoConfirmacao(mensagem, titulo);
 
         alert.present();
 
@@ -55,7 +50,7 @@ export class showVendasPage {
             if (isConfirmed) {
                 this.vendaService.remove(venda).subscribe(response => {
                         this.events.publish('updateScreen');
-                        this.presentToast("Venda apagada com sucesso.");
+                        this.dialogo.exibirToast("Venda apagada com sucesso.");
                     },
                     error => {
                         // TODO tratar possíveis erros
@@ -63,45 +58,4 @@ export class showVendasPage {
             }
         });
     }
-
-    // TODO criar helper com este método
-    presentToast(message: string) {
-        let toast = this.toastCtrl.create({
-            message: message,
-            duration: 3000,
-            position: 'bottom',
-            showCloseButton: true,
-            closeButtonText: "OK"
-        });
-
-        toast.present();
-    }
-
-    // TODO criar helper com este método
-    presentConfirm(title: string, message: string) {
-        let alert = this.alertCtrl.create({
-            title: title,
-            message: message,
-            buttons: [
-                {
-                    text: 'Cancelar',
-                    role: 'cancel',
-                    handler: () => {
-                        alert.dismiss(false);
-                        return false;
-                    }
-                },
-                {
-                    text: 'Confirmar',
-                    handler: () => {
-                        alert.dismiss(true);
-                        return false;
-                    }
-                }
-            ]
-        });
-
-        return alert;
-    }
-
 }

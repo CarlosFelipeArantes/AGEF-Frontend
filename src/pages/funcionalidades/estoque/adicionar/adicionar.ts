@@ -35,6 +35,7 @@ export class AddEstoquePage {
         });
     }
 
+    // noinspection JSUnusedGlobalSymbols
     ionViewDidLoad() {
         this.modeloService.findAll()
             .subscribe(response => {

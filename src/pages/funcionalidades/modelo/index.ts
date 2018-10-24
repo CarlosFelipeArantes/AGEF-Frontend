@@ -56,6 +56,7 @@ export class ModelosPage {
         }
     }
 
+    // noinspection JSUnusedGlobalSymbols
     ionViewDidLoad() {
         this.presentLoading(true);
         this.modeloService.findAll()

@@ -33,6 +33,7 @@ export class EstoquePage {
         });
     }
 
+    // noinspection JSUnusedGlobalSymbols
     ionViewDidEnter() {
         this.pecaFeiraService.findAll()
             .subscribe(response => {

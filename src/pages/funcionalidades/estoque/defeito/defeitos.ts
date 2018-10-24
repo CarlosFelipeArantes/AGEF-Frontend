@@ -32,6 +32,7 @@ export class manageDefeitosPage {
         });
     }
 
+    // noinspection JSUnusedGlobalSymbols
     ionViewDidEnter() {
         this.defeitoService.findAll()
             .subscribe(response => {

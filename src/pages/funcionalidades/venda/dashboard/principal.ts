@@ -22,10 +22,12 @@ export class PrincipalPage {
 
     }
 
+    // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
         this.menu.swipeEnable(false);
     }
 
+    // noinspection JSUnusedGlobalSymbols
     ionViewDidLeave() {
         this.menu.swipeEnable(true);
     }
@@ -71,8 +73,8 @@ export class PrincipalPage {
                 {
                     text: 'Confirmar',
                     handler: data => {
-                        var inicio: String = data.inicio;
-                        var fim: String = data.fim;
+                        const inicio: String = data.inicio;
+                        const fim: String = data.fim;
                         this.vendaService.getFaturamento(inicio, fim)
                             .subscribe(response => {
                                     let alert = this.alertCtrl.create({

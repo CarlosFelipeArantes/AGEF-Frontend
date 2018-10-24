@@ -54,6 +54,7 @@ export class vendaPage {
         });
     }
 
+    // noinspection JSUnusedGlobalSymbols
     ionViewDidEnter() {
         this.pecaFeiraService.findAll()
             .subscribe(response => {
@@ -65,58 +66,58 @@ export class vendaPage {
                 });
     }
 
-    selecionar(pecaFeira: PecaFeiraDTO) {
-        const DATE: Date = new Date();
-        var dia, mes, ano;
-
-        dia = DATE.getDate();
-
-        if (DATE.getMonth().toString.length <= 1) {
-            mes = '0' + DATE.getMonth();
-        } else {
-            mes = DATE.getMonth();
-        }
-
-        ano = DATE.getFullYear();
-
-        let alert = this.alertCtrl.create({
-            title: 'Realizar Venda',
-            message: "Aqui você pode selecionar a quantidade desejada.",
-            inputs: [
-                {
-                    name: 'quantidade',
-                    placeholder: 'Quantidade'
-                }
-            ],
-            buttons: [
-                {
-                    text: 'Cancelar',
-                    role: 'cancel',
-                    handler: data => {
-                        console.log('Cancel clicked');
-                    }
-                },
-                {
-                    text: 'Confirmar',
-                    handler: data => {
-                        this.venda = {
-                            id: pecaFeira.id,
-                            nome: pecaFeira.modelo.nome,
-                            tamanho: pecaFeira.modelo.tamanho,
-                            preco: pecaFeira.preco,
-                            quantidade: data.quantidade,
-                            data: dia + '-' + mes + '-' + ano,
-                        };
-                        if (this.venda.quantidade > pecaFeira.quantidade)
-                            this.events.publish('erroQuantidade');
-                        else
-                            this.adicionarVenda(this.venda);
-                    }
-                }
-            ]
-        });
-        alert.present();
-    }
+    // selecionar(pecaFeira: PecaFeiraDTO) {
+    //     const DATE: Date = new Date();
+    //     let dia, mes, ano;
+    //
+    //     dia = DATE.getDate();
+    //
+    //     if (DATE.getMonth().toString.length <= 1) {
+    //         mes = '0' + DATE.getMonth();
+    //     } else {
+    //         mes = DATE.getMonth();
+    //     }
+    //
+    //     ano = DATE.getFullYear();
+    //
+    //     let alert = this.alert.create({
+    //         title: 'Realizar Venda',
+    //         message: "Aqui você pode selecionar a quantidade desejada.",
+    //         inputs: [
+    //             {
+    //                 name: 'quantidade',
+    //                 placeholder: 'Quantidade'
+    //             }
+    //         ],
+    //         buttons: [
+    //             {
+    //                 text: 'Cancelar',
+    //                 role: 'cancel',
+    //                 handler: data => {
+    //                     console.log('Cancel clicked');
+    //                 }
+    //             },
+    //             {
+    //                 text: 'Confirmar',
+    //                 handler: data => {
+    //                     this.venda = {
+    //                         id: pecaFeira.id,
+    //                         nome: pecaFeira.modelo.nome,
+    //                         tamanho: pecaFeira.modelo.tamanho,
+    //                         preco: pecaFeira.preco,
+    //                         quantidade: data.quantidade,
+    //                         data: dia + '-' + mes + '-' + ano,
+    //                     };
+    //                     if (this.venda.quantidade > pecaFeira.quantidade)
+    //                         this.events.publish('erroQuantidade');
+    //                     else
+    //                         this.adicionarVenda(this.venda);
+    //                 }
+    //             }
+    //         ]
+    //     });
+    //     alert.present();
+    // }
 
     adicionarVenda(venda: VendaDTO) {
         this.vendaService.save(this.venda)

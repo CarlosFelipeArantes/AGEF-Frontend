@@ -43,7 +43,7 @@ export class MyApp {
 
             // Offline event
             this.events.subscribe('network:offline', () => {
-                this.alertNoIntenet();
+                this.alertNoInternet();
             });
 
             // Online event
@@ -54,7 +54,7 @@ export class MyApp {
         });
     }
 
-    alertNoIntenet() {
+    alertNoInternet() {
         let alert = this.alertCtrl.create({
             title: 'Internet',
             subTitle: 'Internet não disponível.',

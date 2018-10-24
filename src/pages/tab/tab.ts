@@ -20,6 +20,7 @@ export class TabPage {
 
     }
 
+    // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
         this.navCtrl.resize();
     }

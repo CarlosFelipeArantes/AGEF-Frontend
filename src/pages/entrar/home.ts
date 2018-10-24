@@ -13,10 +13,12 @@ export class HomePage {
 
     }
 
+    // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
         this.menu.swipeEnable(false);
     }
 
+    // noinspection JSUnusedGlobalSymbols
     ionViewDidLeave() {
         this.menu.swipeEnable(true);
     }

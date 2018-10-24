@@ -37,6 +37,7 @@ export class showPecasPage {
         });
     }
 
+    // noinspection JSUnusedGlobalSymbols
     ionViewDidEnter() {
         this.pecaFeiraService.findAll()
             .subscribe(response => {
@@ -49,7 +50,7 @@ export class showPecasPage {
 
     adicionar(pecaFeira: PecaFeiraDTO) {
         const DATE: Date = new Date();
-        var dia, mes, ano;
+        let dia, mes, ano;
 
         dia = DATE.getDate();
 

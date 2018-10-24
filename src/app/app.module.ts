@@ -11,6 +11,7 @@ import {vendaService} from '../services/domain/venda.service';
 import {defeitoService} from '../services/domain/defeito.service';
 import {Network} from '@ionic-native/network';
 import {NetworkInjector} from '../injectables/network';
+import {DialogoProvider} from "../injectables/dialogo";
 
 
 @NgModule({
@@ -26,6 +27,8 @@ import {NetworkInjector} from '../injectables/network';
     entryComponents: [
         MyApp
     ],
+
+    //TODO-Carlos renomear os providers de acordo com as boas práticas.
     providers: [
         StatusBar,
         SplashScreen,
@@ -35,7 +38,8 @@ import {NetworkInjector} from '../injectables/network';
         vendaService,
         defeitoService,
         Network,
-        NetworkInjector
+        NetworkInjector,
+        DialogoProvider
     ]
 })
 export class AppModule {
