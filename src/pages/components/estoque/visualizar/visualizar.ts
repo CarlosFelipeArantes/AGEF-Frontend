@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AlertController, Events, IonicPage, NavController, NavParams} from 'ionic-angular';
-import {pecaFeiraService} from '../../../../services/domain/pecaFeira.service';
+import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
 import {PecaFeiraDTO} from '../../../../models/pecaFeiraDTO';
 
 
@@ -18,7 +18,7 @@ export class EstoquePage {
         public navCtrl: NavController,
         public navParams: NavParams,
         private alertCtrl: AlertController,
-        public pecaFeiraService: pecaFeiraService,
+        public pecaFeiraService: PecaFeiraService,
         public events: Events
     ) {
 

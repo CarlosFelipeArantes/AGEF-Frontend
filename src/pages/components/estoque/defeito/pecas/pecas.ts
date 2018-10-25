@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AlertController, Events, IonicPage, NavController, NavParams} from 'ionic-angular';
-import {pecaFeiraService} from '../../../../../services/domain/pecaFeira.service';
+import {PecaFeiraService} from '../../../../../services/domain/peca-feira.service';
 import {PecaFeiraDTO} from '../../../../../models/pecaFeiraDTO';
 import {defeitoService} from '../../../../../services/domain/defeito.service';
 import {DefeitoDTO} from '../../../../../models/defeito.dto';
@@ -21,7 +21,7 @@ export class showPecasPage {
         public navCtrl: NavController,
         public navParams: NavParams,
         private alertCtrl: AlertController,
-        public pecaFeiraService: pecaFeiraService,
+        public pecaFeiraService: PecaFeiraService,
         public defeitoService: defeitoService,
         public events: Events
     ) {

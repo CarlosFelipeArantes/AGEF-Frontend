@@ -7,7 +7,7 @@ import {VendaService} from '../../../../services/domain/venda.service';
 
 @IonicPage()
 @Component({
-    selector: 'venda-home',
+    selector: 'page-venda-home',
     templateUrl: 'venda-home.html'
 })
 export class VendaHomePage {
@@ -38,7 +38,7 @@ export class VendaHomePage {
 
                 this.vendaService.delete(venda)
                     .subscribe(() => {
-                            this.loadData();
+                            this.loadVendas();
                             loader.dismiss();
                             this.dialogo.exibirToast("Venda apagada com sucesso.");
                         },
@@ -51,16 +51,40 @@ export class VendaHomePage {
     }
 
     insert() {
-        let profileModal = this.modalCtrl.create('VendaInsertPage');
-        profileModal.present();
+        let modalDadosVenda = this.modalCtrl.create('VendaInsertPage');
+
+        modalDadosVenda.present();
+
+        modalDadosVenda.onDidDismiss(venda => {
+            if (venda !== null) {
+                let loader = this.loader.exibirLoaderPadrao("Criando venda.");
+                loader.present();
+
+                this.vendaService.insert(venda)
+                    .subscribe(() => {
+                            this.loadVendas();
+                            loader.dismiss();
+                            this.dialogo.exibirToast("Venda realizada com sucesso.");
+                        },
+                        error => {
+                            // TODO tratar erros
+                            console.log(error);
+                        })
+
+            }
+        });
     }
 
     // noinspection JSUnusedGlobalSymbols
     ionViewDidEnter() {
-        this.loadData();
+        let loader = this.loader.exibirLoaderPadrao("Carregando as vendas.");
+        loader.present();
+
+        this.loadVendas();
+        loader.dismiss();
     }
 
-    loadData() {
+    loadVendas() {
         this.vendaService.findAll()
             .subscribe(response => {
                     this.vendas = response;
