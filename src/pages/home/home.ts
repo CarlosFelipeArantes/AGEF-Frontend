@@ -5,16 +5,9 @@ import {MenuController} from 'ionic-angular/components/app/menu-controller';
 @IonicPage()
 @Component({
     selector: 'page-home',
-    templateUrl: 'tab.html'
+    templateUrl: 'home.html'
 })
-export class TabPage {
-
-    tab0Root: any = 'PrincipalPage';
-    tab1Root: any = 'EstoquePage';
-    tab2Root: any = 'ModelosPage';
-    tab3Root: any = 'ModelosPage';
-    tab4Root: any = 'manageDefeitosPage';
-    myIndex: number = 2;
+export class HomePage {
 
     constructor(public navCtrl: NavController, public menu: MenuController) {
 
@@ -22,13 +15,18 @@ export class TabPage {
 
     // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
-        this.navCtrl.resize();
+        this.menu.swipeEnable(false);
+    }
+
+    // noinspection JSUnusedGlobalSymbols
+    ionViewDidLeave() {
+        this.menu.swipeEnable(true);
     }
 
 
     login() {
 
-        //this.navCtrl.push("PrincipalPage");
+        this.navCtrl.push("TabsPage");
 
     }
 }

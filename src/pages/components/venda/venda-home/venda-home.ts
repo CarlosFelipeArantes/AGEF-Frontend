@@ -1,16 +1,16 @@
-import {Events, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {Events, IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import {Component} from '@angular/core';
-import {VendaService} from '../../../../services/domain/venda.service';
-import {VendaDTO} from '../../../../models/venda.dto';
 import {DialogoProvider} from "../../../../injectables/dialogo";
 import {LoaderProvider} from "../../../../injectables/loader";
+import {VendaDTO} from '../../../../models/venda.dto';
+import {VendaService} from '../../../../services/domain/venda.service';
 
 @IonicPage()
 @Component({
-    selector: 'vendas-visualizar',
-    templateUrl: 'vendas.html',
+    selector: 'venda-home',
+    templateUrl: 'venda-home.html'
 })
-export class showVendasPage {
+export class VendaHomePage {
 
     vendas: VendaDTO[];
 
@@ -18,25 +18,10 @@ export class showVendasPage {
         public dialogo: DialogoProvider,
         public events: Events,
         public loader: LoaderProvider,
+        public modalCtrl: ModalController,
         public navCtrl: NavController,
         public navParams: NavParams,
         public vendaService: VendaService) {
-    }
-
-    // noinspection JSUnusedGlobalSymbols
-    ionViewDidEnter() {
-        this.loadData();
-    }
-
-    loadData() {
-        this.vendaService.findAll()
-            .subscribe(response => {
-                    this.vendas = response;
-                },
-                error => {
-                    // TODO tratar erros
-                    console.log(error);
-                });
     }
 
     delete(venda: VendaDTO) {
@@ -55,13 +40,34 @@ export class showVendasPage {
                     .subscribe(() => {
                             this.loadData();
                             loader.dismiss();
-                        this.dialogo.exibirToast("Venda apagada com sucesso.");
-                    },
-                    error => {
-                        // TODO tratar erros
-                        console.log(error);
-                    })
+                            this.dialogo.exibirToast("Venda apagada com sucesso.");
+                        },
+                        error => {
+                            // TODO tratar erros
+                            console.log(error);
+                        })
             }
         });
+    }
+
+    insert() {
+        let profileModal = this.modalCtrl.create('VendaInsertPage');
+        profileModal.present();
+    }
+
+    // noinspection JSUnusedGlobalSymbols
+    ionViewDidEnter() {
+        this.loadData();
+    }
+
+    loadData() {
+        this.vendaService.findAll()
+            .subscribe(response => {
+                    this.vendas = response;
+                },
+                error => {
+                    // TODO tratar erros
+                    console.log(error);
+                });
     }
 }
