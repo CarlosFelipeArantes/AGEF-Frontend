@@ -39,5 +39,4 @@ export class VendaService {
         this.headers.set('Content-Type', 'application/json');
         return this.http.put(`${API_CONFIG.baseUrl}/vendas/${venda.id}`, venda, {headers: this.headers});
     }
-
 }

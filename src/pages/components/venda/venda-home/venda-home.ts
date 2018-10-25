@@ -57,26 +57,6 @@ export class VendaHomePage {
 
         modalDadosVenda.onDidDismiss(venda => {
             if (venda !== null) {
-                let loader = this.loader.exibirLoaderPadrao("Criando venda.");
-                loader.present();
-
-                this.vendaService.insert(venda)
-                    .subscribe(() => {
-                            this.loadVendas();
-                            loader.dismiss();
-                            this.dialogo.exibirToast("Venda realizada com sucesso.");
-                        },
-                        error => {
-                            loader.dismiss();
-
-                            if (error.status === 400) {
-                                let mensagem = "A quantidade de peças vendidas deve ser menor ou igual a quantidade de peças no estoque";
-                                let titulo = "Erro";
-                                this.dialogo.exibirDialogoInformacao(mensagem, titulo);
-                            }
-
-                            console.log(error);
-                        })
 
             }
         });
