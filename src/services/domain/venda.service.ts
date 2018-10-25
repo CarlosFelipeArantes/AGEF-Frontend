@@ -1,41 +1,43 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { API_CONFIG } from "../../config/api.config";
-import { VendaDTO } from "../../models/venda.dto";
-import { Observable } from "rxjs/Observable";
-import { Injectable } from "@angular/core";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {API_CONFIG} from "../../config/api.config";
+import {VendaDTO} from "../../models/venda.dto";
+import {Observable} from "rxjs/Observable";
+import {Injectable} from "@angular/core";
 
 @Injectable()
-export class vendaService{
+export class VendaService {
 
-    public headers : HttpHeaders;
+    public headers: HttpHeaders;
 
-    constructor ( public http: HttpClient ){
-    } 
+    constructor(public http: HttpClient) {
+    }
 
-    findAll() : Observable<VendaDTO[]> {
+    findAll(): Observable<VendaDTO[]> {
         return this.http.get<VendaDTO[]>(`${API_CONFIG.baseUrl}/vendas/`);
     }
-    save(venda:VendaDTO){
+
+    insert(venda: VendaDTO) {
         this.headers = new HttpHeaders();
         this.headers.set('Content-Type', 'application/json');
-        return this.http.post(`${API_CONFIG.baseUrl}/vendas/`, venda,{headers:this.headers});
-    }
-    remove(venda:VendaDTO){
-        return this.http.delete(`${API_CONFIG.baseUrl}/vendas/${venda.id}`,{});
+        return this.http.post(`${API_CONFIG.baseUrl}/vendas/`, venda, {headers: this.headers});
     }
 
-    get(venda:string){
-        return this.http.get<VendaDTO>(`${API_CONFIG.baseUrl}/vendas/${venda}`,{});
+    delete(venda: VendaDTO) {
+        return this.http.delete(`${API_CONFIG.baseUrl}/vendas/${venda.id}`, {});
     }
 
-    getFaturamento(inicio,fim){
-        return this.http.get<VendaDTO>(`${API_CONFIG.baseUrl}/vendas/faturamento/?dataFinal=${fim}&dataInicial=${inicio}`,{});
+    findOne(venda: string) {
+        return this.http.get<VendaDTO>(`${API_CONFIG.baseUrl}/vendas/${venda}`, {});
     }
 
-    update(venda:VendaDTO){
+    findByDateBetween(inicio, fim) {
+        return this.http.get<VendaDTO>(`${API_CONFIG.baseUrl}/vendas/faturamento/?dataInicial=${inicio}&dataFinal=${fim}`, {});
+    }
+
+    update(venda: VendaDTO) {
         this.headers = new HttpHeaders();
         this.headers.set('Content-Type', 'application/json');
-        return this.http.put(`${API_CONFIG.baseUrl}/vendas/${venda.id}`, venda,{headers:this.headers});
+        return this.http.put(`${API_CONFIG.baseUrl}/vendas/${venda.id}`, venda, {headers: this.headers});
     }
 
 }
