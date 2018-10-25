@@ -5,7 +5,7 @@ import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
 
 @Injectable()
-export class vendaService {
+export class VendaService {
 
     public headers: HttpHeaders;
 
@@ -16,22 +16,22 @@ export class vendaService {
         return this.http.get<VendaDTO[]>(`${API_CONFIG.baseUrl}/vendas/`);
     }
 
-    save(venda: VendaDTO) {
+    insert(venda: VendaDTO) {
         this.headers = new HttpHeaders();
         this.headers.set('Content-Type', 'application/json');
         return this.http.post(`${API_CONFIG.baseUrl}/vendas/`, venda, {headers: this.headers});
     }
 
-    remove(venda: VendaDTO) {
+    delete(venda: VendaDTO) {
         return this.http.delete(`${API_CONFIG.baseUrl}/vendas/${venda.id}`, {});
     }
 
-    get(venda: string) {
+    findOne(venda: string) {
         return this.http.get<VendaDTO>(`${API_CONFIG.baseUrl}/vendas/${venda}`, {});
     }
 
-    getFaturamento(inicio, fim) {
-        return this.http.get<VendaDTO>(`${API_CONFIG.baseUrl}/vendas/faturamento/?dataFinal=${fim}&dataInicial=${inicio}`, {});
+    findByDateBetween(inicio, fim) {
+        return this.http.get<VendaDTO>(`${API_CONFIG.baseUrl}/vendas/faturamento/?dataInicial=${inicio}&dataFinal=${fim}`, {});
     }
 
     update(venda: VendaDTO) {

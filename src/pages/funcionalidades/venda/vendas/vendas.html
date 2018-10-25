@@ -28,7 +28,7 @@
             </ion-item>
 
             <ion-item-options side="right">
-                <button ion-button color="danger" (click)="remove(venda)">
+                <button ion-button color="danger" (click)="delete(venda)">
                     <ion-icon name="trash"></ion-icon>
                     Apagar
                 </button>
@@ -37,7 +37,7 @@
     </ion-list>
 
     <ion-fab bottom right>
-        <button ion-fab mini>
+        <button ion-fab mini (click)="insert()">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>

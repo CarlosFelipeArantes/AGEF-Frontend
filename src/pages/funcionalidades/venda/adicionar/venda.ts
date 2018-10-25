@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AlertController, Events, IonicPage, NavController, NavParams} from 'ionic-angular';
-import {vendaService} from '../../../../services/domain/venda.service';
+import {VendaService} from '../../../../services/domain/venda.service';
 import {pecaFeiraService} from '../../../../services/domain/pecaFeira.service';
 import {PecaFeiraDTO} from '../../../../models/pecaFeiraDTO';
 import {VendaDTO} from '../../../../models/venda.dto';
@@ -20,7 +20,7 @@ export class vendaPage {
         public navCtrl: NavController,
         public navParams: NavParams,
         public pecaFeiraService: pecaFeiraService,
-        public vendaService: vendaService,
+        public vendaService: VendaService,
         private alertCtrl: AlertController,
         public events: Events
     ) {
@@ -119,15 +119,15 @@ export class vendaPage {
     //     alert.present();
     // }
 
-    adicionarVenda(venda: VendaDTO) {
-        this.vendaService.save(this.venda)
-            .subscribe(response => {
-                    this.events.publish('sucessoVenda');
-                },
-                error => {
-                    console.log(error);
-                }
-            );
-    }
+    // adicionarVenda(venda: VendaDTO) {
+    //     this.vendaService.insert(this.venda)
+    //         .subscribe(response => {
+    //                 this.events.publish('sucessoVenda');
+    //             },
+    //             error => {
+    //                 console.log(error);
+    //             }
+    //         );
+    // }
 
 }

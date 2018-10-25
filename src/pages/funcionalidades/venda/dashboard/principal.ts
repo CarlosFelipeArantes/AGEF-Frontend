@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {AlertController, IonicPage, NavController} from 'ionic-angular';
 import {MenuController} from 'ionic-angular/components/app/menu-controller';
 import {Network} from '@ionic-native/network';
-import {vendaService} from '../../../../services/domain/venda.service';
+import {VendaService} from '../../../../services/domain/venda.service';
 
 
 @IonicPage()
@@ -17,7 +17,7 @@ export class PrincipalPage {
         public menu: MenuController,
         private network: Network,
         private alertCtrl: AlertController,
-        private vendaService: vendaService
+        private vendaService: VendaService
     ) {
 
     }
@@ -66,7 +66,7 @@ export class PrincipalPage {
                 {
                     text: 'Cancelar',
                     role: 'cancel',
-                    handler: data => {
+                    handler: () => {
                         console.log('Cancel clicked');
                     }
                 },
@@ -75,7 +75,7 @@ export class PrincipalPage {
                     handler: data => {
                         const inicio: String = data.inicio;
                         const fim: String = data.fim;
-                        this.vendaService.getFaturamento(inicio, fim)
+                        this.vendaService.findByDateBetween(inicio, fim)
                             .subscribe(response => {
                                     let alert = this.alertCtrl.create({
                                         title: 'Faturamento',

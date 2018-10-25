@@ -7,9 +7,9 @@ export class DialogoProvider {
     private alertCtrl: any;
     private toastCtrl: any;
 
-    constructor(alert: AlertController, toast: ToastController) {
-        this.alertCtrl = alert;
-        this.toastCtrl = toast;
+    constructor(alertCtrl: AlertController, toastCtrl: ToastController) {
+        this.alertCtrl = alertCtrl;
+        this.toastCtrl = toastCtrl;
     }
 
     exibirToast(mensagem: string) {
