@@ -55,9 +55,9 @@ export class VendaHomePage {
 
         modalDadosVenda.present();
 
-        modalDadosVenda.onDidDismiss(venda => {
-            if (venda !== null) {
-
+        modalDadosVenda.onDidDismiss(vendido => {
+            if (vendido) {
+                this.loadVendas();
             }
         });
     }
