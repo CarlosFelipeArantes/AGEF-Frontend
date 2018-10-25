@@ -49,4 +49,19 @@ export class DialogoProvider {
 
         return alert;
     }
+
+    exibirDialogoInformacao(mensagem: string, titulo: string) {
+        let alert = this.alertCtrl.create({
+            title: titulo,
+            message: mensagem,
+            buttons: [
+                {
+                    text: 'OK',
+                    role: 'cancel'
+                }
+            ]
+        });
+
+        alert.present();
+    }
 }

@@ -67,7 +67,14 @@ export class VendaHomePage {
                             this.dialogo.exibirToast("Venda realizada com sucesso.");
                         },
                         error => {
-                            // TODO tratar erros
+                            loader.dismiss();
+
+                            if (error.status === 400) {
+                                let mensagem = "A quantidade de peças vendidas deve ser menor ou igual a quantidade de peças no estoque";
+                                let titulo = "Erro";
+                                this.dialogo.exibirDialogoInformacao(mensagem, titulo);
+                            }
+
                             console.log(error);
                         })
 
