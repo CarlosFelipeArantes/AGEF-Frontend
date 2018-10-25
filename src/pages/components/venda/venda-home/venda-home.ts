@@ -24,6 +24,11 @@ export class VendaHomePage {
         public vendaService: VendaService) {
     }
 
+    // noinspection JSUnusedGlobalSymbols
+    ionViewDidLoad() {
+        this.loadVendas();
+    }
+
     delete(venda: VendaDTO) {
         let mensagem = 'Você realmente quer apagar esse registro de venda?';
         let titulo = 'Confirmar Remoção';
@@ -33,7 +38,7 @@ export class VendaHomePage {
 
         alert.onDidDismiss((confirmado) => {
             if (confirmado) {
-                let loader = this.loader.exibirLoaderPadrao("Trabalhando para apagar a venda.");
+                let loader = this.loader.exibirLoaderPadrao("Apagando a venda.");
                 loader.present();
 
                 this.vendaService.delete(venda)
@@ -62,22 +67,18 @@ export class VendaHomePage {
         });
     }
 
-    // noinspection JSUnusedGlobalSymbols
-    ionViewDidEnter() {
+    loadVendas() {
         let loader = this.loader.exibirLoaderPadrao("Carregando as vendas.");
         loader.present();
 
-        this.loadVendas();
-        loader.dismiss();
-    }
-
-    loadVendas() {
         this.vendaService.findAll()
             .subscribe(response => {
                     this.vendas = response;
+                    loader.dismiss();
                 },
                 error => {
                     // TODO tratar erros
+                    loader.dismiss();
                     console.log(error);
                 });
     }
