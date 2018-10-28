@@ -58,6 +58,24 @@
             </div>
         </div>
     </form>
+
+    <ion-grid text-center margin-top>
+        <ion-row>
+            <ion-col>
+                <button (click)="decrement()" [large]="true" color="danger" ion-button icon-only>
+                    <ion-icon name="remove"></ion-icon>
+                </button>
+            </ion-col>
+
+            <ion-col>
+                <button (click)="increment()" [large]="true" color="secondary" ion-button icon-only>
+                    <ion-icon name="add"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
 </ion-content>
 
 <ion-footer>

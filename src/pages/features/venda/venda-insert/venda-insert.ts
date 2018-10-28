@@ -43,8 +43,18 @@ export class VendaInsertPage {
         this.loadPecas();
     }
 
-    // noinspection JSUnusedGlobalSymbols
-    ionViewDidLoad() {
+    decrement() {
+        let qtdAtual = this.formGroup.controls.quantidade.value;
+
+        if (qtdAtual > 1) {
+            this.formGroup.controls.quantidade.setValue(--qtdAtual);
+        }
+    }
+
+    increment() {
+        let qtdAtual = this.formGroup.controls.quantidade.value;
+
+        this.formGroup.controls.quantidade.setValue(++qtdAtual);
     }
 
     insert() {
