@@ -3,7 +3,6 @@ import {AlertController, Events, IonicPage, NavController, NavParams} from 'ioni
 import {defeitoService} from '../../../../services/domain/defeito.service';
 import {DefeitoDTO} from '../../../../models/defeito.dto';
 
-
 @IonicPage()
 @Component({
     selector: 'page-defeitos',

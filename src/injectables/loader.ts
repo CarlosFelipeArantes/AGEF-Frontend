@@ -5,7 +5,7 @@ import {Injectable} from "@angular/core";
 export class LoaderProvider {
 
     constructor(
-        private loadingCtrl: LoadingController) {
+        public loadingCtrl: LoadingController) {
     }
 
     exibirLoaderPadrao(mensagem: string) {

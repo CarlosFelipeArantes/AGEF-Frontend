@@ -3,7 +3,6 @@ import {AlertController, Events, IonicPage, NavController, NavParams} from 'ioni
 import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
 import {PecaFeiraDTO} from '../../../../models/pecaFeiraDTO';
 
-
 @IonicPage()
 @Component({
     selector: 'page-visualizar',

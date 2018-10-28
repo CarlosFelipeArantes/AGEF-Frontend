@@ -38,8 +38,13 @@ export class VendaInsertPage {
         })
     }
 
-    ionViewDidLoad() {
+    // noinspection JSUnusedGlobalSymbols
+    ionViewWillEnter() {
         this.loadPecas();
+    }
+
+    // noinspection JSUnusedGlobalSymbols
+    ionViewDidLoad() {
     }
 
     insert() {

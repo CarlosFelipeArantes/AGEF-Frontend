@@ -1,0 +1,72 @@
+<ion-content>
+    <ion-list>
+        <div *ngFor="let dataVenda of vendasGroupByDate">
+            <ion-list-header>
+                <div *ngIf="dataVenda.length === 1; else plural">
+                    {{dataVenda[0].data}} — {{dataVenda.length}} Venda
+                </div>
+
+                <ng-template #plural>
+                    {{dataVenda[0].data}} — {{dataVenda.length}} Vendas
+                </ng-template>
+
+            </ion-list-header>
+
+            <ion-item-sliding (click)="expandItem(dataVenda, venda)" *ngFor="let venda of dataVenda.reverse()">
+                <ion-item>
+                    <ion-grid text-center>
+                        <ion-row>
+                            <ion-col>
+                                <p ion-text color="primary">Peça:</p>
+                                <h3>{{venda.pecaFeira.modelo.nome}} - {{venda.pecaFeira.modelo.tamanho}}</h3>
+                            </ion-col>
+
+                            <ion-col>
+                                <p ion-text color="primary">Valor Total:</p>
+                                <h3>R${{venda.preco * venda.quantidade}}</h3>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row>
+                            <ion-col>
+                                <expandable [expandHeight]="itemExpandHeight" [expanded]="venda.expanded">
+                                    <ion-grid>
+                                        <ion-row>
+                                            <ion-col>
+                                                <p ion-text color="primary">Quantidade:</p>
+                                                <h3>{{venda.quantidade}}</h3>
+                                            </ion-col>
+
+                                            <ion-col>
+                                                <p ion-text color="primary">Valor Unitário:</p>
+                                                <h3>R${{venda.preco}}</h3>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-grid>
+                                </expandable>
+                            </ion-col>
+                        </ion-row>
+
+                    </ion-grid>
+
+                </ion-item>
+
+                <ion-item-options side="right">
+                    <button ion-button color="danger" (click)="delete(venda)">
+                        <ion-icon name="trash"></ion-icon>
+                        Apagar
+                    </button>
+                </ion-item-options>
+
+            </ion-item-sliding>
+        </div>
+    </ion-list>
+
+    <ion-fab bottom right>
+        <button ion-fab mini (click)="insert()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+</ion-content>
+
+

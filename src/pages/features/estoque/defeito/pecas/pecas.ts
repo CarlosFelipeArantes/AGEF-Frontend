@@ -5,7 +5,6 @@ import {PecaFeiraDTO} from '../../../../../models/pecaFeiraDTO';
 import {defeitoService} from '../../../../../services/domain/defeito.service';
 import {DefeitoDTO} from '../../../../../models/defeito.dto';
 
-
 @IonicPage()
 @Component({
     selector: 'page-visualizar',

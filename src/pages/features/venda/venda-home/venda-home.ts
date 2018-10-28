@@ -4,6 +4,7 @@ import {DialogoProvider} from "../../../../injectables/dialogo";
 import {LoaderProvider} from "../../../../injectables/loader";
 import {VendaDTO} from '../../../../models/venda.dto';
 import {VendaService} from '../../../../services/domain/venda.service';
+import * as _ from "underscore";
 
 @IonicPage()
 @Component({
@@ -12,12 +13,14 @@ import {VendaService} from '../../../../services/domain/venda.service';
 })
 export class VendaHomePage {
 
+    itemExpandHeight: number = 35;
     vendas: VendaDTO[];
+    vendasGroupByDate: any;
 
     constructor(
         public dialogo: DialogoProvider,
         public events: Events,
-        public loader: LoaderProvider,
+        public loaderProvider: LoaderProvider,
         public modalCtrl: ModalController,
         public navCtrl: NavController,
         public navParams: NavParams,
@@ -25,8 +28,14 @@ export class VendaHomePage {
     }
 
     // noinspection JSUnusedGlobalSymbols
-    ionViewDidLoad() {
+    ionViewWillEnter() {
+        // TODO criar uma forma de apresentar o loader. A UX não fica legal com loader a todo momento.
+        let loader = this.loaderProvider.exibirLoaderPadrao("Carregando as vendas.");
+        loader.present();
+
         this.loadVendas();
+
+        loader.dismiss();
     }
 
     delete(venda: VendaDTO) {
@@ -38,7 +47,7 @@ export class VendaHomePage {
 
         alert.onDidDismiss((confirmado) => {
             if (confirmado) {
-                let loader = this.loader.exibirLoaderPadrao("Apagando a venda.");
+                let loader = this.loaderProvider.exibirLoaderPadrao("Apagando a venda.");
                 loader.present();
 
                 this.vendaService.delete(venda)
@@ -55,6 +64,23 @@ export class VendaHomePage {
         });
     }
 
+    expandItem(dataVendaArg, vendaArg) {
+        this.vendasGroupByDate.map((dataVenda) => {
+            if (dataVendaArg === dataVenda) {
+                dataVenda.map((venda) => {
+                    if (vendaArg == venda) {
+                        venda.expanded = !venda.expanded;
+                    } else {
+                        venda.expanded = false;
+                    }
+
+                    return venda
+                });
+            }
+            return dataVenda;
+        });
+    }
+
     insert() {
         let modalDadosVenda = this.modalCtrl.create('VendaInsertPage');
 
@@ -68,18 +94,27 @@ export class VendaHomePage {
     }
 
     loadVendas() {
-        let loader = this.loader.exibirLoaderPadrao("Carregando as vendas.");
-        loader.present();
-
         this.vendaService.findAll()
             .subscribe(response => {
                     this.vendas = response;
-                    loader.dismiss();
+                    this.vendasGroupByDate = this.splitVendaByDate(this.vendas);
                 },
                 error => {
                     // TODO tratar erros
-                    loader.dismiss();
                     console.log(error);
                 });
     }
+
+    splitVendaByDate(vendas) {
+        return _.chain(vendas)
+            .groupBy(function (obj) {
+                return obj.data;
+            })
+            .sortBy(function (v, k) {
+                return v;
+            })
+            .reverse()
+            .value();
+    }
+
 }
