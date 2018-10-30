@@ -8,15 +8,15 @@ import {
     NavParams,
     ToastController
 } from 'ionic-angular';
-import {ModeloService} from '../../../services/domain/modelo.service';
-import {ModeloDTO} from '../../../models/modelo.dto';
+import {ModeloService} from '../../../../services/domain/modelo.service';
+import {ModeloDTO} from '../../../../models/modelo.dto';
 
 @IonicPage()
 @Component({
     selector: 'page-modelos',
-    templateUrl: 'index.html',
+    templateUrl: 'modelo-home.html',
 })
-export class ModelosPage {
+export class ModeloHomePage {
 
     items: ModeloDTO[];
     modelo: ModeloDTO;
@@ -69,7 +69,7 @@ export class ModelosPage {
                 });
     }
 
-    remove(modelo: ModeloDTO) {
+    delete(modelo: ModeloDTO) {
         this.modeloService.remove(modelo)
             .subscribe(response => {
                     this.events.publish('updateScreen');
@@ -94,7 +94,7 @@ export class ModelosPage {
         alert.present();
     }
 
-    editarPrompt(modelo: ModeloDTO) {
+    edit(modelo: ModeloDTO) {
         let alert = this.alertCtrl.create({
             title: 'Editar:',
             message: "Aqui você pode editar o seu modelo",

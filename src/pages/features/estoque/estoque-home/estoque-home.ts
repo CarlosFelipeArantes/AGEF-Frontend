@@ -6,9 +6,9 @@ import {PecaFeiraDTO} from '../../../../models/pecaFeiraDTO';
 @IonicPage()
 @Component({
     selector: 'page-visualizar',
-    templateUrl: 'visualizar.html',
+    templateUrl: 'estoque-home.html',
 })
-export class EstoquePage {
+export class EstoqueHomePage {
 
     items: PecaFeiraDTO[];
     pecaFeira: PecaFeiraDTO;
