@@ -12,8 +12,7 @@
     <form [formGroup]="formGroup" (ngSubmit)="insert()">
         <ion-item>
             <ion-label color="primary" stacked>Peça</ion-label>
-            <ion-select (ionChange)="onSelectChangeUpdatePreco($event)" formControlName="peca"
-                        placeholder="Peça vendida">
+            <ion-select (ionChange)="onSelectChangeUpdatePreco($event)" formControlName="peca">
                 <ion-option *ngFor="let peca of pecas" [value]="peca">{{peca.modelo.nome}} - {{peca.modelo.tamanho}}
                 </ion-option>
             </ion-select>
@@ -22,7 +21,7 @@
         <!--TODO validar preço (i.e.: trocar vírgula por ponto, etc)-->
         <ion-item>
             <ion-label color="primary" stacked>Preço Unitário</ion-label>
-            <ion-input formControlName="preco" type="number" placeholder="Valor unitário da peça"></ion-input>
+            <ion-input formControlName="preco" type="number"></ion-input>
         </ion-item>
 
         <div *ngIf="formGroup.controls.preco.invalid && (formGroup.controls.preco.dirty || formGroup.controls.preco.touched)"
