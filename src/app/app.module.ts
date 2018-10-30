@@ -12,7 +12,7 @@ import {defeitoService} from '../services/domain/defeito.service';
 import {Network} from '@ionic-native/network';
 import {NetworkInjector} from '../injectables/network';
 import {DialogoProvider} from "../injectables/dialogo";
-import {LoaderProvider} from "../injectables/loader";
+import {LoadingProvider} from "../injectables/loading";
 import {DatePipe} from "@angular/common";
 
 @NgModule({
@@ -42,7 +42,7 @@ import {DatePipe} from "@angular/common";
         Network,
         NetworkInjector,
         DialogoProvider,
-        LoaderProvider
+        LoadingProvider
     ]
 })
 export class AppModule {

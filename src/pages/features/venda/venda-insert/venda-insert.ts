@@ -2,7 +2,7 @@ import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular
 import {Component} from '@angular/core';
 import {DialogoProvider} from "../../../../injectables/dialogo";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {LoaderProvider} from "../../../../injectables/loader";
+import {LoadingProvider} from "../../../../injectables/loading";
 import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
 import {PecaFeiraDTO} from "../../../../models/pecaFeiraDTO";
 import {DatePipe} from "@angular/common";
@@ -23,7 +23,7 @@ export class VendaInsertPage {
         public datePipe: DatePipe,
         public dialogo: DialogoProvider,
         public formBuilder: FormBuilder,
-        public loaderProvider: LoaderProvider,
+        public loaderProvider: LoadingProvider,
         public navCtrl: NavController,
         public navParams: NavParams,
         public pecaFeiraService: PecaFeiraService,
@@ -69,7 +69,7 @@ export class VendaInsertPage {
             quantidade: quantidade
         };
 
-        let loader = this.loaderProvider.exibirLoaderPadrao("Registrando a venda");
+        let loader = this.loaderProvider.exibirLoadingPadrao("Registrando a venda");
         loader.present();
 
         this.vendaService.insert(venda)

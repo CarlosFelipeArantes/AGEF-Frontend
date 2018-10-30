@@ -1,6 +1,6 @@
 <ion-content>
     <ion-list>
-        <div *ngFor="let dataVenda of vendasGroupByDate">
+        <div *ngFor="let dataVenda of vendasGroupByDate; let lastItem = last;">
             <ion-list-header>
                 <div *ngIf="dataVenda.length === 1; else plural">
                     {{dataVenda[0].data}} — {{dataVenda.length}} Venda
@@ -12,8 +12,8 @@
 
             </ion-list-header>
 
-            <ion-item-sliding (click)="expandItem(dataVenda, venda)" *ngFor="let venda of dataVenda.reverse()">
-                <ion-item>
+            <ion-item-sliding *ngFor="let venda of dataVenda.reverse()">
+                <ion-item (click)="expandItem(venda)">
                     <ion-grid text-center>
                         <ion-row>
                             <ion-col>
@@ -59,11 +59,16 @@
                 </ion-item-options>
 
             </ion-item-sliding>
+
+            <div *ngIf="lastItem">
+                {{presentLoading(false)}}
+            </div>
+
         </div>
     </ion-list>
 
     <ion-fab bottom right>
-        <button ion-fab mini (click)="insert()">
+        <button ion-fab (click)="insert()">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>

@@ -1,7 +1,7 @@
-import {Events, IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
+import {Events, IonicPage, Loading, ModalController, NavController, NavParams} from 'ionic-angular';
 import {Component} from '@angular/core';
 import {DialogoProvider} from "../../../../injectables/dialogo";
-import {LoaderProvider} from "../../../../injectables/loader";
+import {LoadingProvider} from "../../../../injectables/loading";
 import {VendaDTO} from '../../../../models/venda.dto';
 import {VendaService} from '../../../../services/domain/venda.service';
 import * as _ from "underscore";
@@ -13,6 +13,8 @@ import * as _ from "underscore";
 })
 export class VendaHomePage {
 
+    loading: Loading;
+    isLoadingDismissed: boolean = true;
     itemExpandHeight: number = 35;
     vendas: VendaDTO[];
     vendasGroupByDate: any;
@@ -20,7 +22,7 @@ export class VendaHomePage {
     constructor(
         public dialogo: DialogoProvider,
         public events: Events,
-        public loaderProvider: LoaderProvider,
+        public loaderProvider: LoadingProvider,
         public modalCtrl: ModalController,
         public navCtrl: NavController,
         public navParams: NavParams,
@@ -29,31 +31,32 @@ export class VendaHomePage {
 
     // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
-        // TODO criar uma forma de apresentar o loader. A UX não fica legal com loader a todo momento.
-        let loader = this.loaderProvider.exibirLoaderPadrao("Carregando as vendas.");
-        loader.present();
-
         this.loadVendas();
+    }
 
-        loader.dismiss();
+    // noinspection JSUnusedGlobalSymbols
+    ionViewDidLoad() {
+        // Dismiss é feito no *ngFor.
+        this.loading = this.loaderProvider.exibirLoadingPadrao("Carregando as vendas.");
+        this.presentLoading(true);
     }
 
     delete(venda: VendaDTO) {
-        let mensagem = 'Você realmente quer apagar esse registro de venda?';
-        let titulo = 'Confirmar Remoção';
+        let mensagem: string = 'Você realmente quer apagar esse registro de venda?';
+        let titulo: string = 'Confirmar Remoção';
         let alert = this.dialogo.exibirDialogoConfirmacao(mensagem, titulo);
 
         alert.present();
 
         alert.onDidDismiss((confirmado) => {
             if (confirmado) {
-                let loader = this.loaderProvider.exibirLoaderPadrao("Apagando a venda.");
-                loader.present();
+                this.loading = this.loaderProvider.exibirLoadingPadrao("Apagando a venda.");
+                this.presentLoading(true);
 
                 this.vendaService.delete(venda)
                     .subscribe(() => {
                             this.loadVendas();
-                            loader.dismiss();
+                            this.presentLoading(false);
                             this.dialogo.exibirToast("Venda apagada com sucesso.");
                         },
                         error => {
@@ -64,20 +67,15 @@ export class VendaHomePage {
         });
     }
 
-    expandItem(dataVendaArg, vendaArg) {
+    expandItem(vendaArg) {
         this.vendasGroupByDate.map((dataVenda) => {
-            if (dataVendaArg === dataVenda) {
-                dataVenda.map((venda) => {
-                    if (vendaArg == venda) {
-                        venda.expanded = !venda.expanded;
-                    } else {
-                        venda.expanded = false;
-                    }
-
-                    return venda
-                });
-            }
-            return dataVenda;
+            dataVenda.map((venda) => {
+                if (vendaArg == venda) {
+                    venda.expanded = !venda.expanded;
+                } else {
+                    venda.expanded = false;
+                }
+            });
         });
     }
 
@@ -97,7 +95,7 @@ export class VendaHomePage {
         this.vendaService.findAll()
             .subscribe(response => {
                     this.vendas = response;
-                    this.vendasGroupByDate = this.splitVendaByDate(this.vendas);
+                    this.vendasGroupByDate = VendaHomePage.splitVendaByDate(this.vendas);
                 },
                 error => {
                     // TODO tratar erros
@@ -105,16 +103,26 @@ export class VendaHomePage {
                 });
     }
 
-    splitVendaByDate(vendas) {
+    presentLoading(shouldPresent: boolean) {
+        if (shouldPresent && this.isLoadingDismissed) {
+            this.loading.present();
+            this.isLoadingDismissed = false;
+
+        } else if (!shouldPresent && !this.isLoadingDismissed) {
+            this.loading.dismiss();
+            this.isLoadingDismissed = true;
+        }
+    }
+
+    private static splitVendaByDate(vendas) {
         return _.chain(vendas)
             .groupBy(function (obj) {
                 return obj.data;
             })
-            .sortBy(function (v, k) {
+            .sortBy(function (v) {
                 return v;
             })
             .reverse()
             .value();
     }
-
 }
