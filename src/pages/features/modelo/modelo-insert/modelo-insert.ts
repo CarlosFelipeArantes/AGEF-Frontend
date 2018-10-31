@@ -11,7 +11,7 @@ import {VendaService} from "../../../../services/domain/venda.service";
 @IonicPage()
 @Component({
     selector: 'page-venda-insert',
-    templateUrl: 'venda-insert.html',
+    templateUrl: 'modelo-insert.html',
 })
 export class ModeloInsertPage {
 
