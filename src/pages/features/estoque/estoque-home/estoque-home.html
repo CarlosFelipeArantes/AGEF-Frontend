@@ -1,0 +1,41 @@
+<ion-content>
+    <ion-list>
+        <div *ngFor="let item of items">
+            <ion-item-sliding>
+                <ion-item>
+                    <ion-grid text-center>
+                        <ion-row>
+                            <ion-col>
+                                <p ion-text color="primary">Peça:</p>
+                                <h3>{{item.modelo.nome}} - {{item.modelo.tamanho}}</h3>
+                            </ion-col>
+                            <ion-col>            
+                                <p ion-text color="primary">Quantidade:</p>
+                                <h3>{{item.quantidade}}</h3>
+                            </ion-col>
+                            <ion-col>
+                                <p ion-text color="primary">Preço:</p>
+                                <h3>{{item.preco}}</h3>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item-options side="right">
+                        <button ion-button color="danger" (click)="delete(item)">
+                            <ion-icon name="trash"></ion-icon>
+                            Apagar
+                        </button>
+                        <button ion-button color="primary" (click)="edit(item)">
+                                <ion-icon name="brush"></ion-icon>
+                                Editar
+                            </button>
+                </ion-item-options>
+            </ion-item-sliding>
+        </div>
+    </ion-list>
+    <ion-fab bottom right>
+            <button ion-fab (click)="insert()">
+                <ion-icon name="add"></ion-icon>
+            </button>
+    </ion-fab>
+</ion-content>
