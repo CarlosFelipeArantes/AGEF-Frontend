@@ -6,7 +6,7 @@ import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
 
 @Injectable()
-export class defeitoService {
+export class DefeitoService {
 
     public headers: HttpHeaders;
 
@@ -23,7 +23,7 @@ export class defeitoService {
         return this.http.post(`${API_CONFIG.baseUrl}/defeitos/`, defeito, {headers: this.headers});
     }
 
-    remove(defeito: DefeitoDTO) {
+    delete(defeito: DefeitoDTO) {
         return this.http.delete(`${API_CONFIG.baseUrl}/defeitos/${defeito.id}`, {});
     }
 

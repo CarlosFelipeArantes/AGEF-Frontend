@@ -8,7 +8,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {ModeloService} from '../services/domain/modelo.service';
 import {PecaFeiraService} from '../services/domain/peca-feira.service';
 import {VendaService} from '../services/domain/venda.service';
-import {defeitoService} from '../services/domain/defeito.service';
+import {DefeitoService} from '../services/domain/defeito.service';
 import {Network} from '@ionic-native/network';
 import {NetworkInjector} from '../injectables/network';
 import {DialogoProvider} from "../injectables/dialogo";
@@ -38,7 +38,7 @@ import {DatePipe} from "@angular/common";
         ModeloService,
         PecaFeiraService,
         VendaService,
-        defeitoService,
+        DefeitoService,
         Network,
         NetworkInjector,
         DialogoProvider,
