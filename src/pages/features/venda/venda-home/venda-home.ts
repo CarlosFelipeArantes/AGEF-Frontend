@@ -4,7 +4,6 @@ import {DialogoProvider} from "../../../../injectables/dialogo";
 import {LoadingProvider} from "../../../../injectables/loading";
 import {VendaDTO} from '../../../../models/venda.dto';
 import {VendaService} from '../../../../services/domain/venda.service';
-import * as _ from "underscore";
 
 @IonicPage()
 @Component({
@@ -114,15 +113,11 @@ export class VendaHomePage {
         }
     }
 
-    private static splitVendaByDate(vendas) {
-        return _.chain(vendas)
-            .groupBy(function (obj) {
-                return obj.data;
-            })
-            .sortBy(function (v) {
-                return v;
-            })
-            .reverse()
-            .value();
+    private static splitVendaByDate(vendas: VendaDTO[]): any[][] {
+        let vendasByDate = vendas
+            .reduce((r, v, i, a, k = v.data) => ((r[k] || (r[k] = []))
+                .push(v), r), {});
+
+        return Object.values(vendasByDate);
     }
 }

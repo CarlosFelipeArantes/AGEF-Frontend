@@ -12,7 +12,7 @@ export class VendaService {
     constructor(public http: HttpClient) {
     }
 
-    findAll(): Observable<VendaDTO[]> {
+    findAll(): Observable<any> {
         return this.http.get<VendaDTO[]>(`${API_CONFIG.baseUrl}/vendas/`);
     }
 
