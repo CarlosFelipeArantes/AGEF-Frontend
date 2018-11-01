@@ -1,58 +1,65 @@
 <ion-content>
     <ion-list>
-        <div *ngFor="let dataVenda of vendasGroupByDate; let lastItem = last;">
+        <div *ngFor="let vendaByDate of vendasGroupByDateAndByPeca; let lastItem = last;">
             <ion-list-header>
-                <div *ngIf="dataVenda.length === 1; else plural">
-                    {{dataVenda[0].data}} — {{dataVenda.length}} Venda
+                <div *ngIf="getQtdTotalVendasByDate(vendaByDate) === 1; else plural">
+                    {{vendaByDate[0][0].data}} — {{getQtdTotalVendasByDate(vendaByDate)}} Venda
                 </div>
 
                 <ng-template #plural>
-                    {{dataVenda[0].data}} — {{dataVenda.length}} Vendas
+                    {{vendaByDate[0][0].data}} — {{getQtdTotalVendasByDate(vendaByDate)}} Vendas
                 </ng-template>
+
+                <button ion-button (click)="insert()" clear icon-only item-end>
+                    <ion-icon name="cart"></ion-icon>
+                </button>
+
+                <button ion-button (click)="buttonClick()" clear icon-only item-end margin>
+                    <ion-icon name="shirt"></ion-icon>
+                </button>
 
             </ion-list-header>
 
-            <ion-item-sliding *ngFor="let venda of dataVenda.reverse()">
-                <ion-item (click)="expandItem(venda)">
+            <ion-item-sliding *ngFor="let vendaByPeca of vendaByDate">
+                <ion-item>
                     <ion-grid text-center>
-                        <ion-row>
+                        <ion-row align-items-center>
                             <ion-col>
-                                <p ion-text color="primary">Peça:</p>
-                                <h3>{{venda.pecaFeira.modelo.nome}} - {{venda.pecaFeira.modelo.tamanho}}</h3>
+                                <button ion-button
+                                        (click)="deleteByPecaAndAddEstoque(vendaByPeca.length, vendaByPeca[0].pecaFeira)"
+                                        class="circle-button" color="primary"
+                                        icon-only>
+                                    <ion-icon name="remove"></ion-icon>
+                                </button>
                             </ion-col>
 
                             <ion-col>
-                                <p ion-text color="primary">Valor Total:</p>
-                                <h3>R${{venda.preco * venda.quantidade}}</h3>
+                                <h3>{{vendaByPeca[0].pecaFeira.modelo.nome}} -
+                                    {{vendaByPeca[0].pecaFeira.modelo.tamanho}}</h3>
+                                <p>R${{getValorTotalVendaByPeca(vendaByPeca)}}</p>
+                                <p>{{vendaByPeca.length}}</p>
                             </ion-col>
-                        </ion-row>
 
-                        <ion-row>
                             <ion-col>
-                                <expandable [expandHeight]="itemExpandHeight" [expanded]="venda.expanded">
-                                    <ion-grid>
-                                        <ion-row>
-                                            <ion-col>
-                                                <p ion-text color="primary">Quantidade:</p>
-                                                <h3>{{venda.quantidade}}</h3>
-                                            </ion-col>
-
-                                            <ion-col>
-                                                <p ion-text color="primary">Valor Unitário:</p>
-                                                <h3>R${{venda.preco}}</h3>
-                                            </ion-col>
-                                        </ion-row>
-                                    </ion-grid>
-                                </expandable>
+                                <button ion-button (click)="insertOne(vendaByPeca[0].pecaFeira)" class="circle-button"
+                                        color="primary"
+                                        icon-only>
+                                    <ion-icon name="add"></ion-icon>
+                                </button>
                             </ion-col>
                         </ion-row>
-
                     </ion-grid>
 
                 </ion-item>
 
                 <ion-item-options side="right">
-                    <button ion-button color="danger" (click)="delete(venda)">
+                    <button ion-button color="primary" (click)="detalhes(vendaByPeca)">
+                        <ion-icon name="search"></ion-icon>
+                        Detalhes
+                    </button>
+
+                    <!--TODO-Eric conversar com os devs sobre a necessidade desta opção-->
+                    <button ion-button color="danger" (click)="delete(vendaByPeca)">
                         <ion-icon name="trash"></ion-icon>
                         Apagar
                     </button>
@@ -66,12 +73,6 @@
 
         </div>
     </ion-list>
-
-    <ion-fab bottom right>
-        <button ion-fab (click)="insert()">
-            <ion-icon name="add"></ion-icon>
-        </button>
-    </ion-fab>
 </ion-content>
 
 

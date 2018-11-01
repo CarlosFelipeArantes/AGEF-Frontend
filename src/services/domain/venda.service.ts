@@ -3,6 +3,7 @@ import {API_CONFIG} from "../../config/api.config";
 import {VendaDTO} from "../../models/venda.dto";
 import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
+import {PecaFeiraDTO} from "../../models/pecaFeiraDTO";
 
 @Injectable()
 export class VendaService {
@@ -24,6 +25,10 @@ export class VendaService {
 
     delete(venda: VendaDTO) {
         return this.http.delete(`${API_CONFIG.baseUrl}/vendas/${venda.id}`, {});
+    }
+
+    deleteByPecaAndAddEstoque(peca: PecaFeiraDTO) {
+        return this.http.delete(`${API_CONFIG.baseUrl}/vendas/byPecaAndAddEstoque/${peca.id}`, {});
     }
 
     findOne(venda: string) {
