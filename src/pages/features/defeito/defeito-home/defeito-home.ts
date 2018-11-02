@@ -7,10 +7,10 @@ import {DefeitoDTO} from '../../../../models/defeito.dto';
 
 @IonicPage()
 @Component({
-    selector: 'page-defeitos',
-    templateUrl: 'defeitos.html',
+    selector: 'page-defeito-home',
+    templateUrl: 'defeito-home.html',
 })
-export class manageDefeitosPage {
+export class DefeitoHomePage {
 
     loading: Loading;
     isLoadingDismissed: boolean = true;
@@ -67,7 +67,7 @@ export class manageDefeitosPage {
     }
 
     insert() {
-        let modalDadosDefeito = this.modalCtrl.create('manageDefeitosPage');
+        let modalDadosDefeito = this.modalCtrl.create('DefeitoInsertPage');
 
         modalDadosDefeito.present();
 
@@ -82,7 +82,7 @@ export class manageDefeitosPage {
         this.defeitoService.findAll()
             .subscribe(response => {
                     this.defeitos = response;
-                    this.defeitosGroupByDate = manageDefeitosPage.splitDefeitoByDate(this.defeitos);
+                    this.defeitosGroupByDate = DefeitoHomePage.splitDefeitoByDate(this.defeitos);
                 },
                 error => {
                     // TODO tratar erros
