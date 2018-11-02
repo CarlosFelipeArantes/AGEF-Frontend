@@ -9,6 +9,7 @@ import {ModeloService} from '../services/domain/modelo.service';
 import {PecaFeiraService} from '../services/domain/peca-feira.service';
 import {VendaService} from '../services/domain/venda.service';
 import {DefeitoService} from '../services/domain/defeito.service';
+import {FaturamentoService} from '../services/domain/faturamento.service';
 import {Network} from '@ionic-native/network';
 import {NetworkInjector} from '../injectables/network';
 import {DialogoProvider} from "../injectables/dialogo";
@@ -39,6 +40,7 @@ import {DatePipe} from "@angular/common";
         PecaFeiraService,
         VendaService,
         DefeitoService,
+        FaturamentoService,
         Network,
         NetworkInjector,
         DialogoProvider,
