@@ -16,7 +16,8 @@ export class VendaHomePage {
 
     loading: Loading;
     isLoadingDismissed: boolean = true;
-    vendasGroupByDateAndByPeca: any[][];
+    qtdTotalVendas: number;
+    vendasGroupedByPeca: any[][];
 
     constructor(
         public datePipe: DatePipe,
@@ -31,7 +32,7 @@ export class VendaHomePage {
 
     // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
-        this.loadVendas();
+        this.loadScreenData();
     }
 
     // noinspection JSUnusedGlobalSymbols
@@ -55,7 +56,7 @@ export class VendaHomePage {
 
                 this.vendaService.delete(venda)
                     .subscribe(() => {
-                            this.loadVendas();
+                            this.loadScreenData();
                             this.presentLoading(false);
                             this.dialogo.exibirToast("Venda apagada com sucesso.");
                         },
@@ -67,38 +68,46 @@ export class VendaHomePage {
         });
     }
 
-    public estornar(qtdVendasPeca: number): void {
+    public estornar(qtdVendasPeca: number, vendas: VendaDTO[]): void {
+        let venda = this.findLastVendaWhereQtdUm(vendas);
 
-        console.log(qtdVendasPeca);
+        if (qtdVendasPeca === 0) {
+            let mensagem = "Não existem mais vendas deste produto nesta data.";
+            let titulo = "Não existem vendas";
 
-        // if (qtdVendasPeca > 0) {
-        //     this.vendaService.estornar(this.lastVendaQtdUm)
-        //         .subscribe(() => {
-        //                 this.loadVendas();
-        //                 this.dialogo.exibirToast("Venda apagada com sucesso.");
-        //             },
-        //             error => {
-        //                 // TODO tratar erros
-        //                 console.log(error);
-        //             });
-        //
-        // } else {
-        //     let mensagem = "Não existem mais vendas deste produto nesta data.";
-        //     let titulo = "Não existem vendas";
-        //
-        //     this.dialogo.exibirDialogoInformacao(mensagem, titulo);
-        // }
+            this.dialogo.exibirDialogoInformacao(mensagem, titulo);
+
+        } else if (venda === undefined) {
+            let mensagem = "Para remover vendas com quantidades de peças vendidas diferentes de 1, entre na tela de detalhes.";
+            let titulo = "Remova na Tela de Detalhes";
+
+            this.dialogo.exibirDialogoInformacao(mensagem, titulo);
+
+        } else {
+            this.vendaService.estornar(venda)
+                .subscribe(() => {
+                        this.loadScreenData();
+                        this.dialogo.exibirToast("Venda apagada com sucesso.");
+                    },
+                    error => {
+                        // TODO tratar erros
+                        console.log(error);
+                    });
+
+        }
     }
 
     //TODO-Eric implementar modal de detalhes
-    public detalhes(vendaByPeca: any[]): void {
-        console.log(vendaByPeca);
+    public showDetails(vendas: any[]): void {
+        console.log(vendas);
     }
 
-    public getQtdTotalVendasByDate(vendaByDate: any[]): number {
-        return vendaByDate.reduce(function (acc, venda) {
-            return acc + venda.length;
-        }, 0);
+    public findLastVendaWhereQtdUm(vendas: VendaDTO[]): VendaDTO {
+        return vendas
+            .reverse()
+            .find(function (venda) {
+                return venda.quantidade === 1;
+            });
     }
 
     public getValorTotalVendaByPeca(vendaByPeca: any[]): number {
@@ -114,7 +123,7 @@ export class VendaHomePage {
 
         modalDadosVenda.onDidDismiss(vendido => {
             if (vendido) {
-                this.loadVendas();
+                this.loadScreenData();
             }
         });
     }
@@ -132,11 +141,9 @@ export class VendaHomePage {
         };
 
         this.vendaService.insert(venda)
-            .subscribe((response) => {
-                    // this.lastVendaQtdUm = response;
+            .subscribe(() => {
                     this.dialogo.exibirToast("Venda registrada com sucesso.");
-                    this.loadVendas();
-                    console.log(response);
+                    this.loadScreenData();
                 },
                 error => {
                     if (error.status === 400) {
@@ -150,14 +157,14 @@ export class VendaHomePage {
                 })
     }
 
-    public loadVendas(): void {
+    public loadScreenData(): void {
         this.vendaService.findAll()
             .subscribe(response => {
                     let vendas = response;
-                    let vendasGroupByDate = VendaHomePage.splitVendaByDate(vendas);
-                    this.vendasGroupByDateAndByPeca = VendaHomePage.splitVendaByPeca(vendasGroupByDate);
-                    console.log(this.vendasGroupByDateAndByPeca);
+                    this.qtdTotalVendas = vendas.length;
+                    this.vendasGroupedByPeca = VendaHomePage.splitVendaByPeca(vendas);
                 },
+
                 error => {
                     // TODO tratar erros
                     console.log(error);
@@ -175,22 +182,10 @@ export class VendaHomePage {
         }
     }
 
-    private static splitVendaByDate(vendas: VendaDTO[]): any[][] {
-        let vendasByDate = vendas
-            .reduce((r, v, i, a, k = v.data) => ((r[k] || (r[k] = [])).push(v), r), {});
+    private static splitVendaByPeca(vendas: VendaDTO[]): any[][] {
+        let vendasByPeca = vendas
+            .reduce((r, v, i, a, k = (v.pecaFeira.modelo.nome + ' - ' + v.pecaFeira.modelo.tamanho)) => ((r[k] || (r[k] = [])).push(v), r), {});
 
-        return Object.values(vendasByDate);
-    }
-
-    private static splitVendaByPeca(vendasByDateArg: any[][]): any[][] {
-        let vendasByDateAndByPeca = vendasByDateArg
-            .map((vendasByDate) => {
-                let vendasByDateAndByPeca = vendasByDate
-                    .reduce((r, v, i, a, k = (v.pecaFeira.modelo.nome + ' - ' + v.pecaFeira.modelo.tamanho)) => ((r[k] || (r[k] = [])).push(v), r), {});
-
-                return Object.values(vendasByDateAndByPeca);
-            });
-
-        return (vendasByDateAndByPeca);
+        return Object.values(vendasByPeca);
     }
 }

@@ -27,7 +27,7 @@ export class VendaService {
     }
 
     estornar(venda: VendaDTO) {
-        return this.http.delete(`${API_CONFIG.baseUrl}/vendas/${venda.id}/estornar/${venda.pecaFeira.id}`, {});
+        return this.http.put(`${API_CONFIG.baseUrl}/vendas/${venda.id}/estornar/${venda.pecaFeira.id}`, {});
     }
 
     findOne(venda: string) {
