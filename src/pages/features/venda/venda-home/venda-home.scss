@@ -15,9 +15,19 @@ ion-list-header {
   }
 }
 
-p {
-  font-size: 0.7em !important;
+ion-navbar {
+  .toolbar-content {
+    color: white;
+    font-size: 1em;
+  }
 }
+
+ion-item {
+  p {
+    font-size: 0.7em !important;
+  }
+}
+
 
 page-venda-home {
   .vertical-center-text {

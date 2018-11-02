@@ -1,3 +1,20 @@
+<ion-header>
+    <ion-navbar>
+        <p margin>Hoje — X vendas</p>
+
+        <ion-buttons end>
+            <button ion-button (click)="showFilterOptions()" clear icon-only>
+                <ion-icon name="funnel"></ion-icon>
+            </button>
+
+            <button ion-button (click)="insert()" clear icon-only>
+                <ion-icon name="cart"></ion-icon>
+            </button>
+        </ion-buttons>
+
+    </ion-navbar>
+</ion-header>
+
 <ion-content>
     <ion-list>
         <div *ngFor="let vendaByDate of vendasGroupByDateAndByPeca; let lastItem = last;">
@@ -10,14 +27,6 @@
                     {{vendaByDate[0][0].data}} — {{getQtdTotalVendasByDate(vendaByDate)}} Vendas
                 </ng-template>
 
-                <button ion-button (click)="insert()" clear icon-only item-end>
-                    <ion-icon name="cart"></ion-icon>
-                </button>
-
-                <button ion-button (click)="buttonClick()" clear icon-only item-end margin>
-                    <ion-icon name="shirt"></ion-icon>
-                </button>
-
             </ion-list-header>
 
             <ion-item-sliding *ngFor="let vendaByPeca of vendaByDate">
@@ -26,7 +35,7 @@
                         <ion-row align-items-center>
                             <ion-col>
                                 <button ion-button
-                                        (click)="deleteByPecaAndAddEstoque(vendaByPeca.length, vendaByPeca[0].pecaFeira)"
+                                        (click)="estornar(vendaByPeca.length)"
                                         class="circle-button" color="primary"
                                         icon-only>
                                     <ion-icon name="remove"></ion-icon>

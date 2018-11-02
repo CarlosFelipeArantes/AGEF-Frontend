@@ -67,27 +67,27 @@ export class VendaHomePage {
         });
     }
 
-    public deleteByPecaAndAddEstoque(qtdVendasPeca: number, peca: PecaFeiraDTO): void {
+    public estornar(qtdVendasPeca: number): void {
 
-        console.log(peca);
+        console.log(qtdVendasPeca);
 
-        if (qtdVendasPeca > 0) {
-            this.vendaService.deleteByPecaAndAddEstoque(peca)
-                .subscribe(() => {
-                        this.loadVendas();
-                        this.dialogo.exibirToast("Venda apagada com sucesso.");
-                    },
-                    error => {
-                        // TODO tratar erros
-                        console.log(error);
-                    });
-
-        } else {
-            let mensagem = "Não existem mais vendas deste produto nesta data.";
-            let titulo = "Não existem vendas";
-
-            this.dialogo.exibirDialogoInformacao(mensagem, titulo);
-        }
+        // if (qtdVendasPeca > 0) {
+        //     this.vendaService.estornar(this.lastVendaQtdUm)
+        //         .subscribe(() => {
+        //                 this.loadVendas();
+        //                 this.dialogo.exibirToast("Venda apagada com sucesso.");
+        //             },
+        //             error => {
+        //                 // TODO tratar erros
+        //                 console.log(error);
+        //             });
+        //
+        // } else {
+        //     let mensagem = "Não existem mais vendas deste produto nesta data.";
+        //     let titulo = "Não existem vendas";
+        //
+        //     this.dialogo.exibirDialogoInformacao(mensagem, titulo);
+        // }
     }
 
     //TODO-Eric implementar modal de detalhes
@@ -107,6 +107,18 @@ export class VendaHomePage {
         }, 0);
     }
 
+    public insert(): void {
+        let modalDadosVenda = this.modalCtrl.create('VendaInsertPage');
+
+        modalDadosVenda.present();
+
+        modalDadosVenda.onDidDismiss(vendido => {
+            if (vendido) {
+                this.loadVendas();
+            }
+        });
+    }
+
     public insertOne(pecaArg: PecaFeiraDTO): void {
         let data = new Date().toISOString();
         let peca = pecaArg;
@@ -120,9 +132,11 @@ export class VendaHomePage {
         };
 
         this.vendaService.insert(venda)
-            .subscribe(() => {
+            .subscribe((response) => {
+                    // this.lastVendaQtdUm = response;
                     this.dialogo.exibirToast("Venda registrada com sucesso.");
                     this.loadVendas();
+                    console.log(response);
                 },
                 error => {
                     if (error.status === 400) {
@@ -134,18 +148,6 @@ export class VendaHomePage {
 
                     console.log(error);
                 })
-    }
-
-    public insert(): void {
-        let modalDadosVenda = this.modalCtrl.create('VendaInsertPage');
-
-        modalDadosVenda.present();
-
-        modalDadosVenda.onDidDismiss(vendido => {
-            if (vendido) {
-                this.loadVendas();
-            }
-        });
     }
 
     public loadVendas(): void {
