@@ -3,7 +3,7 @@ import {AlertController, Events, IonicPage, NavController, NavParams} from 'ioni
 import {ModeloService} from '../../../../services/domain/modelo.service';
 import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
 import {ModeloDTO} from '../../../../models/modelo.dto';
-import {PecaFeiraDto} from '../../../../models/pecaFeira.dto';
+import {PecaFeiraDTO} from '../../../../models/pecaFeira.dto';
 
 @IonicPage()
 @Component({
@@ -14,7 +14,7 @@ export class AddEstoquePage {
 
     items: ModeloDTO[];
     modelo: ModeloDTO;
-    pecaFeira: PecaFeiraDto;
+    pecaFeira: PecaFeiraDTO;
 
     constructor(
         public navCtrl: NavController,
@@ -62,7 +62,7 @@ export class AddEstoquePage {
             );
     }
 
-    updatePeca(pecaFeira: PecaFeiraDto) {
+    updatePeca(pecaFeira: PecaFeiraDTO) {
         this.pecaFeiraService.update(pecaFeira)
             .subscribe(response => {
                 },
@@ -72,7 +72,7 @@ export class AddEstoquePage {
             );
     }
 
-    promptEditAlert(pecaFeira: PecaFeiraDto) {
+    promptEditAlert(pecaFeira: PecaFeiraDTO) {
         let alert = this.alertCtrl.create({
             title: 'Editar:',
             message: "Aqui você pode editar os campos preço e quantidade ",

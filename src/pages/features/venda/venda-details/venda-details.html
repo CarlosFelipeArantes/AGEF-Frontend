@@ -18,11 +18,11 @@
         <div *ngFor="let vendasFromDate of vendasGroupedByDate; let dateIndex = index; let lastItem = last;">
             <ion-list-header>
                 <div *ngIf="vendasFromDate.length === 1; else plural">
-                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} Venda
+                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} venda
                 </div>
 
                 <ng-template #plural>
-                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} Vendas
+                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} vendas
                 </ng-template>
 
             </ion-list-header>
@@ -30,7 +30,10 @@
             <ion-item-sliding *ngFor="let venda of vendasFromDate.reverse(); let vendaIndex = index;">
                 <ion-item align-items-center>
                     <h3 ion-text color="primary" item-start>{{vendaIndex + 1}}.</h3>
-                    <p><ion-icon ion-text color="secondary" name="checkmark"></ion-icon> R${{venda.preco}}</p>
+                    <p>
+                        <ion-icon ion-text color="secondary" name="checkmark"></ion-icon>
+                        R${{venda.preco}}
+                    </p>
                     <p item-end class="qtdVenda">×{{venda.quantidade}}</p>
                 </ion-item>
 

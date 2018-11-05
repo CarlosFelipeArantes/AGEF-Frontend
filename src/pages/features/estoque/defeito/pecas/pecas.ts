@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {AlertController, Events, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {PecaFeiraService} from '../../../../../services/domain/peca-feira.service';
-import {PecaFeiraDto} from '../../../../../models/pecaFeira.dto';
+import {PecaFeiraDTO} from '../../../../../models/pecaFeira.dto';
 import {DefeitoService} from '../../../../../services/domain/defeito.service';
 import {DefeitoDTO} from '../../../../../models/defeito.dto';
 
@@ -12,8 +12,8 @@ import {DefeitoDTO} from '../../../../../models/defeito.dto';
 })
 export class showPecasPage {
 
-    items: PecaFeiraDto[];
-    pecaFeira: PecaFeiraDto;
+    items: PecaFeiraDTO[];
+    pecaFeira: PecaFeiraDTO;
     defeito: DefeitoDTO;
 
     constructor(
@@ -47,7 +47,7 @@ export class showPecasPage {
                 });
     }
 
-    adicionar(pecaFeira: PecaFeiraDto) {
+    adicionar(pecaFeira: PecaFeiraDTO) {
         const DATE: Date = new Date();
         let dia, mes, ano;
 
@@ -104,7 +104,6 @@ export class showPecasPage {
             ]
         });
         alert.present();
-
 
     }
 

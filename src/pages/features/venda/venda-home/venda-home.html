@@ -1,16 +1,23 @@
 <ion-header>
     <ion-navbar>
         <div *ngIf="qtdTotalVendas > 1; else showTextSingular">
-            <p margin>Hoje — {{qtdTotalVendas}} vendas</p>
+            <p margin>{{filtro}} — {{qtdTotalVendas}} vendas</p>
         </div>
 
         <ng-template #showTextSingular>
-            <p margin>Hoje — {{qtdTotalVendas}} vendas</p>
+            <p margin>{{filtro}} — {{qtdTotalVendas}} vendas</p>
         </ng-template>
 
         <ion-buttons end>
-            <button ion-button (click)="showFilterOptions()" clear icon-only>
-                <ion-icon name="funnel"></ion-icon>
+            <button ion-button (click)="showFilters()" clear icon-only>
+                <ion-icon name="funnel">
+                    <ion-select [(ngModel)]="filtro" (ionChange)="onFiltroChange()" cancelText="Cancelar"
+                                okText="Confirmar" hidden #selectFiltro>
+                        <ion-option>Hoje</ion-option>
+                        <ion-option>Mês</ion-option>
+                        <ion-option>Total</ion-option>
+                    </ion-select>
+                </ion-icon>
             </button>
 
             <button ion-button (click)="insert()" clear icon-only>
@@ -40,7 +47,10 @@
                             <h3>{{vendas[0].pecaFeira.modelo.nome}} -
                                 {{vendas[0].pecaFeira.modelo.tamanho}}</h3>
                             <p>R${{getValorTotalVendaByPeca(vendas)}}</p>
-                            <p ion-text color="primary"><ion-icon name="basket"></ion-icon>{{vendas.length}}</p>
+                            <p ion-text color="primary">
+                                <ion-icon name="basket"></ion-icon>
+                                {{vendas.length}}
+                            </p>
                         </ion-col>
 
                         <ion-col>

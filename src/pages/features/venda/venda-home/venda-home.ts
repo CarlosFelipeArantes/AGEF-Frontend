@@ -1,10 +1,10 @@
-import {Events, IonicPage, Loading, ModalController, NavController, NavParams} from 'ionic-angular';
-import {Component} from '@angular/core';
+import {Events, IonicPage, Loading, ModalController, NavController, NavParams, Select} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
 import {DialogoProvider} from "../../../../injectables/dialogo";
 import {LoadingProvider} from "../../../../injectables/loading";
 import {VendaDTO} from '../../../../models/venda.dto';
 import {VendaService} from '../../../../services/domain/venda.service';
-import {PecaFeiraDto} from "../../../../models/pecaFeira.dto";
+import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
 import {DatePipe} from "@angular/common";
 
 @IonicPage()
@@ -14,10 +14,13 @@ import {DatePipe} from "@angular/common";
 })
 export class VendaHomePage {
 
+    filtro: string = 'Hoje';
     loading: Loading;
     isLoadingDismissed: boolean = true;
     qtdTotalVendas: number;
     vendasGroupedByPeca: any[][];
+
+    @ViewChild('selectFiltro') selectRef: Select;
 
     constructor(
         public datePipe: DatePipe,
@@ -32,7 +35,7 @@ export class VendaHomePage {
 
     // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
-        this.loadScreenData();
+        this.findByFilter();
     }
 
     // noinspection JSUnusedGlobalSymbols
@@ -56,7 +59,7 @@ export class VendaHomePage {
 
                 this.vendaService.delete(venda)
                     .subscribe(() => {
-                            this.loadScreenData();
+                            this.findByFilter();
                             this.presentLoading(false);
                             this.dialogo.exibirToast("Venda apagada com sucesso.");
                         },
@@ -86,7 +89,7 @@ export class VendaHomePage {
         } else {
             this.vendaService.estornar(venda)
                 .subscribe(() => {
-                        this.loadScreenData();
+                        this.findByFilter();
                         this.dialogo.exibirToast("Venda apagada com sucesso.");
                     },
                     error => {
@@ -97,17 +100,61 @@ export class VendaHomePage {
         }
     }
 
-    //TODO-Eric implementar modal de detalhes
-    public showDetails(vendas: any[]): void {
-        let modalDetalhesVenda = this.modalCtrl.create('VendaDetailsPage', vendas);
+    public findAll() {
+        this.vendaService.findAll()
+            .subscribe(response => {
+                    this.loadData(response);
+                    return response;
+                },
 
-        modalDetalhesVenda.present();
+                error => {
+                    // TODO tratar erros
+                    console.log(error);
+                });
 
-        modalDetalhesVenda.onDidDismiss(needsReload => {
-            if (needsReload) {
-                this.loadScreenData();
-            }
-        });
+    }
+
+    public findByDataBetween(dataInicialArg: Date, dataFinalArg: Date): void {
+        let dataInicial = this.datePipe.transform(dataInicialArg, 'dd/MM/yyyy');
+        let dataFinal = this.datePipe.transform(dataFinalArg, 'dd/MM/yyyy');
+
+        this.vendaService.findByDataBetween(dataInicial, dataFinal)
+            .subscribe(response => {
+                    this.loadData(response);
+                    return response;
+                },
+
+                error => {
+                    // TODO tratar erros
+                    console.log(error);
+                });
+    }
+
+    public findByDia(dia: Date) {
+        this.findByDataBetween(dia, dia);
+    }
+
+    public findByFilter(): void {
+        let hoje = new Date();
+
+        if (this.filtro === "Mês") {
+            let ano = hoje.getFullYear();
+            let mes = hoje.getMonth();
+
+            let dataInicial = new Date(ano, mes, 1);
+            let dataFinal = new Date(ano, mes + 1, 0);
+
+            this.findByDataBetween(dataInicial, dataFinal);
+
+        } else if (this.filtro === "Hoje") {
+            this.findByDia(hoje);
+
+        } else if (this.filtro === "Total") {
+            this.findAll();
+
+        } else {
+            console.log("Erro");
+        }
     }
 
     public findLastVendaWhereQtdUm(vendas: VendaDTO[]): VendaDTO {
@@ -131,12 +178,12 @@ export class VendaHomePage {
 
         modalDadosVenda.onDidDismiss(vendido => {
             if (vendido) {
-                this.loadScreenData();
+                this.findByFilter();
             }
         });
     }
 
-    public insertOne(pecaArg: PecaFeiraDto): void {
+    public insertOne(pecaArg: PecaFeiraDTO): void {
         let data = new Date().toISOString();
         let peca = pecaArg;
         let preco = pecaArg.preco;
@@ -148,10 +195,12 @@ export class VendaHomePage {
             quantidade: quantidade
         };
 
+        console.log(pecaArg);
+
         this.vendaService.insert(venda)
             .subscribe(() => {
                     this.dialogo.exibirToast("Venda registrada com sucesso.");
-                    this.loadScreenData();
+                    this.findByFilter();
                 },
                 error => {
                     if (error.status === 400) {
@@ -165,18 +214,13 @@ export class VendaHomePage {
                 })
     }
 
-    public loadScreenData(): void {
-        this.vendaService.findAll()
-            .subscribe(response => {
-                    let vendas = response;
-                    this.qtdTotalVendas = vendas.length;
-                    this.vendasGroupedByPeca = this.splitVendaByPeca(vendas);
-                },
+    public loadData(vendas: VendaDTO[]): void {
+        this.qtdTotalVendas = vendas.length;
+        this.vendasGroupedByPeca = this.splitVendaByPeca(vendas);
+    }
 
-                error => {
-                    // TODO tratar erros
-                    console.log(error);
-                });
+    public onFiltroChange() {
+        this.findByFilter();
     }
 
     public presentLoading(shouldPresent: boolean): void {
@@ -188,6 +232,22 @@ export class VendaHomePage {
             this.loading.dismiss();
             this.isLoadingDismissed = true;
         }
+    }
+
+    public showDetails(vendas: any[]): void {
+        let modalDetalhesVenda = this.modalCtrl.create('VendaDetailsPage', vendas);
+
+        modalDetalhesVenda.present();
+
+        modalDetalhesVenda.onDidDismiss(needsReload => {
+            if (needsReload) {
+                this.findByFilter();
+            }
+        });
+    }
+
+    public showFilters(): void {
+        this.selectRef.open();
     }
 
     public splitVendaByPeca(vendas: VendaDTO[]): any[][] {
