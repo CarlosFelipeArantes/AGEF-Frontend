@@ -1,0 +1,30 @@
+page-venda-details {
+
+  ion-item {
+
+    ion-icon {
+      margin-right: 3px;
+    }
+
+    p {
+      font-size: 0.7em;
+
+      ion-icon {
+        margin-left: 10px;
+        margin-right: 5px;
+      }
+
+    }
+
+  }
+
+  .list-header-md {
+    background-color: #2f4149;
+    color: white;
+  }
+
+  .qtdVenda {
+    font-size: 0.9em;
+    font-weight: bold;
+  }
+}

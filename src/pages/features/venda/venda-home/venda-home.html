@@ -1,77 +1,73 @@
+<ion-header>
+    <ion-navbar>
+        <div *ngIf="qtdTotalVendas > 1; else showTextSingular">
+            <p margin>Hoje — {{qtdTotalVendas}} vendas</p>
+        </div>
+
+        <ng-template #showTextSingular>
+            <p margin>Hoje — {{qtdTotalVendas}} vendas</p>
+        </ng-template>
+
+        <ion-buttons end>
+            <button ion-button (click)="showFilterOptions()" clear icon-only>
+                <ion-icon name="funnel"></ion-icon>
+            </button>
+
+            <button ion-button (click)="insert()" clear icon-only>
+                <ion-icon name="cart"></ion-icon>
+            </button>
+        </ion-buttons>
+
+    </ion-navbar>
+</ion-header>
+
 <ion-content>
     <ion-list>
-        <div *ngFor="let dataVenda of vendasGroupByDate; let lastItem = last;">
-            <ion-list-header>
-                <div *ngIf="dataVenda.length === 1; else plural">
-                    {{dataVenda[0].data}} — {{dataVenda.length}} Venda
-                </div>
+        <ion-item-sliding *ngFor="let vendas of vendasGroupedByPeca; let lastItem = last;">
+            <ion-item>
+                <ion-grid text-center>
+                    <ion-row align-items-center>
+                        <ion-col>
+                            <button ion-button
+                                    (click)="estornar(vendas.length, vendas)"
+                                    class="circle-button" color="primary"
+                                    icon-only>
+                                <ion-icon name="remove"></ion-icon>
+                            </button>
+                        </ion-col>
 
-                <ng-template #plural>
-                    {{dataVenda[0].data}} — {{dataVenda.length}} Vendas
-                </ng-template>
+                        <ion-col>
+                            <h3>{{vendas[0].pecaFeira.modelo.nome}} -
+                                {{vendas[0].pecaFeira.modelo.tamanho}}</h3>
+                            <p>R${{getValorTotalVendaByPeca(vendas)}}</p>
+                            <p ion-text color="primary"><ion-icon name="basket"></ion-icon>{{vendas.length}}</p>
+                        </ion-col>
 
-            </ion-list-header>
+                        <ion-col>
+                            <button ion-button (click)="insertOne(vendas[0].pecaFeira)" class="circle-button"
+                                    color="primary"
+                                    icon-only>
+                                <ion-icon name="add"></ion-icon>
+                            </button>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
 
-            <ion-item-sliding *ngFor="let venda of dataVenda.reverse()">
-                <ion-item (click)="expandItem(venda)">
-                    <ion-grid text-center>
-                        <ion-row>
-                            <ion-col>
-                                <p ion-text color="primary">Peça:</p>
-                                <h3>{{venda.pecaFeira.modelo.nome}} - {{venda.pecaFeira.modelo.tamanho}}</h3>
-                            </ion-col>
+            </ion-item>
 
-                            <ion-col>
-                                <p ion-text color="primary">Valor Total:</p>
-                                <h3>R${{venda.preco * venda.quantidade}}</h3>
-                            </ion-col>
-                        </ion-row>
-
-                        <ion-row>
-                            <ion-col>
-                                <expandable [expandHeight]="itemExpandHeight" [expanded]="venda.expanded">
-                                    <ion-grid>
-                                        <ion-row>
-                                            <ion-col>
-                                                <p ion-text color="primary">Quantidade:</p>
-                                                <h3>{{venda.quantidade}}</h3>
-                                            </ion-col>
-
-                                            <ion-col>
-                                                <p ion-text color="primary">Valor Unitário:</p>
-                                                <h3>R${{venda.preco}}</h3>
-                                            </ion-col>
-                                        </ion-row>
-                                    </ion-grid>
-                                </expandable>
-                            </ion-col>
-                        </ion-row>
-
-                    </ion-grid>
-
-                </ion-item>
-
-                <ion-item-options side="right">
-                    <button ion-button color="danger" (click)="delete(venda)">
-                        <ion-icon name="trash"></ion-icon>
-                        Apagar
-                    </button>
-                </ion-item-options>
-
-            </ion-item-sliding>
+            <ion-item-options side="right">
+                <button ion-button color="primary" (click)="showDetails(vendas)">
+                    <ion-icon name="search"></ion-icon>
+                    Detalhes
+                </button>
+            </ion-item-options>
 
             <div *ngIf="lastItem">
                 {{presentLoading(false)}}
             </div>
+        </ion-item-sliding>
 
-        </div>
     </ion-list>
-
-    <ion-fab bottom right>
-        <button ion-fab (click)="insert()">
-            <ion-icon name="add"></ion-icon>
-        </button>
-    </ion-fab>
 </ion-content>
 
 

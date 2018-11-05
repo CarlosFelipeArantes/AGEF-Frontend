@@ -4,6 +4,8 @@ import {DialogoProvider} from "../../../../injectables/dialogo";
 import {LoadingProvider} from "../../../../injectables/loading";
 import {VendaDTO} from '../../../../models/venda.dto';
 import {VendaService} from '../../../../services/domain/venda.service';
+import {PecaFeiraDto} from "../../../../models/pecaFeira.dto";
+import {DatePipe} from "@angular/common";
 
 @IonicPage()
 @Component({
@@ -14,11 +16,11 @@ export class VendaHomePage {
 
     loading: Loading;
     isLoadingDismissed: boolean = true;
-    itemExpandHeight: number = 35;
-    vendas: VendaDTO[];
-    vendasGroupByDate: any;
+    qtdTotalVendas: number;
+    vendasGroupedByPeca: any[][];
 
     constructor(
+        public datePipe: DatePipe,
         public dialogo: DialogoProvider,
         public events: Events,
         public loaderProvider: LoadingProvider,
@@ -30,7 +32,7 @@ export class VendaHomePage {
 
     // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
-        this.loadVendas();
+        this.loadScreenData();
     }
 
     // noinspection JSUnusedGlobalSymbols
@@ -40,8 +42,8 @@ export class VendaHomePage {
         this.presentLoading(true);
     }
 
-    delete(venda: VendaDTO) {
-        let mensagem: string = 'Você realmente quer apagar esse registro de venda?';
+    public delete(venda: VendaDTO): void {
+        let mensagem: string = 'Você realmente deseja apagar todos os registro de venda desta peça?';
         let titulo: string = 'Confirmar Remoção';
         let alert = this.dialogo.exibirDialogoConfirmacao(mensagem, titulo);
 
@@ -54,7 +56,7 @@ export class VendaHomePage {
 
                 this.vendaService.delete(venda)
                     .subscribe(() => {
-                            this.loadVendas();
+                            this.loadScreenData();
                             this.presentLoading(false);
                             this.dialogo.exibirToast("Venda apagada com sucesso.");
                         },
@@ -66,43 +68,118 @@ export class VendaHomePage {
         });
     }
 
-    expandItem(vendaArg) {
-        this.vendasGroupByDate.map((dataVenda) => {
-            dataVenda.map((venda) => {
-                if (vendaArg == venda) {
-                    venda.expanded = !venda.expanded;
-                } else {
-                    venda.expanded = false;
-                }
-            });
+    public estornar(qtdVendasPeca: number, vendas: VendaDTO[]): void {
+        let venda = this.findLastVendaWhereQtdUm(vendas);
+
+        if (qtdVendasPeca === 0) {
+            let mensagem = "Não existem mais vendas deste produto nesta data.";
+            let titulo = "Não existem vendas";
+
+            this.dialogo.exibirDialogoInformacao(mensagem, titulo);
+
+        } else if (venda === undefined) {
+            let mensagem = "Para remover vendas com quantidades de peças vendidas diferentes de 1, entre na tela de detalhes.";
+            let titulo = "Remova na Tela de Detalhes";
+
+            this.dialogo.exibirDialogoInformacao(mensagem, titulo);
+
+        } else {
+            this.vendaService.estornar(venda)
+                .subscribe(() => {
+                        this.loadScreenData();
+                        this.dialogo.exibirToast("Venda apagada com sucesso.");
+                    },
+                    error => {
+                        // TODO tratar erros
+                        console.log(error);
+                    });
+
+        }
+    }
+
+    //TODO-Eric implementar modal de detalhes
+    public showDetails(vendas: any[]): void {
+        let modalDetalhesVenda = this.modalCtrl.create('VendaDetailsPage', vendas);
+
+        modalDetalhesVenda.present();
+
+        modalDetalhesVenda.onDidDismiss(needsReload => {
+            if (needsReload) {
+                this.loadScreenData();
+            }
         });
     }
 
-    insert() {
+    public findLastVendaWhereQtdUm(vendas: VendaDTO[]): VendaDTO {
+        return vendas
+            .reverse()
+            .find(function (venda) {
+                return venda.quantidade === 1;
+            });
+    }
+
+    public getValorTotalVendaByPeca(vendaByPeca: any[]): number {
+        return vendaByPeca.reduce(function (acc, venda) {
+            return acc + (venda.preco * venda.quantidade);
+        }, 0);
+    }
+
+    public insert(): void {
         let modalDadosVenda = this.modalCtrl.create('VendaInsertPage');
 
         modalDadosVenda.present();
 
         modalDadosVenda.onDidDismiss(vendido => {
             if (vendido) {
-                this.loadVendas();
+                this.loadScreenData();
             }
         });
     }
 
-    loadVendas() {
+    public insertOne(pecaArg: PecaFeiraDto): void {
+        let data = new Date().toISOString();
+        let peca = pecaArg;
+        let preco = pecaArg.preco;
+        let quantidade = 1;
+        let venda: any = {
+            data: this.datePipe.transform(data, 'dd/MM/yyyy'),
+            pecaFeira: peca,
+            preco: preco,
+            quantidade: quantidade
+        };
+
+        this.vendaService.insert(venda)
+            .subscribe(() => {
+                    this.dialogo.exibirToast("Venda registrada com sucesso.");
+                    this.loadScreenData();
+                },
+                error => {
+                    if (error.status === 400) {
+                        let mensagem = "Não existem mais peças no estoque.";
+                        let titulo = "Estoque vazio";
+
+                        this.dialogo.exibirDialogoInformacao(mensagem, titulo);
+                    }
+
+                    console.log(error);
+                })
+    }
+
+    public loadScreenData(): void {
         this.vendaService.findAll()
             .subscribe(response => {
-                    this.vendas = response;
-                    this.vendasGroupByDate = VendaHomePage.splitVendaByDate(this.vendas);
+                    let vendas = response;
+                    this.qtdTotalVendas = vendas.length;
+                    this.vendasGroupedByPeca = this.splitVendaByPeca(vendas);
                 },
+
                 error => {
                     // TODO tratar erros
                     console.log(error);
                 });
     }
 
-    presentLoading(shouldPresent: boolean) {
+    public presentLoading(shouldPresent: boolean): void {
         if (shouldPresent && this.isLoadingDismissed) {
             this.loading.present();
             this.isLoadingDismissed = false;
@@ -113,11 +190,10 @@ export class VendaHomePage {
         }
     }
 
-    private static splitVendaByDate(vendas: VendaDTO[]): any[][] {
-        let vendasByDate = vendas
-            .reduce((r, v, i, a, k = v.data) => ((r[k] || (r[k] = []))
-                .push(v), r), {});
+    public splitVendaByPeca(vendas: VendaDTO[]): any[][] {
+        let vendasByPeca = vendas
+            .reduce((r, v, i, a, k = (v.pecaFeira.modelo.nome + ' - ' + v.pecaFeira.modelo.tamanho)) => ((r[k] || (r[k] = [])).push(v), r), {});
 
-        return Object.values(vendasByDate);
+        return Object.values(vendasByPeca);
     }
 }
