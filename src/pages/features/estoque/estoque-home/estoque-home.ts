@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {AlertController, Events, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
-import {PecaFeiraDto} from '../../../../models/pecaFeira.dto';
+import {PecaFeiraDTO} from '../../../../models/pecaFeira.dto';
 
 @IonicPage()
 @Component({
@@ -10,8 +10,8 @@ import {PecaFeiraDto} from '../../../../models/pecaFeira.dto';
 })
 export class EstoqueHomePage {
 
-    items: PecaFeiraDto[];
-    pecaFeira: PecaFeiraDto;
+    items: PecaFeiraDTO[];
+    pecaFeira: PecaFeiraDTO;
 
     constructor(
         public navCtrl: NavController,
@@ -43,7 +43,7 @@ export class EstoqueHomePage {
                 });
     }
 
-    remove(pecaFeira: PecaFeiraDto) {
+    remove(pecaFeira: PecaFeiraDTO) {
         this.pecaFeiraService.remove(pecaFeira)
             .subscribe(response => {
                     this.events.publish('updateScreen');
@@ -64,7 +64,7 @@ export class EstoqueHomePage {
                 });
     }
 
-    edit(pecaFeira: PecaFeiraDto) {
+    edit(pecaFeira: PecaFeiraDTO) {
         let alert = this.alertCtrl.create({
             title: 'Editar:',
             message: "Aqui você pode editar o seu modelo: " + pecaFeira.modelo.nome,
@@ -117,7 +117,6 @@ export class EstoqueHomePage {
             ]
         });
         alert.present();
-
 
     }
 

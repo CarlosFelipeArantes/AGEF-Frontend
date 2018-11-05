@@ -1,10 +1,9 @@
-import {PecaFeiraDto} from "./pecaFeira.dto";
+import {PecaFeiraDTO} from "./pecaFeira.dto";
 
 export interface VendaDTO {
     id: string,
     data: string;
-    expanded: boolean;
-    pecaFeira: PecaFeiraDto;
+    pecaFeira: PecaFeiraDTO;
     preco: number;
     quantidade: number;
 }

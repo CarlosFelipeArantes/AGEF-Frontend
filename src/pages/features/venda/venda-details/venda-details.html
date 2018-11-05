@@ -30,7 +30,10 @@
             <ion-item-sliding *ngFor="let venda of vendasFromDate.reverse(); let vendaIndex = index;">
                 <ion-item align-items-center>
                     <h3 ion-text color="primary" item-start>{{vendaIndex + 1}}.</h3>
-                    <p><ion-icon ion-text color="secondary" name="checkmark"></ion-icon> R${{venda.preco}}</p>
+                    <p>
+                        <ion-icon ion-text color="secondary" name="checkmark"></ion-icon>
+                        R${{venda.preco}}
+                    </p>
                     <p item-end class="qtdVenda">×{{venda.quantidade}}</p>
                 </ion-item>
 

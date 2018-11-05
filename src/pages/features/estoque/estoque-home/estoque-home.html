@@ -28,7 +28,7 @@
                             <ion-col>
                                 <h3>{{item.modelo.nome}} - {{item.modelo.tamanho}}</h3>
                             </ion-col>
-                            <ion-col>            
+                            <ion-col>
                                 <h3>{{item.quantidade}}</h3>
                             </ion-col>
                             <ion-col>
@@ -38,21 +38,21 @@
                     </ion-grid>
                 </ion-item>
                 <ion-item-options side="right">
-                        <button ion-button color="danger" (click)="delete(item)">
-                            <ion-icon name="trash"></ion-icon>
-                            Apagar
-                        </button>
-                        <button ion-button color="primary" (click)="edit(item)">
-                                <ion-icon name="brush"></ion-icon>
-                                Editar
-                            </button>
+                    <button ion-button color="danger" (click)="delete(item)">
+                        <ion-icon name="trash"></ion-icon>
+                        Apagar
+                    </button>
+                    <button ion-button color="primary" (click)="edit(item)">
+                        <ion-icon name="brush"></ion-icon>
+                        Editar
+                    </button>
                 </ion-item-options>
             </ion-item-sliding>
         </div>
     </ion-list>
     <ion-fab bottom right>
-            <button ion-fab (click)="insert()">
-                <ion-icon name="add"></ion-icon>
-            </button>
+        <button ion-fab (click)="insert()">
+            <ion-icon name="add"></ion-icon>
+        </button>
     </ion-fab>
 </ion-content>

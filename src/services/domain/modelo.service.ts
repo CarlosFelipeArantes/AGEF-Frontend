@@ -11,7 +11,6 @@ export class ModeloService {
     public tamanho: string;
     public headers: HttpHeaders;
 
-
     constructor(public http: HttpClient) {
     }
 

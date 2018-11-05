@@ -1,8 +1,8 @@
-import {PecaFeiraDto} from "./pecaFeira.dto";
+import {PecaFeiraDTO} from "./pecaFeira.dto";
 
 export interface DefeitoDTO {
     id: string;
-    pecaFeira: PecaFeiraDto
+    pecaFeira: PecaFeiraDTO
     data: string;
     quantidade: number;
 }
