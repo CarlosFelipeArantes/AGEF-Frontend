@@ -36,11 +36,11 @@
                             </button>
                         </ion-col>
 
-                        <ion-col (click)="showDetails(vendas)">
+                        <ion-col>
                             <h3>{{vendas[0].pecaFeira.modelo.nome}} -
                                 {{vendas[0].pecaFeira.modelo.tamanho}}</h3>
                             <p>R${{getValorTotalVendaByPeca(vendas)}}</p>
-                            <p ion-text color="primary">{{vendas.length}}</p>
+                            <p ion-text color="primary"><ion-icon name="basket"></ion-icon>{{vendas.length}}</p>
                         </ion-col>
 
                         <ion-col>
@@ -56,7 +56,7 @@
             </ion-item>
 
             <ion-item-options side="right">
-                <button ion-button color="primary" (click)="detalhes(vendas)">
+                <button ion-button color="primary" (click)="showDetails(vendas)">
                     <ion-icon name="search"></ion-icon>
                     Detalhes
                 </button>

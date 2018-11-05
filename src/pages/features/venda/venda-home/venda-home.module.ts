@@ -5,8 +5,7 @@ import {ExpandableComponent} from "../../../../components/expandable/expandable"
 
 @NgModule({
     declarations: [
-        VendaHomePage,
-        ExpandableComponent
+        VendaHomePage
     ],
     imports: [
         IonicPageModule.forChild(VendaHomePage)

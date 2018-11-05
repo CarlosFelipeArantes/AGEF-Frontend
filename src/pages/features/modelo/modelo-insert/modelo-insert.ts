@@ -4,7 +4,7 @@ import {DialogoProvider} from "../../../../injectables/dialogo";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LoadingProvider} from "../../../../injectables/loading";
 import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
-import {PecaFeiraDTO} from "../../../../models/pecaFeiraDTO";
+import {PecaFeiraDto} from "../../../../models/pecaFeira.dto";
 import {DatePipe} from "@angular/common";
 import {VendaService} from "../../../../services/domain/venda.service";
 
@@ -17,7 +17,7 @@ export class ModeloInsertPage {
 
     dataMax: String = new Date().toISOString();
     formGroup: FormGroup;
-    pecas: PecaFeiraDTO[];
+    pecas: PecaFeiraDto[];
 
     constructor(
         public datePipe: DatePipe,
@@ -107,7 +107,7 @@ export class ModeloInsertPage {
         this.viewCtrl.dismiss(false);
     }
 
-    onSelectChangeUpdatePreco(peca: PecaFeiraDTO) {
+    onSelectChangeUpdatePreco(peca: PecaFeiraDto) {
         let preco = peca.preco;
 
         this.formGroup.controls.preco.setValue(preco);

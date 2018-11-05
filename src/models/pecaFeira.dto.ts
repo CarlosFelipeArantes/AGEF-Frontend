@@ -1,6 +1,6 @@
 import {ModeloDTO} from "./modelo.dto";
 
-export interface PecaFeiraDTO {
+export interface PecaFeiraDto {
     id: string;
     modelo: ModeloDTO;
     preco: number;

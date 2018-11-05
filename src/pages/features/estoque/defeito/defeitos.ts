@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AlertController, Events, IonicPage, NavController, NavParams} from 'ionic-angular';
-import {defeitoService} from '../../../../services/domain/defeito.service';
+import {DefeitoService} from '../../../../services/domain/defeito.service';
 import {DefeitoDTO} from '../../../../models/defeito.dto';
 
 @IonicPage()
@@ -16,7 +16,7 @@ export class manageDefeitosPage {
         public navCtrl: NavController,
         public navParams: NavParams,
         private alertCtrl: AlertController,
-        public defeitoService: defeitoService,
+        public defeitoService: DefeitoService,
         public events: Events
     ) {
 

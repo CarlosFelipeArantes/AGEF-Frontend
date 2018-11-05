@@ -4,7 +4,7 @@ import {DialogoProvider} from "../../../../injectables/dialogo";
 import {LoadingProvider} from "../../../../injectables/loading";
 import {VendaDTO} from '../../../../models/venda.dto';
 import {VendaService} from '../../../../services/domain/venda.service';
-import {PecaFeiraDTO} from "../../../../models/pecaFeiraDTO";
+import {PecaFeiraDto} from "../../../../models/pecaFeira.dto";
 import {DatePipe} from "@angular/common";
 
 @IonicPage()
@@ -99,7 +99,15 @@ export class VendaHomePage {
 
     //TODO-Eric implementar modal de detalhes
     public showDetails(vendas: any[]): void {
-        console.log(vendas);
+        let modalDetalhesVenda = this.modalCtrl.create('VendaDetailsPage', vendas);
+
+        modalDetalhesVenda.present();
+
+        modalDetalhesVenda.onDidDismiss(needsReload => {
+            if (needsReload) {
+                this.loadScreenData();
+            }
+        });
     }
 
     public findLastVendaWhereQtdUm(vendas: VendaDTO[]): VendaDTO {
@@ -128,7 +136,7 @@ export class VendaHomePage {
         });
     }
 
-    public insertOne(pecaArg: PecaFeiraDTO): void {
+    public insertOne(pecaArg: PecaFeiraDto): void {
         let data = new Date().toISOString();
         let peca = pecaArg;
         let preco = pecaArg.preco;
@@ -162,7 +170,7 @@ export class VendaHomePage {
             .subscribe(response => {
                     let vendas = response;
                     this.qtdTotalVendas = vendas.length;
-                    this.vendasGroupedByPeca = VendaHomePage.splitVendaByPeca(vendas);
+                    this.vendasGroupedByPeca = this.splitVendaByPeca(vendas);
                 },
 
                 error => {
@@ -182,7 +190,7 @@ export class VendaHomePage {
         }
     }
 
-    private static splitVendaByPeca(vendas: VendaDTO[]): any[][] {
+    public splitVendaByPeca(vendas: VendaDTO[]): any[][] {
         let vendasByPeca = vendas
             .reduce((r, v, i, a, k = (v.pecaFeira.modelo.nome + ' - ' + v.pecaFeira.modelo.tamanho)) => ((r[k] || (r[k] = [])).push(v), r), {});
 
