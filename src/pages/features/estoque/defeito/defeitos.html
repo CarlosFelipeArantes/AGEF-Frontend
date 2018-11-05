@@ -1,32 +1,54 @@
-<ion-content class="master">
-    <ion-list *ngFor="let item of items">
-        <button ion-button full color="dark">
-            <ion-grid>
-                <ion-row>
-                    <ion-col col-4>
-                        <div class="vertical-center-text">{{item.pecaFeira.modelo.nome}}</div>
-                    </ion-col>
-                    <ion-col col-2>
-                        <div>Tam:<b>{{item.pecaFeira.modelo.tamanho}}</b></div>
-                    </ion-col>
-                    <ion-col col-4>
-                        <div class="vertical-center-text">Qtd:<b>{{item.quantidade}}</b></div>
-                    </ion-col>
-                    <ion-col col-2>
-                        <button ion-button (click)="remove(item)" color="danger" clear icon-only>
-                            <ion-icon name='trash'></ion-icon>
-                        </button>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </button>
+<ion-content>
+    <ion-list>
+        <div *ngFor="let dataDefeito of defeitosGroupByDate; let lastItem = last;">
+            <ion-list-header>
+                <div *ngIf="dataDefeito.length === 1; else plural">
+                    {{dataDefeito[0].data}} — {{dataDefeito.length}} Defeito
+                </div>
+
+                <ng-template #plural>
+                    {{dataDefeito[0].data}} — {{dataDefeito.length}} Defeitos
+                </ng-template>
+
+            </ion-list-header>
+
+            <ion-item-sliding *ngFor="let defeito of dataDefeito.reverse()">
+                <ion-item>
+                    <ion-grid text-center>
+                        <ion-row>
+                            <ion-col>
+                                <p ion-text color="primary">Peça:</p>
+                                <h3>{{defeito.pecaFeira.modelo.nome}} - {{defeito.pecaFeira.modelo.tamanho}}</h3>
+                            </ion-col>
+
+                            <ion-col>
+                                <p ion-text color="primary">Quantidade:</p>
+                                <h3>{{defeito.quantidade}}</h3>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+
+                </ion-item>
+
+                <ion-item-options side="right">
+                    <button ion-button color="danger" (click)="delete(defeito)">
+                        <ion-icon name="trash"></ion-icon>
+                        Apagar
+                    </button>
+                </ion-item-options>
+
+            </ion-item-sliding>
+
+            <div *ngIf="lastItem">
+                {{presentLoading(false)}}
+            </div>
+
+        </div>
     </ion-list>
-</ion-content>
-<ion-footer>
-    <ion-toolbar>
-        <button ion-button full round item-end icon-start color="secondary" (click)="registrar()">
-            <ion-icon name="add-circle"></ion-icon>
-            Registrar
+
+    <ion-fab bottom right>
+        <button ion-fab (click)="insert()">
+            <ion-icon name="add"></ion-icon>
         </button>
-    </ion-toolbar>
-</ion-footer>
+    </ion-fab>
+</ion-content>

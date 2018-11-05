@@ -1,3 +1,23 @@
+<ion-header>
+
+    <!--TODO botão de fechar modal (e.g.: ModalController do Ionic Doc)-->
+    <ion-navbar>
+        <ion-grid text-center>
+            <ion-row>
+                <ion-col>
+                    <div>Peça</div>
+                </ion-col>
+                <ion-col>
+                    <div>Quantidade</div>
+                </ion-col>
+                <ion-col>
+                    <div>Preço</div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-navbar>
+</ion-header>
+
 <ion-content>
     <ion-list>
         <div *ngFor="let item of items">
@@ -6,16 +26,13 @@
                     <ion-grid text-center>
                         <ion-row>
                             <ion-col>
-                                <p ion-text color="primary">Peça:</p>
                                 <h3>{{item.modelo.nome}} - {{item.modelo.tamanho}}</h3>
                             </ion-col>
                             <ion-col>            
-                                <p ion-text color="primary">Quantidade:</p>
                                 <h3>{{item.quantidade}}</h3>
                             </ion-col>
                             <ion-col>
-                                <p ion-text color="primary">Preço:</p>
-                                <h3>{{item.preco}}</h3>
+                                <h3>R${{item.preco}}</h3>
                             </ion-col>
                         </ion-row>
                     </ion-grid>

@@ -1,5 +1,7 @@
+import {Events, IonicPage, Loading, ModalController, NavController, NavParams} from 'ionic-angular';
 import {Component} from '@angular/core';
-import {AlertController, Events, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {DialogoProvider} from "../../../../injectables/dialogo";
+import {LoadingProvider} from "../../../../injectables/loading";
 import {DefeitoService} from '../../../../services/domain/defeito.service';
 import {DefeitoDTO} from '../../../../models/defeito.dto';
 
@@ -10,119 +12,101 @@ import {DefeitoDTO} from '../../../../models/defeito.dto';
 })
 export class manageDefeitosPage {
 
-    items: DefeitoDTO[];
+    loading: Loading;
+    isLoadingDismissed: boolean = true;
+    itemExpandHeight: number = 35;
+    defeitos: DefeitoDTO[];
+    defeitosGroupByDate: any;
 
     constructor(
+        public dialogo: DialogoProvider,
+        public events: Events,
+        public loaderProvider: LoadingProvider,
+        public modalCtrl: ModalController,
         public navCtrl: NavController,
         public navParams: NavParams,
-        private alertCtrl: AlertController,
-        public defeitoService: DefeitoService,
-        public events: Events
-    ) {
-
-        this.events.subscribe('updateScreen', () => {
-            this.defeitoService.findAll()
-                .subscribe(response => {
-                        this.items = response;
-                    },
-                    error => {
-                        console.log(error);
-                    });
-        });
+        public defeitoService: DefeitoService){
     }
 
     // noinspection JSUnusedGlobalSymbols
-    ionViewDidEnter() {
+    ionViewWillEnter() {
+        this.loadDefeitos();
+    }
+
+    // noinspection JSUnusedGlobalSymbols
+    ionViewDidLoad() {
+        // Dismiss é feito no *ngFor.
+        this.loading = this.loaderProvider.exibirLoadingPadrao("Carregando os defeitos.");
+        this.presentLoading(true);
+    }
+
+    delete(defeito: DefeitoDTO) {
+        let mensagem: string = 'Você realmente quer apagar esse registro de defeito?';
+        let titulo: string = 'Confirmar Remoção';
+        let alert = this.dialogo.exibirDialogoConfirmacao(mensagem, titulo);
+
+        alert.present();
+
+        alert.onDidDismiss((confirmado) => {
+            if (confirmado) {
+                this.loading = this.loaderProvider.exibirLoadingPadrao("Apagando o defeito.");
+                this.presentLoading(true);
+
+                this.defeitoService.delete(defeito)
+                    .subscribe(() => {
+                            this.loadDefeitos();
+                            this.presentLoading(false);
+                            this.dialogo.exibirToast("Defeito apagado com sucesso.");
+                        },
+                        error => {
+                            // TODO tratar erros
+                            console.log(error);
+                        })
+            }
+        });
+    }
+
+    insert() {
+        let modalDadosDefeito = this.modalCtrl.create('manageDefeitosPage');
+
+        modalDadosDefeito.present();
+
+        modalDadosDefeito.onDidDismiss(defeituoso => {
+            if (defeituoso) {
+                this.loadDefeitos();
+            }
+        });
+    }
+
+    loadDefeitos() {
         this.defeitoService.findAll()
             .subscribe(response => {
-                    this.items = response;
+                    this.defeitos = response;
+                    this.defeitosGroupByDate = manageDefeitosPage.splitDefeitoByDate(this.defeitos);
                 },
                 error => {
+                    // TODO tratar erros
                     console.log(error);
                 });
     }
 
-    remove(defeito: DefeitoDTO) {
-        this.defeitoService.remove(defeito)
-            .subscribe(response => {
-                    this.events.publish('updateScreen');
-                    let alert = this.alertCtrl.create({
-                        title: 'Sucesso',
-                        subTitle: 'Registro de defeito removido com sucesso!',
-                        buttons: ['Continuar']
-                    });
-                    alert.present();
-                },
-                error => {
-                    if (error.status == '400') {
-                        let alert = this.alertCtrl.create({
-                            title: 'Erro',
-                            subTitle: 'Não foi possível remover o defeito.',
-                            buttons: ['Continuar']
-                        });
-                        alert.present();
-                    }
-                });
+    presentLoading(shouldPresent: boolean) {
+        if (shouldPresent && this.isLoadingDismissed) {
+            this.loading.present();
+            this.isLoadingDismissed = false;
+
+        } else if (!shouldPresent && !this.isLoadingDismissed) {
+            this.loading.dismiss();
+            this.isLoadingDismissed = true;
+        }
     }
 
-    edit(defeito: DefeitoDTO) {
-        let alert = this.alertCtrl.create({
-            title: 'Editar:',
-            message: "Aqui você pode editar o seu modelo: " + "",
-            inputs: [
-                {
-                    name: 'preco',
-                    placeholder: ""
-                },
-                {
-                    name: 'quantidade',
-                    placeholder: "" + ""
-                }
-            ],
-            buttons: [
-                {
-                    text: 'Cancelar',
-                    role: 'cancel',
-                    handler: data => {
-                        console.log('Cancel clicked');
-                    }
-                },
-                {
-                    text: 'Confirmar',
-                    handler: data => {
-                        if (data.preco != '')
-                        //pecaFeira.preco = data.preco;
-                            if (data.quantidade != '')
-                            //pecaFeira.quantidade = data.quantidade;
+    private static splitDefeitoByDate(defeitos: DefeitoDTO[]): any[][] {
+        let defeitosByDate = defeitos
+            .reduce((r, v, i, a, k = v.data) => ((r[k] || (r[k] = []))
+                .push(v), r), {});
 
-                                this.defeitoService.update(defeito).subscribe(response => {
-                                        this.events.publish('updateScreen');
-                                        let alert = this.alertCtrl.create({
-                                            title: 'Sucesso',
-                                            subTitle: 'Defeito removido com sucesso!',
-                                            buttons: ['Continuar']
-                                        });
-                                        alert.present();
-                                    },
-                                    error => {
-                                        if (error.status == '400') {
-                                            let alert = this.alertCtrl.create({
-                                                title: 'Erro',
-                                                subTitle: 'Não foi possível editar o defeito.',
-                                                buttons: ['Continuar']
-                                            });
-                                            alert.present();
-                                        }
-                                    });
-                    }
-                }
-            ]
-        });
-        alert.present();
-    }
-
-    registrar() {
-        this.navCtrl.push("showPecasPage");
+        return Object.values(defeitosByDate);
     }
 
 }
