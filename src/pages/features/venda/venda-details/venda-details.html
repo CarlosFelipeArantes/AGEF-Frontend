@@ -18,11 +18,11 @@
         <div *ngFor="let vendasFromDate of vendasGroupedByDate; let dateIndex = index; let lastItem = last;">
             <ion-list-header>
                 <div *ngIf="vendasFromDate.length === 1; else plural">
-                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} Venda
+                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} venda
                 </div>
 
                 <ng-template #plural>
-                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} Vendas
+                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} vendas
                 </ng-template>
 
             </ion-list-header>

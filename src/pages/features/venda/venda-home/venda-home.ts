@@ -14,7 +14,7 @@ import {DatePipe} from "@angular/common";
 })
 export class VendaHomePage {
 
-    filtro: string = 'Mês';
+    filtro: string = 'Hoje';
     loading: Loading;
     isLoadingDismissed: boolean = true;
     qtdTotalVendas: number;
@@ -114,7 +114,6 @@ export class VendaHomePage {
 
     }
 
-    //TODO-Eric implementar
     public findByDataBetween(dataInicialArg: Date, dataFinalArg: Date): void {
         let dataInicial = this.datePipe.transform(dataInicialArg, 'dd/MM/yyyy');
         let dataFinal = this.datePipe.transform(dataFinalArg, 'dd/MM/yyyy');
