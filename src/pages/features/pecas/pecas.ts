@@ -88,7 +88,7 @@ export class showPecasPage {
                                 quantidade: data.quantidade,
                                 data: ano + '-' + dia + '-' + mes,
                             };
-                            this.defeitoService.save(this.defeito).subscribe(response => {
+                            this.defeitoService.insert(this.defeito).subscribe(response => {
                                     this.events.publish('updateScreen');
                                 },
                                 error => {

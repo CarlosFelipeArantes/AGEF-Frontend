@@ -1,7 +1,6 @@
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {API_CONFIG} from "../../config/api.config";
 import {VendaDTO} from "../../models/venda.dto";
-import {DefeitoDTO} from "../../models/defeito.dto";
 import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
 
