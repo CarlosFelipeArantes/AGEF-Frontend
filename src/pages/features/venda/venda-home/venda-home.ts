@@ -7,6 +7,7 @@ import {VendaService} from '../../../../services/domain/venda.service';
 import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
 import {DatePipe} from "@angular/common";
 import {UtilsService} from "../../../../services/utils/utils.service";
+import {PecaFeiraService} from "../../../../services/domain/peca-feira.service";
 
 @IonicPage()
 @Component({
@@ -18,6 +19,7 @@ export class VendaHomePage {
     filtro: string = 'Hoje';
     loading: Loading;
     isLoadingDismissed: boolean = true;
+    pecas: PecaFeiraDTO[];
     qtdTotalVendas: number;
     vendasGroupedByPeca: any[][];
 
@@ -31,6 +33,7 @@ export class VendaHomePage {
         public modalCtrl: ModalController,
         public navCtrl: NavController,
         public navParams: NavParams,
+        public pecaFeiraService: PecaFeiraService,
         public utilsService: UtilsService,
         public vendaService: VendaService) {
     }
@@ -236,6 +239,16 @@ export class VendaHomePage {
             this.loading.dismiss();
             this.isLoadingDismissed = true;
         }
+    }
+
+    public recuperarDadosPecas(): void {
+        this.pecaFeiraService.findAll()
+            .subscribe(response => {
+                    this.pecas = response;
+                },
+                error => {
+                    console.log(error);
+                });
     }
 
     public showDetails(vendas: any[]): void {

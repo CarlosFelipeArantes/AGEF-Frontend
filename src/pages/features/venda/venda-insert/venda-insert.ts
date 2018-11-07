@@ -106,7 +106,7 @@ export class VendaInsertPage {
                 })
     }
 
-    onClickDismissModal() {
+    onClickFecharModal() {
         this.viewCtrl.dismiss(false);
     }
 

@@ -35,7 +35,7 @@ export class FaturamentoHomePage {
         public vendaService: VendaService) {
 
         this.formGroup = this.formBuilder.group({
-            dataInicial: [null, [Validators.required]],
+            dataInicial: [this.primeiroDiaMes().toISOString(), [Validators.required]],
             dataFinal: [new Date().toISOString(), [Validators.required]]
         })
     }
@@ -63,16 +63,20 @@ export class FaturamentoHomePage {
     }
 
     public onClickInserirDatasMesAtual(): void {
+        let dataInicial = this.primeiroDiaMes();
+        let dataFinal = this.dataMax;
+
+        this.formGroup.controls.dataInicial.setValue(dataInicial.toISOString());
+        this.formGroup.controls.dataFinal.setValue(dataFinal);
+    }
+
+    public primeiroDiaMes(): Date {
         let hoje = new Date();
 
         let ano = hoje.getFullYear();
         let mes = hoje.getMonth();
 
-        let dataInicial = new Date(ano, mes, 1);
-        let dataFinal = this.dataMax;
-
-        this.formGroup.controls.dataInicial.setValue(dataInicial.toISOString());
-        this.formGroup.controls.dataFinal.setValue(dataFinal);
+        return new Date(ano, mes, 1);
     }
 
     public exibirModalFaturamento(dataInicial: string, dataFinal: string, vendas: VendaDTO[]): void {
