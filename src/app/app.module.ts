@@ -14,6 +14,8 @@ import {NetworkInjector} from '../injectables/network';
 import {DialogoProvider} from "../injectables/dialogo";
 import {LoadingProvider} from "../injectables/loading";
 import {DatePipe} from "@angular/common";
+import {UtilsService} from "../services/utils/utils.service";
+import {BrMaskerIonicServices3} from "brmasker-ionic-3";
 
 @NgModule({
     declarations: [
@@ -31,6 +33,8 @@ import {DatePipe} from "@angular/common";
 
     //TODO-Carlos renomear os providers de acordo com as boas práticas.
     providers: [
+        UtilsService,
+        BrMaskerIonicServices3,
         DatePipe,
         StatusBar,
         SplashScreen,

@@ -6,6 +6,7 @@ import {VendaDTO} from '../../../../models/venda.dto';
 import {VendaService} from '../../../../services/domain/venda.service';
 import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
 import {DatePipe} from "@angular/common";
+import {UtilsService} from "../../../../services/utils/utils.service";
 
 @IonicPage()
 @Component({
@@ -30,6 +31,7 @@ export class VendaHomePage {
         public modalCtrl: ModalController,
         public navCtrl: NavController,
         public navParams: NavParams,
+        public utilsService: UtilsService,
         public vendaService: VendaService) {
     }
 
@@ -165,10 +167,12 @@ export class VendaHomePage {
             });
     }
 
-    public getValorTotalVendaByPeca(vendaByPeca: any[]): number {
-        return vendaByPeca.reduce(function (acc, venda) {
+    public getValorTotalVendaByPeca(vendaByPeca: any[]): string {
+        let valorTotal = vendaByPeca.reduce(function (acc, venda) {
             return acc + (venda.preco * venda.quantidade);
         }, 0);
+
+        return this.utilsService.mascaraDinheiro(valorTotal);
     }
 
     public insert(): void {

@@ -12,7 +12,6 @@
     </ion-navbar>
 </ion-header>
 
-
 <ion-content>
     <ion-list>
         <div *ngFor="let vendasFromDate of vendasGroupedByDate; let dateIndex = index; let lastItem = last;">
@@ -32,7 +31,7 @@
                     <h3 ion-text color="primary" item-start>{{vendaIndex + 1}}.</h3>
                     <p>
                         <ion-icon ion-text color="secondary" name="checkmark"></ion-icon>
-                        R${{venda.preco}}
+                        R${{mascaraDinheiro(venda.preco)}}
                     </p>
                     <p item-end class="qtdVenda">×{{venda.quantidade}}</p>
                 </ion-item>

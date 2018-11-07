@@ -4,6 +4,7 @@ import {VendaDTO} from "../../../../models/venda.dto";
 import {DialogoProvider} from "../../../../injectables/dialogo";
 import {LoadingProvider} from "../../../../injectables/loading";
 import {VendaService} from "../../../../services/domain/venda.service";
+import {UtilsService} from "../../../../services/utils/utils.service";
 
 /**
  * Generated class for the VendaDetailsPage page.
@@ -30,6 +31,7 @@ export class VendaDetailsPage {
         public loadingProvider: LoadingProvider,
         public navCtrl: NavController,
         public navParams: NavParams,
+        public utilsService: UtilsService,
         public vendaService: VendaService,
         public viewCtrl: ViewController) {
 
@@ -76,6 +78,10 @@ export class VendaDetailsPage {
                         })
             }
         });
+    }
+
+    public mascaraDinheiro(valor: number): string {
+        return this.utilsService.mascaraDinheiro(valor);
     }
 
     public presentLoading(shouldPresent: boolean): void {
