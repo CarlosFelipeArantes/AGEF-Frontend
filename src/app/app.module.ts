@@ -5,9 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {MyApp} from './app.component';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
-import {ModeloService} from '../services/domain/modelo.service';
 import {PecaFeiraService} from '../services/domain/peca-feira.service';
-import {VendaService} from '../services/domain/venda.service';
 import {DefeitoService} from '../services/domain/defeito.service';
 import {FaturamentoService} from '../services/domain/faturamento.service';
 import {Network} from '@ionic-native/network';
@@ -15,6 +13,8 @@ import {NetworkInjector} from '../injectables/network';
 import {DialogoProvider} from "../injectables/dialogo";
 import {LoadingProvider} from "../injectables/loading";
 import {DatePipe} from "@angular/common";
+import {UtilsService} from "../services/utils/utils.service";
+import {BrMaskerIonicServices3} from "brmasker-ionic-3";
 
 @NgModule({
     declarations: [
@@ -32,13 +32,13 @@ import {DatePipe} from "@angular/common";
 
     //TODO-Carlos renomear os providers de acordo com as boas práticas.
     providers: [
+        UtilsService,
+        BrMaskerIonicServices3,
         DatePipe,
         StatusBar,
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        ModeloService,
         PecaFeiraService,
-        VendaService,
         DefeitoService,
         FaturamentoService,
         Network,

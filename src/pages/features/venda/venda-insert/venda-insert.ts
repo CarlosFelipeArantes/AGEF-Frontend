@@ -4,9 +4,10 @@ import {DialogoProvider} from "../../../../injectables/dialogo";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LoadingProvider} from "../../../../injectables/loading";
 import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
-import {PecaFeiraDTO} from "../../../../models/pecaFeiraDTO";
+import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
 import {DatePipe} from "@angular/common";
 import {VendaService} from "../../../../services/domain/venda.service";
+import {UtilsService} from "../../../../services/utils/utils.service";
 
 @IonicPage()
 @Component({
@@ -23,17 +24,18 @@ export class VendaInsertPage {
         public datePipe: DatePipe,
         public dialogo: DialogoProvider,
         public formBuilder: FormBuilder,
-        public loaderProvider: LoadingProvider,
+        public loadingProvider: LoadingProvider,
         public navCtrl: NavController,
         public navParams: NavParams,
         public pecaFeiraService: PecaFeiraService,
+        public utilsService: UtilsService,
         public vendaService: VendaService,
         public viewCtrl: ViewController) {
 
         this.formGroup = this.formBuilder.group({
             data: [new Date().toISOString(), [Validators.required]],
             peca: [null, [Validators.required]],
-            preco: [null, [Validators.required, Validators.min(0.01)]],
+            preco: [null, [Validators.required]],
             quantidade: [1, [Validators.required, Validators.min(1)]]
         })
     }
@@ -58,18 +60,19 @@ export class VendaInsertPage {
     }
 
     insert() {
-        let data = this.formGroup.controls.data.value;
-        let peca = this.formGroup.controls.peca.value;
-        let preco = this.formGroup.controls.preco.value;
-        let quantidade = this.formGroup.controls.quantidade.value;
+        let data: string = this.formGroup.controls.data.value;
+        let peca: string = this.formGroup.controls.peca.value;
+        let preco: string = this.formGroup.controls.preco.value;
+        let quantidade: string = this.formGroup.controls.quantidade.value;
+
         let venda: any = {
             data: this.datePipe.transform(data, 'dd/MM/yyyy'),
             pecaFeira: peca,
-            preco: preco,
+            preco: this.utilsService.trocarPontuacaoPreco(preco),
             quantidade: quantidade
         };
 
-        let loader = this.loaderProvider.exibirLoadingPadrao("Registrando a venda");
+        let loader = this.loadingProvider.exibirLoadingPadrao("Registrando a venda");
         loader.present();
 
         this.vendaService.insert(venda)
@@ -108,8 +111,9 @@ export class VendaInsertPage {
     }
 
     onSelectChangeUpdatePreco(peca: PecaFeiraDTO) {
-        let preco = peca.preco;
+        let preco: number = peca.preco;
+        let precoMasked = this.utilsService.mascaraDinheiro(preco);
 
-        this.formGroup.controls.preco.setValue(preco);
+        this.formGroup.controls.preco.setValue(precoMasked);
     }
 }

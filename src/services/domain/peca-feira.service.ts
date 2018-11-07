@@ -1,6 +1,6 @@
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {API_CONFIG} from "../../config/api.config";
-import {PecaFeiraDTO} from "../../models/pecaFeiraDTO";
+import {PecaFeiraDTO} from "../../models/pecaFeira.dto";
 import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
 

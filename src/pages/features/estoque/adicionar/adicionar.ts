@@ -3,7 +3,7 @@ import {AlertController, Events, IonicPage, NavController, NavParams} from 'ioni
 import {ModeloService} from '../../../../services/domain/modelo.service';
 import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
 import {ModeloDTO} from '../../../../models/modelo.dto';
-import {PecaFeiraDTO} from '../../../../models/pecaFeiraDTO';
+import {PecaFeiraDTO} from '../../../../models/pecaFeira.dto';
 
 @IonicPage()
 @Component({

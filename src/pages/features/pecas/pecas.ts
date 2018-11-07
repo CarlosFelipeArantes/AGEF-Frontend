@@ -1,9 +1,16 @@
 import {Component} from '@angular/core';
 import {AlertController, Events, IonicPage, NavController, NavParams} from 'ionic-angular';
+<<<<<<< HEAD:src/pages/features/pecas/pecas.ts
 import {PecaFeiraService} from '../../../services/domain/peca-feira.service';
 import {PecaFeiraDTO} from '../../../models/pecaFeiraDTO';
 import {DefeitoService} from '../../../services/domain/defeito.service';
 import {DefeitoDTO} from '../../../models/defeito.dto';
+=======
+import {PecaFeiraService} from '../../../../../services/domain/peca-feira.service';
+import {PecaFeiraDTO} from '../../../../../models/pecaFeira.dto';
+import {DefeitoService} from '../../../../../services/domain/defeito.service';
+import {DefeitoDTO} from '../../../../../models/defeito.dto';
+>>>>>>> master:src/pages/features/estoque/defeito/pecas/pecas.ts
 
 @IonicPage()
 @Component({
@@ -104,7 +111,6 @@ export class showPecasPage {
             ]
         });
         alert.present();
-
 
     }
 

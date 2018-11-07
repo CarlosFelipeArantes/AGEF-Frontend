@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            {{vendas[0].pecaFeira.modelo.nome}} - {{vendas[0].pecaFeira.modelo.tamanho}}
+        </ion-title>
+
+        <ion-buttons end>
+            <button ion-button icon-only (click)="onClickDismissModal()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <div *ngFor="let vendasFromDate of vendasGroupedByDate; let dateIndex = index; let lastItem = last;">
+            <ion-list-header>
+                <div *ngIf="vendasFromDate.length === 1; else plural">
+                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} venda
+                </div>
+
+                <ng-template #plural>
+                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} vendas
+                </ng-template>
+
+            </ion-list-header>
+
+            <ion-item-sliding *ngFor="let venda of vendasFromDate.reverse(); let vendaIndex = index;">
+                <ion-item align-items-center>
+                    <h3 ion-text color="primary" item-start>{{vendaIndex + 1}}.</h3>
+                    <p>
+                        <ion-icon ion-text color="secondary" name="checkmark"></ion-icon>
+                        R${{mascaraDinheiro(venda.preco)}}
+                    </p>
+                    <p item-end class="qtdVenda">×{{venda.quantidade}}</p>
+                </ion-item>
+
+                <ion-item-options side="right">
+                    <button ion-button color="danger" (click)="delete(venda)">
+                        <ion-icon name="trash"></ion-icon>
+                        Apagar
+                    </button>
+                </ion-item-options>
+
+            </ion-item-sliding>
+
+            <div *ngIf="lastItem">
+                {{presentLoading(false)}}
+            </div>
+
+        </div>
+    </ion-list>
+</ion-content>

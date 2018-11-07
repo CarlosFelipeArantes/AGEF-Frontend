@@ -25,7 +25,7 @@ export class DefeitoHomePage {
         public modalCtrl: ModalController,
         public navCtrl: NavController,
         public navParams: NavParams,
-        public defeitoService: DefeitoService){
+        public defeitoService: DefeitoService) {
     }
 
     // noinspection JSUnusedGlobalSymbols

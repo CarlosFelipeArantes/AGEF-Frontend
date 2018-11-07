@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {AlertController, Events, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
-import {PecaFeiraDTO} from '../../../../models/pecaFeiraDTO';
+import {PecaFeiraDTO} from '../../../../models/pecaFeira.dto';
 
 @IonicPage()
 @Component({
@@ -117,7 +117,6 @@ export class EstoqueHomePage {
             ]
         });
         alert.present();
-
 
     }
 
