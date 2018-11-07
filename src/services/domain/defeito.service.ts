@@ -1,6 +1,5 @@
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {API_CONFIG} from "../../config/api.config";
-import {VendaDTO} from "../../models/venda.dto";
 import {DefeitoDTO} from "../../models/defeito.dto";
 import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
@@ -28,7 +27,7 @@ export class DefeitoService {
     }
 
     findOne(defeito: string) {
-        return this.http.get<VendaDTO>(`${API_CONFIG.baseUrl}/defeitos/${defeito}`, {});
+        return this.http.get<DefeitoDTO>(`${API_CONFIG.baseUrl}/defeitos/${defeito}`, {});
     }
 
     findByDateBetween(inicio, fim) {
