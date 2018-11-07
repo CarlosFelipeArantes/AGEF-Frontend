@@ -1,15 +1,30 @@
+<ion-header>
+    <ion-navbar>
+        <ion-grid text-center>
+            <ion-row>
+                <ion-col>
+                    <div>Modelo</div>
+                </ion-col>
+                <ion-col>
+                    <div>Tamanho</div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-navbar>
+</ion-header>
+
 <ion-content>
     <ion-list>
         <div *ngFor="let item of items">
             <ion-item-sliding>
                 <ion-item>
-                    <ion-grid>
+                    <ion-grid text-center>
                         <ion-row>
-                            <ion-col col-4>
+                            <ion-col>
                                 <div>{{item.nome}}</div>
                             </ion-col>
-                            <ion-col col-4>
-                                <div>Tam:<b>{{item.tamanho}}</b></div>
+                            <ion-col>
+                                <div><b>{{item.tamanho}}</b></div>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
