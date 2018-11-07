@@ -1,0 +1,69 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            {{peca.modelo.nome}} - {{peca.modelo.tamanho}}
+        </ion-title>
+
+        <ion-buttons end>
+            <button ion-button icon-only (click)="onClickFecharModal()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="formGroup" (ngSubmit)="persistirPeca()">
+        <ion-item>
+            <ion-label color="primary" stacked>Preço Unitário</ion-label>
+            <ion-input [brmasker]="{money: true, numberAndTousand: true, thousand: '.'}" formControlName="preco"
+                       type="text"></ion-input>
+        </ion-item>
+
+        <div *ngIf="formGroup.controls.preco.invalid && (formGroup.controls.preco.dirty || formGroup.controls.preco.touched)"
+             class="error-text" margin-left>
+            <div ion-text color="danger" *ngIf="formGroup.controls.preco.errors.required">
+                <p>Campo de preenchimento obrigatório.</p>
+            </div>
+
+            <div ion-text color="danger" *ngIf="formGroup.controls.preco.errors.min">
+                <p>O preço unitário da peça deve ser maior do que 0.</p>
+            </div>
+        </div>
+
+        <ion-item>
+            <ion-label color="primary" stacked>Quantidade</ion-label>
+            <ion-input formControlName="quantidade" type="number"
+                       placeholder="Quantidade de peças vendidas"></ion-input>
+        </ion-item>
+
+        <div *ngIf="formGroup.controls.quantidade.invalid && (formGroup.controls.quantidade.dirty || formGroup.controls.quantidade.touched)"
+             class="error-text" margin-left>
+            <div ion-text color="danger" *ngIf="formGroup.controls.quantidade.errors.required">
+                <p>Campo de preenchimento obrigatório.</p>
+            </div>
+
+            <div ion-text color="danger" *ngIf="formGroup.controls.quantidade.errors.min">
+                <p>A quantidade de peças vendidas deve ser maior ou igual à 1.</p>
+            </div>
+        </div>
+    </form>
+</ion-content>
+
+<ion-footer>
+    <form [formGroup]="formGroup" (ngSubmit)="atualizarPeca()">
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <div ion-button (click)="onClickFecharModal()" block color="danger" small>Cancelar</div>
+                </ion-col>
+
+                <ion-col>
+                    <button ion-button [disabled]="!formGroup.valid" block color="secondary" small type="submit">
+                        Confirmar
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+</ion-footer>

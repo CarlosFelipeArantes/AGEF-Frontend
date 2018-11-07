@@ -51,7 +51,7 @@ export class PecaHomePage {
                 });
     }
 
-    public remover(pecaFeira: PecaFeiraDTO): void {
+    public onClickRemoverPeca(pecaFeira: PecaFeiraDTO): void {
         let mensagem: string = 'Você realmente deseja apagar essa peça do estoque?';
         let titulo: string = 'Confirmar Remoção';
         let dialogo = this.dialogoProvider.exibirDialogoConfirmacao(mensagem, titulo);
@@ -93,6 +93,18 @@ export class PecaHomePage {
 
         modalCadastroPeca.onDidDismiss(cadastrado => {
             if (cadastrado) {
+                this.recuperarDadosPecas();
+            }
+        });
+    }
+
+    public onClickAbrirModalEdicaoPeca(peca: PecaFeiraDTO): void {
+        let modalEdicaoPeca = this.modalCtrl.create("PecaUpdatePage", peca);
+
+        modalEdicaoPeca.present();
+
+        modalEdicaoPeca.onDidDismiss(editado => {
+            if (editado) {
                 this.recuperarDadosPecas();
             }
         });

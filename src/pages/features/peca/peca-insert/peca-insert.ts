@@ -10,7 +10,7 @@ import {UtilsService} from "../../../../services/utils/utils.service";
 
 @IonicPage()
 @Component({
-    selector: 'page-peca-insert',
+    selector: 'page-modelo-home',
     templateUrl: 'peca-insert.html',
 })
 export class PecaInsertPage {
@@ -34,7 +34,6 @@ export class PecaInsertPage {
             preco: [null, [Validators.required]],
             quantidade: [1, [Validators.required, Validators.min(1)]]
         })
-
     }
 
     // noinspection JSUnusedGlobalSymbols

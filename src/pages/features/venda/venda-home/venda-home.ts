@@ -172,7 +172,9 @@ export class VendaHomePage {
             return acc + (venda.preco * venda.quantidade);
         }, 0);
 
-        return this.utilsService.mascaraDinheiro(valorTotal);
+        valorTotal = valorTotal.toFixed(2);
+
+        return this.utilsService.mascaraDinheiro(+valorTotal);
     }
 
     public insert(): void {
@@ -198,8 +200,6 @@ export class VendaHomePage {
             preco: preco,
             quantidade: quantidade
         };
-
-        console.log(pecaArg);
 
         this.vendaService.insert(venda)
             .subscribe(() => {

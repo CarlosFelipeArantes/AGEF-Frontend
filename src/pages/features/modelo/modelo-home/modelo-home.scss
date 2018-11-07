@@ -1,4 +1,5 @@
-page-modelo-home{
+page-modelo-home
+{
   ion-list-header {
     .label {
       color: white;
@@ -22,13 +23,12 @@ page-modelo-home{
       margin-right: 3px;
     }
   }
-    .vertical-center-text {
-      padding-top: 30%;
-    }
-    .master {
-      background-color: #dddddd;
-    }
-  
+  .vertical-center-text {
+    padding-top: 30%;
+  }
+  .master {
+    background-color: #dddddd;
+  }
 
   .button-clear-md {
     color: white;
@@ -40,7 +40,11 @@ page-modelo-home{
     border-radius: 50%;
   }
 
-  .list-header-md {
+  .list-header {
     background-color: #4A6572;
+  }
+
+  .header-navbar-text {
+    color: white;
   }
 }

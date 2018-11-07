@@ -46,7 +46,7 @@ export class FaturamentoDetailsPage {
 
     public calcVlrTotalVendas(): string {
         let valorTotal = this.vendas.reduce(function (acc, venda) {
-            return acc + venda.preco;
+            return acc + (venda.preco * venda.quantidade);
         }, 0);
 
         return this.mascaraDinheiro(valorTotal);

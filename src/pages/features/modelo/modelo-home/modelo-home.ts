@@ -13,7 +13,7 @@ import {ModeloDTO} from '../../../../models/modelo.dto';
 
 @IonicPage()
 @Component({
-    selector: 'page-peca-insert',
+    selector: 'page-modelo-home',
     templateUrl: 'modelo-home.html',
 })
 export class ModeloHomePage {

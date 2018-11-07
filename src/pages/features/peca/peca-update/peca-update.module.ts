@@ -1,20 +1,20 @@
 import {NgModule} from '@angular/core';
 import {IonicPageModule} from 'ionic-angular';
-import {DefeitoInsertPage} from './defeito-insert';
-import {DefeitoService} from "../../../../services/domain/defeito.service";
+import {PecaUpdatePage} from './peca-update';
 import {PecaFeiraService} from "../../../../services/domain/peca-feira.service";
+import {BrMaskerModule} from "brmasker-ionic-3";
 
 @NgModule({
     declarations: [
-        DefeitoInsertPage,
+        PecaUpdatePage
     ],
     imports: [
-        IonicPageModule.forChild(DefeitoInsertPage),
+        BrMaskerModule,
+        IonicPageModule.forChild(PecaUpdatePage)
     ],
     providers: [
-        DefeitoService,
         PecaFeiraService
     ]
 })
-export class DefeitoInsertPageModule {
+export class PecaUpdatePageModule {
 }
