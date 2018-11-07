@@ -1,0 +1,25 @@
+<ion-header>
+
+        <!--TODO botão de fechar modal (e.g.: ModalController do Ionic Doc)-->
+        <ion-navbar>
+            <ion-title>
+                Faturamento
+            </ion-title>
+        </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="formGroup" (ngSubmit)="loadFaturamento()">
+        <ion-list>
+            <ion-item>
+                    <ion-label color="primary" stacked>Data inicial</ion-label>
+                    <ion-datetime formControlName="data" [max]="dataMax" displayFormat="DD/MM/YYYY"></ion-datetime>
+            </ion-item>
+                
+            <ion-item>
+                <ion-label color="primary" stacked>Data final</ion-label>
+                <ion-datetime formControlName="data" [max]="dataMax" displayFormat="DD/MM/YYYY"></ion-datetime>
+            </ion-item>
+        </ion-list>
+    </form>
+</ion-content>

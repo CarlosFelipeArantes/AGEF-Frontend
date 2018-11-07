@@ -10,7 +10,7 @@ export class TabsPage {
     tab1Root: any = 'EstoqueHomePage';
     tab2Root: any = 'FaturamentoHomePage';
     tab3Root: any = 'ModeloHomePage';
-    tab4Root: any = 'manageDefeitosPage';
+    tab4Root: any = 'DefeitoHomePage';
 
     constructor() {
     }
