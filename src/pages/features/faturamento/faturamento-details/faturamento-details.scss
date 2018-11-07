@@ -1,0 +1,46 @@
+page-faturamento-details {
+
+  ion-item {
+
+    ion-icon {
+      margin-right: 3px;
+    }
+
+    p {
+      font-size: 0.7em;
+
+      ion-icon {
+        margin-left: 10px;
+        margin-right: 5px;
+      }
+
+    }
+
+  }
+
+  ion-footer {
+    .item {
+      background-color: #2f4149;
+
+      h2, h3, p {
+        color: white !important;
+      }
+
+      .vlrTotal {
+        font-weight: bold;
+      }
+
+    }
+  }
+
+  .list-header {
+    background-color: #2f4149;
+    color: white;
+  }
+
+  .qtdVenda {
+    font-size: 0.9em;
+    font-weight: bold;
+  }
+
+}
