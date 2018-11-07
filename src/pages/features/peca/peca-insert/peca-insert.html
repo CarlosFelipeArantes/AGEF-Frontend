@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar>
         <ion-title>
-            Dados da Venda
+            Dados da Peça
         </ion-title>
 
         <ion-buttons end>
@@ -13,18 +13,19 @@
 </ion-header>
 
 <ion-content>
-    <form [formGroup]="formGroup" (ngSubmit)="insert()">
+    <form [formGroup]="formGroup" (ngSubmit)="persistirPeca()">
         <ion-item>
-            <ion-label color="primary" stacked>Peça</ion-label>
-            <ion-select (ionChange)="onSelectChangeUpdatePreco($event)" formControlName="peca">
-                <ion-option *ngFor="let peca of pecas" [value]="peca">{{peca.modelo.nome}} - {{peca.modelo.tamanho}}
+            <ion-label color="primary" stacked>Modelo</ion-label>
+            <ion-select formControlName="modelo">
+                <ion-option *ngFor="let modelo of modelos" [value]="modelo">{{modelo.nome}} - {{modelo.tamanho}}
                 </ion-option>
             </ion-select>
         </ion-item>
 
         <ion-item>
             <ion-label color="primary" stacked>Preço Unitário</ion-label>
-            <ion-input [brmasker]="{money: true, numberAndTousand: true, thousand: '.'}" formControlName="preco" type="text"></ion-input>
+            <ion-input [brmasker]="{money: true, numberAndTousand: true, thousand: '.'}" formControlName="preco"
+                       type="text"></ion-input>
         </ion-item>
 
         <div *ngIf="formGroup.controls.preco.invalid && (formGroup.controls.preco.dirty || formGroup.controls.preco.touched)"
@@ -37,11 +38,6 @@
                 <p>O preço unitário da peça deve ser maior do que 0.</p>
             </div>
         </div>
-
-        <ion-item>
-            <ion-label color="primary" stacked>Data da Venda</ion-label>
-            <ion-datetime formControlName="data" [max]="dataMax" displayFormat="DD/MM/YYYY"></ion-datetime>
-        </ion-item>
 
         <ion-item>
             <ion-label color="primary" stacked>Quantidade</ion-label>
@@ -60,32 +56,14 @@
             </div>
         </div>
     </form>
-
-    <ion-grid text-center margin-top>
-        <ion-row>
-            <ion-col>
-                <button (click)="decrement()" [large]="true" ion-button icon-only>
-                    <ion-icon name="remove"></ion-icon>
-                </button>
-            </ion-col>
-
-            <ion-col>
-                <button (click)="increment()" [large]="true" ion-button icon-only>
-                    <ion-icon name="add"></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-
-
 </ion-content>
 
 <ion-footer>
-    <form [formGroup]="formGroup" (ngSubmit)="insert()">
+    <form [formGroup]="formGroup" (ngSubmit)="persistirPeca()">
         <ion-grid>
             <ion-row>
                 <ion-col>
-                    <div ion-button (click)="onClickDismissModal()" block color="danger" small>Cancelar</div>
+                    <div ion-button (click)="onClickFecharModal()" block color="danger" small>Cancelar</div>
                 </ion-col>
 
                 <ion-col>

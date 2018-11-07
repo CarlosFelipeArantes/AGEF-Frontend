@@ -1,17 +1,15 @@
 <ion-header>
-
-    <!--TODO botão de fechar modal (e.g.: ModalController do Ionic Doc)-->
     <ion-navbar>
         <ion-grid text-center>
             <ion-row>
                 <ion-col>
-                    <div>Peça</div>
+                    <div class="text-navbar-header">Peça</div>
                 </ion-col>
                 <ion-col>
-                    <div>Quantidade</div>
+                    <div class="text-navbar-header">Preço</div>
                 </ion-col>
                 <ion-col>
-                    <div>Preço</div>
+                    <div class="text-navbar-header">Quantidade</div>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -20,39 +18,47 @@
 
 <ion-content>
     <ion-list>
-        <div *ngFor="let item of items">
+        <div *ngFor="let peca of pecas; let ultimaPeca = last;">
             <ion-item-sliding>
                 <ion-item>
                     <ion-grid text-center>
                         <ion-row>
                             <ion-col>
-                                <h3>{{item.modelo.nome}} - {{item.modelo.tamanho}}</h3>
+                                <h3 class="peca">{{peca.modelo.nome}} - {{peca.modelo.tamanho}}</h3>
                             </ion-col>
                             <ion-col>
-                                <h3>{{item.quantidade}}</h3>
+                                <p class="preco">R${{mascaraDinheiro(peca.preco)}}</p>
                             </ion-col>
                             <ion-col>
-                                <h3>R${{item.preco}}</h3>
+                                <h3 class="quantidade-pecas">{{peca.quantidade}}</h3>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
                 </ion-item>
+
                 <ion-item-options side="right">
-                    <button ion-button color="danger" (click)="delete(item)">
-                        <ion-icon name="trash"></ion-icon>
-                        Apagar
-                    </button>
-                    <button ion-button color="primary" (click)="edit(item)">
+                    <button ion-button color="primary" (click)="edit(peca)">
                         <ion-icon name="brush"></ion-icon>
                         Editar
                     </button>
+                    <button ion-button color="danger" (click)="remover(peca)">
+                        <ion-icon name="trash"></ion-icon>
+                        Apagar
+                    </button>
                 </ion-item-options>
+
             </ion-item-sliding>
+
+            <div *ngIf="ultimaPeca">
+                {{mostrarLoading(false)}}
+            </div>
         </div>
     </ion-list>
+
     <ion-fab bottom right>
-        <button ion-fab (click)="insert()">
+        <button ion-fab (click)="onClickAbrirModalCadastroPeca()">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
+
 </ion-content>

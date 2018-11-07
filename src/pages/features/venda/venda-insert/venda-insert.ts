@@ -22,7 +22,7 @@ export class VendaInsertPage {
 
     constructor(
         public datePipe: DatePipe,
-        public dialogo: DialogoProvider,
+        public dialogoProvider: DialogoProvider,
         public formBuilder: FormBuilder,
         public loadingProvider: LoadingProvider,
         public navCtrl: NavController,
@@ -72,23 +72,23 @@ export class VendaInsertPage {
             quantidade: quantidade
         };
 
-        let loader = this.loadingProvider.exibirLoadingPadrao("Registrando a venda");
-        loader.present();
+        let loading = this.loadingProvider.exibirLoadingPadrao("Registrando a venda");
+        loading.present();
 
         this.vendaService.insert(venda)
             .subscribe(() => {
-                    loader.dismiss();
-                    this.dialogo.exibirToast("Venda registrada com sucesso.");
+                    loading.dismiss();
+                    this.dialogoProvider.exibirToast("Venda registrada com sucesso.");
                     this.viewCtrl.dismiss(true);
                 },
                 error => {
                     if (error.status === 400) {
-                        loader.dismiss();
+                        loading.dismiss();
 
                         let mensagem = "A quantidade de peças vendidas deve ser menor ou igual a quantidade de peças no estoque";
                         let titulo = "Erro";
 
-                        this.dialogo.exibirDialogoInformacao(mensagem, titulo);
+                        this.dialogoProvider.exibirDialogoInformacao(mensagem, titulo);
                     }
 
                     console.log(error);

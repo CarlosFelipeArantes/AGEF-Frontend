@@ -27,7 +27,7 @@ export class VendaHomePage {
         public datePipe: DatePipe,
         public dialogo: DialogoProvider,
         public events: Events,
-        public loaderProvider: LoadingProvider,
+        public loadingProvider: LoadingProvider,
         public modalCtrl: ModalController,
         public navCtrl: NavController,
         public navParams: NavParams,
@@ -43,7 +43,7 @@ export class VendaHomePage {
     // noinspection JSUnusedGlobalSymbols
     ionViewDidLoad() {
         // Dismiss é feito no *ngFor.
-        this.loading = this.loaderProvider.exibirLoadingPadrao("Carregando as vendas.");
+        this.loading = this.loadingProvider.exibirLoadingPadrao("Carregando as vendas.");
         this.presentLoading(true);
     }
 
@@ -56,7 +56,7 @@ export class VendaHomePage {
 
         alert.onDidDismiss((confirmado) => {
             if (confirmado) {
-                this.loading = this.loaderProvider.exibirLoadingPadrao("Apagando a venda.");
+                this.loading = this.loadingProvider.exibirLoadingPadrao("Apagando a venda.");
                 this.presentLoading(true);
 
                 this.vendaService.delete(venda)

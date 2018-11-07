@@ -6,17 +6,14 @@ import {
     LoadingController,
     NavController,
     NavParams,
-    ToastController,
-    ModalController
+    ToastController
 } from 'ionic-angular';
-import {DialogoProvider} from "../../../../injectables/dialogo";
 import {ModeloService} from '../../../../services/domain/modelo.service';
 import {ModeloDTO} from '../../../../models/modelo.dto';
-import {LoadingProvider} from "../../../../injectables/loading";
 
 @IonicPage()
 @Component({
-    selector: 'page-modelo-home',
+    selector: 'page-peca-insert',
     templateUrl: 'modelo-home.html',
 })
 export class ModeloHomePage {
@@ -28,13 +25,10 @@ export class ModeloHomePage {
     });
 
     constructor(
-        public dialogo: DialogoProvider,
         public navCtrl: NavController,
-        public loaderProvider: LoadingProvider,
         public navParams: NavParams,
         public modeloService: ModeloService,
         public events: Events,
-        public modalCtrl: ModalController,
         private toastCtrl: ToastController,
         private alertCtrl: AlertController,
         private loadingCtrl: LoadingController
@@ -76,30 +70,19 @@ export class ModeloHomePage {
     }
 
     delete(modelo: ModeloDTO) {
-        let mensagem: string = 'Você realmente quer apagar esse registro de defeito?';
-        let titulo: string = 'Confirmar Remoção';
-        let alert = this.dialogo.exibirDialogoConfirmacao(mensagem, titulo);
-
-        alert.present();
-
-        alert.onDidDismiss((confirmado) => {
-            if (confirmado) {
-                this.loading = this.loaderProvider.exibirLoadingPadrao("Apagando o modelo.");
-                this.presentLoading(true);
-
-                this.modeloService.remove(modelo)
-                    .subscribe(() => {
-                            this.events.publish('updateScreen');
-                            this.presentLoading(false);
-                            this.dialogo.exibirToast("Modelo apagado com sucesso.");
-                        },
-                        error => {
-                            this.presentLoading(false);
-                            this.dialogo.exibirToast("Não foi possível remover. O modelo está associado em estoque.");
-                            console.log(error);
-                        })
-            }
-        });
+        this.modeloService.remove(modelo)
+            .subscribe(response => {
+                    this.events.publish('updateScreen');
+                    let alert = this.alertCtrl.create({
+                        title: 'Sucesso',
+                        subTitle: 'Modelo removido com sucesso!',
+                        buttons: ['Continuar']
+                    });
+                    alert.present();
+                },
+                error => {
+                    this.alertaRemoverErro(modelo);
+                });
     }
 
     alertaRemoverErro(modelo: ModeloDTO) {
@@ -237,18 +220,6 @@ export class ModeloHomePage {
             console.log('Dismissed toast');
         });
         toast.present();
-    }
-
-    public insert(): void {
-        let modalModelo = this.modalCtrl.create('ModeloInsertPage');
-
-        modalModelo.present();
-
-        modalModelo.onDidDismiss(vendido => {
-            if (vendido) {
-                this.updateModelo;
-            }
-        });
     }
 
 }
