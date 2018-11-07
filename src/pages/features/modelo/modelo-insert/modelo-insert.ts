@@ -10,7 +10,7 @@ import {VendaService} from "../../../../services/domain/venda.service";
 
 @IonicPage()
 @Component({
-    selector: 'page-venda-insert',
+    selector: 'page-modelo-insert',
     templateUrl: 'modelo-insert.html',
 })
 export class ModeloInsertPage {
