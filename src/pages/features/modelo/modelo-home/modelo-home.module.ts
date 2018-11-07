@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {IonicPageModule} from 'ionic-angular';
 import {ModeloHomePage} from './modelo-home';
+import {ModeloService} from "../../../../services/domain/modelo.service";
 
 @NgModule({
     declarations: [
@@ -9,6 +10,9 @@ import {ModeloHomePage} from './modelo-home';
     imports: [
         IonicPageModule.forChild(ModeloHomePage),
     ],
+    providers: [
+        ModeloService
+    ]
 })
 export class ModeloHomePageModule {
 }

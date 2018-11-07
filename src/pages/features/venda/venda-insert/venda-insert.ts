@@ -24,7 +24,7 @@ export class VendaInsertPage {
         public datePipe: DatePipe,
         public dialogo: DialogoProvider,
         public formBuilder: FormBuilder,
-        public loaderProvider: LoadingProvider,
+        public loadingProvider: LoadingProvider,
         public navCtrl: NavController,
         public navParams: NavParams,
         public pecaFeiraService: PecaFeiraService,
@@ -72,7 +72,7 @@ export class VendaInsertPage {
             quantidade: quantidade
         };
 
-        let loader = this.loaderProvider.exibirLoadingPadrao("Registrando a venda");
+        let loader = this.loadingProvider.exibirLoadingPadrao("Registrando a venda");
         loader.present();
 
         this.vendaService.insert(venda)

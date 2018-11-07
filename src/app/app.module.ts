@@ -5,9 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {MyApp} from './app.component';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
-import {ModeloService} from '../services/domain/modelo.service';
 import {PecaFeiraService} from '../services/domain/peca-feira.service';
-import {VendaService} from '../services/domain/venda.service';
 import {DefeitoService} from '../services/domain/defeito.service';
 import {Network} from '@ionic-native/network';
 import {NetworkInjector} from '../injectables/network';
@@ -39,9 +37,7 @@ import {BrMaskerIonicServices3} from "brmasker-ionic-3";
         StatusBar,
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        ModeloService,
         PecaFeiraService,
-        VendaService,
         DefeitoService,
         Network,
         NetworkInjector,

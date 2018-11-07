@@ -7,7 +7,7 @@ import {VendaDetailsPage} from './venda-details';
         VendaDetailsPage
     ],
     imports: [
-        IonicPageModule.forChild(VendaDetailsPage),
+        IonicPageModule.forChild(VendaDetailsPage)
     ],
 })
 export class VendaDetailsPageModule {
