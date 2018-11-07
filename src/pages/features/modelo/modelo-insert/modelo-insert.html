@@ -3,78 +3,38 @@
     <!--TODO botão de fechar modal (e.g.: ModalController do Ionic Doc)-->
     <ion-navbar>
         <ion-title>
-            Dados da Venda
+            Inserir Modelo
         </ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
     <form [formGroup]="formGroup" (ngSubmit)="insert()">
+    
         <ion-item>
-            <ion-label color="primary" stacked>Peça</ion-label>
-            <ion-select (ionChange)="onSelectChangeUpdatePreco($event)" formControlName="peca">
-                <ion-option *ngFor="let peca of pecas" [value]="peca">{{peca.modelo.nome}} - {{peca.modelo.tamanho}}
-                </ion-option>
-            </ion-select>
+            <ion-label color="primary" stacked>Nome do Modelo</ion-label>
+            <ion-input formControlName="modelo" type="string"></ion-input>
         </ion-item>
 
-        <!--TODO validar preço (i.e.: trocar vírgula por ponto, etc)-->
-        <ion-item>
-            <ion-label color="primary" stacked>Preço Unitário</ion-label>
-            <ion-input formControlName="preco" type="number"></ion-input>
-        </ion-item>
-
-        <div *ngIf="formGroup.controls.preco.invalid && (formGroup.controls.preco.dirty || formGroup.controls.preco.touched)"
-             class="error-text" margin-left>
-            <div ion-text color="danger" *ngIf="formGroup.controls.preco.errors.required">
+        <div *ngIf="(formGroup.controls.modelo.dirty || formGroup.controls.modelo.touched)" class="error-text" margin-left>
+            <div ion-text color="danger" *ngIf="formGroup.controls.modelo.errors?.required">
                 <p>Campo de preenchimento obrigatório.</p>
-            </div>
-
-            <div ion-text color="danger" *ngIf="formGroup.controls.preco.errors.min">
-                <p>O preço unitário da peça deve ser maior do que 0.</p>
             </div>
         </div>
 
         <ion-item>
-            <ion-label color="primary" stacked>Data da Venda</ion-label>
-            <ion-datetime formControlName="data" [max]="dataMax" displayFormat="DD/MM/YYYY"></ion-datetime>
+            <ion-label color="primary" stacked>Tamanho</ion-label>
+            <ion-input formControlName="tamanho" type="string"
+                       placeholder="Tamanho do Modelo"></ion-input>
         </ion-item>
 
-        <ion-item>
-            <ion-label color="primary" stacked>Quantidade</ion-label>
-            <ion-input formControlName="quantidade" type="number"
-                       placeholder="Quantidade de peças vendidas"></ion-input>
-        </ion-item>
-
-        <div *ngIf="formGroup.controls.quantidade.invalid && (formGroup.controls.quantidade.dirty || formGroup.controls.quantidade.touched)"
+        <div *ngIf="(formGroup.controls.tamanho.dirty || formGroup.controls.tamanho.touched)"
              class="error-text" margin-left>
-            <div ion-text color="danger" *ngIf="formGroup.controls.quantidade.errors.required">
+            <div ion-text color="danger" *ngIf="formGroup.controls.tamanho.errors?.required">
                 <p>Campo de preenchimento obrigatório.</p>
-            </div>
-
-            <div ion-text color="danger" *ngIf="formGroup.controls.quantidade.errors.min">
-                <p>A quantidade de peças vendidas deve ser maior ou igual à 1.</p>
             </div>
         </div>
     </form>
-
-    <ion-grid text-center margin-top>
-        <ion-row>
-            <ion-col>
-                <button (click)="decrement()" [large]="true" ion-button icon-only>
-                    <ion-icon name="remove"></ion-icon>
-                </button>
-            </ion-col>
-
-            <ion-col>
-                <button (click)="increment()" [large]="true" ion-button icon-only>
-                    <ion-icon name="add"></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-
-
 </ion-content>
 
 <ion-footer>

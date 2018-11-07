@@ -3,10 +3,9 @@ import {Component} from '@angular/core';
 import {DialogoProvider} from "../../../../injectables/dialogo";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LoadingProvider} from "../../../../injectables/loading";
-import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
-import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
 import {DatePipe} from "@angular/common";
-import {VendaService} from "../../../../services/domain/venda.service";
+import {ModeloService} from "../../../../services/domain/modelo.service";
+import { ModeloDTO } from '../../../../models/modelo.dto';
 
 @IonicPage()
 @Component({
@@ -15,9 +14,8 @@ import {VendaService} from "../../../../services/domain/venda.service";
 })
 export class ModeloInsertPage {
 
-    dataMax: String = new Date().toISOString();
     formGroup: FormGroup;
-    pecas: PecaFeiraDTO[];
+    modelos: ModeloDTO[];
 
     constructor(
         public datePipe: DatePipe,
@@ -26,21 +24,18 @@ export class ModeloInsertPage {
         public loaderProvider: LoadingProvider,
         public navCtrl: NavController,
         public navParams: NavParams,
-        public pecaFeiraService: PecaFeiraService,
-        public vendaService: VendaService,
+        public modeloService: ModeloService,
         public viewCtrl: ViewController) {
 
         this.formGroup = this.formBuilder.group({
-            data: [new Date().toISOString(), [Validators.required]],
-            peca: [null, [Validators.required]],
-            preco: [null, [Validators.required, Validators.min(0.01)]],
-            quantidade: [1, [Validators.required, Validators.min(1)]]
+            modelo: [null, [Validators.required]],
+            tamanho: [null, [Validators.required]]
         })
     }
 
     // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
-        this.loadPecas();
+        this.loadModelos();
     }
 
     decrement() {
@@ -58,24 +53,20 @@ export class ModeloInsertPage {
     }
 
     insert() {
-        let data = this.formGroup.controls.data.value;
-        let peca = this.formGroup.controls.peca.value;
-        let preco = this.formGroup.controls.preco.value;
-        let quantidade = this.formGroup.controls.quantidade.value;
-        let venda: any = {
-            data: this.datePipe.transform(data, 'dd/MM/yyyy'),
-            pecaFeira: peca,
-            preco: preco,
-            quantidade: quantidade
+        let nome = this.formGroup.controls.modelo.value;
+        let tamanho = this.formGroup.controls.tamanho.value;
+        let modelo: any = {
+            nome: nome,
+            tamanho: tamanho,
         };
 
-        let loader = this.loaderProvider.exibirLoadingPadrao("Registrando a venda");
+        let loader = this.loaderProvider.exibirLoadingPadrao("Salvando modelo");
         loader.present();
 
-        this.vendaService.insert(venda)
+        this.modeloService.save(modelo)
             .subscribe(() => {
                     loader.dismiss();
-                    this.dialogo.exibirToast("Venda registrada com sucesso.");
+                    this.dialogo.exibirToast("Modelo salvo com sucesso.");
                     this.viewCtrl.dismiss(true);
                 },
                 error => {
@@ -92,10 +83,10 @@ export class ModeloInsertPage {
                 })
     }
 
-    loadPecas() {
-        this.pecaFeiraService.findAll()
-            .subscribe(pecas => {
-                    this.pecas = pecas;
+    loadModelos() {
+        this.modeloService.findAll()
+            .subscribe(modelos => {
+                    this.modelos = modelos;
                 },
                 error => {
                     //TODO tratar erros
@@ -107,9 +98,4 @@ export class ModeloInsertPage {
         this.viewCtrl.dismiss(false);
     }
 
-    onSelectChangeUpdatePreco(peca: PecaFeiraDTO) {
-        let preco = peca.preco;
-
-        this.formGroup.controls.preco.setValue(preco);
-    }
 }
