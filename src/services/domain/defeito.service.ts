@@ -1,6 +1,5 @@
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {API_CONFIG} from "../../config/api.config";
-import {VendaDTO} from "../../models/venda.dto";
 import {DefeitoDTO} from "../../models/defeito.dto";
 import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
@@ -17,7 +16,7 @@ export class DefeitoService {
         return this.http.get<DefeitoDTO[]>(`${API_CONFIG.baseUrl}/defeitos/`);
     }
 
-    save(defeito: DefeitoDTO) {
+    insert(defeito: DefeitoDTO) {
         this.headers = new HttpHeaders();
         this.headers.set('Content-Type', 'application/json');
         return this.http.post(`${API_CONFIG.baseUrl}/defeitos/`, defeito, {headers: this.headers});
@@ -27,8 +26,12 @@ export class DefeitoService {
         return this.http.delete(`${API_CONFIG.baseUrl}/defeitos/${defeito.id}`, {});
     }
 
-    get(defeito: string) {
-        return this.http.get<VendaDTO>(`${API_CONFIG.baseUrl}/defeitos/${defeito}`, {});
+    findOne(defeito: string) {
+        return this.http.get<DefeitoDTO>(`${API_CONFIG.baseUrl}/defeitos/${defeito}`, {});
+    }
+
+    findByDateBetween(inicio, fim) {
+        return this.http.get<DefeitoDTO>(`${API_CONFIG.baseUrl}/defeitos/?dataInicial=${inicio}&dataFinal=${fim}`, {});
     }
 
     update(defeito: DefeitoDTO) {
