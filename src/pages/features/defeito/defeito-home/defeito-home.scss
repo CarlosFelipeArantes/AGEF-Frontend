@@ -1,4 +1,23 @@
 page-defeito-home {
+
+  ion-navbar {
+    .toolbar-content {
+      color: white;
+      font-size: 1em;
+    }
+  }
+
+  ion-item {
+    p {
+      font-size: 0.7em !important;
+      font-weight: bold;
+    }
+
+    ion-icon {
+      margin-right: 3px;
+    }
+  }
+
   .vertical-center-text {
     padding-top: 30%;
   }
