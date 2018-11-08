@@ -55,7 +55,7 @@ export class PecaUpdatePage {
         this.pecaFeiraService.update(this.peca)
             .subscribe(() => {
                     loading.dismiss();
-                    this.dialogoProvider.exibirToast("Venda atualizada com sucesso.");
+                    this.dialogoProvider.exibirToast("Peça atualizada com sucesso.");
                     this.viewCtrl.dismiss(true);
                 },
 

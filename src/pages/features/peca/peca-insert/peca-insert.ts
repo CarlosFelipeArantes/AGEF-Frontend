@@ -70,7 +70,7 @@ export class PecaInsertPage {
         this.pecaFeiraService.save(peca)
             .subscribe(() => {
                     loading.dismiss();
-                    this.dialogoProvider.exibirToast("Venda registrada com sucesso.");
+                    this.dialogoProvider.exibirToast("Peça cadastrada com sucesso.");
                     this.viewCtrl.dismiss(true);
                 },
 
