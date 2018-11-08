@@ -5,13 +5,13 @@
         </div>
 
         <ng-template #showTextSingular>
-            <p margin>{{filtro}} — {{qtdTotalVendas}} vendas</p>
+            <p margin>{{filtro}} — {{qtdTotalVendas}} venda</p>
         </ng-template>
 
         <ion-buttons end>
-            <button ion-button (click)="showFilters()" clear icon-only>
+            <button ion-button (click)="onClickAbrirOpcoesFiltro()" clear icon-only>
                 <ion-icon name="funnel">
-                    <ion-select [(ngModel)]="filtro" (ionChange)="onFiltroChange()" cancelText="Cancelar"
+                    <ion-select [(ngModel)]="filtro" (ionChange)="onChangeRcprVendasComFiltro()" cancelText="Cancelar"
                                 okText="Confirmar" hidden #selectFiltro>
                         <ion-option>Hoje</ion-option>
                         <ion-option>Mês</ion-option>
@@ -20,7 +20,7 @@
                 </ion-icon>
             </button>
 
-            <button ion-button (click)="insert()" clear icon-only>
+            <button ion-button (click)="onClickAbrirModalCadastroVenda()" clear icon-only>
                 <ion-icon name="cart"></ion-icon>
             </button>
         </ion-buttons>
@@ -30,13 +30,13 @@
 
 <ion-content>
     <ion-list>
-        <ion-item-sliding *ngFor="let vendas of vendasGroupedByPeca; let lastItem = last;">
+        <ion-item-sliding *ngFor="let peca of pecas; let lastItem = last;">
             <ion-item>
                 <ion-grid text-center>
                     <ion-row align-items-center>
                         <ion-col>
                             <button ion-button
-                                    (click)="estornar(vendas.length, vendas)"
+                                    (click)="onClickEstornarVenda(peca)"
                                     class="circle-button" color="primary"
                                     icon-only>
                                 <ion-icon name="remove"></ion-icon>
@@ -44,17 +44,16 @@
                         </ion-col>
 
                         <ion-col>
-                            <h3>{{vendas[0].pecaFeira.modelo.nome}} -
-                                {{vendas[0].pecaFeira.modelo.tamanho}}</h3>
-                            <p>R${{getValorTotalVendaByPeca(vendas)}}</p>
+                            <h3>{{recuperarNomePeca(peca)}}</h3>
+                            <p>R${{calcValorTotalVendasPorPeca(peca)}}</p>
                             <p ion-text color="primary">
                                 <ion-icon name="basket"></ion-icon>
-                                {{vendas.length}}
+                                {{recuperarQtdVendas(peca)}}
                             </p>
                         </ion-col>
 
                         <ion-col>
-                            <button ion-button (click)="insertOne(vendas[0].pecaFeira)" class="circle-button"
+                            <button ion-button (click)="onClickCadastrarUmaVenda(peca)" class="circle-button"
                                     color="primary"
                                     icon-only>
                                 <ion-icon name="add"></ion-icon>
@@ -66,14 +65,14 @@
             </ion-item>
 
             <ion-item-options side="right">
-                <button ion-button color="primary" (click)="showDetails(vendas)">
+                <button ion-button color="primary" (click)="onClickAbrirModalDetalhesVenda(peca)">
                     <ion-icon name="search"></ion-icon>
                     Detalhes
                 </button>
             </ion-item-options>
 
             <div *ngIf="lastItem">
-                {{presentLoading(false)}}
+                {{mostrarLoading(false)}}
             </div>
         </ion-item-sliding>
 

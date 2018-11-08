@@ -7,34 +7,23 @@ export class UtilsService {
     constructor(private brMasker: BrMaskerIonicServices3) {
     }
 
-    mascaraDinheiro(valor: number): string {
-        let valorStr: string = valor.toString();
-
-        if (this.precisao(valor) === 0) {
-            valorStr += ".00"
-
-        } else if (this.precisao(valor) === 1) {
-            valorStr += ".0";
+    public estaVazio(obj: any): boolean {
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key))
+                return false;
         }
+        return true;
+    }
+
+    public mascaraDinheiro(valor: number): string {
+        let valorStr: string = valor.toFixed(2);
 
         return this.brMasker.writeValueMoney(valorStr);
     }
 
-    trocarPontuacaoPreco(valor: string): string {
+    public trocarPontuacaoPreco(valor: string): string {
         return valor
             .replace(".", "")
             .replace(",", ".");
-    }
-
-    precisao(a: number): number {
-        if (!isFinite(a)) return 0;
-        let e = 1, p = 0;
-
-        while (Math.round(a * e) / e !== a) {
-            e *= 10;
-            p++;
-        }
-
-        return p;
     }
 }

@@ -65,13 +65,14 @@ export class VendaDetailsPage {
                 this.loading = this.loadingProvider.exibirLoadingPadrao("Apagando a venda.");
                 this.presentLoading(true);
 
-                this.vendaService.delete(venda)
+                this.vendaService.estornar(venda)
                     .subscribe(() => {
                             this.reloadData(venda);
                             this.prevScreenNeedReload = true;
                             this.presentLoading(false);
                             this.dialogoProvider.exibirToast("Venda apagada com sucesso.");
                         },
+
                         error => {
                             // TODO tratar erros
                             console.log(error);
@@ -96,9 +97,14 @@ export class VendaDetailsPage {
     }
 
     public reloadData(venda: VendaDTO): void {
-        let indexOfVenda = this.vendas.indexOf(venda);
-        this.vendas.splice(indexOfVenda, 1);
-        this.vendasGroupedByDate = this.splitVendaByDate(this.vendas);
+        if (this.vendas.length > 1) {
+            let indexOfVenda = this.vendas.indexOf(venda);
+            this.vendas.splice(indexOfVenda, 1);
+            this.vendasGroupedByDate = this.splitVendaByDate(this.vendas);
+
+        } else {
+            this.viewCtrl.dismiss(true);
+        }
     }
 
     public splitVendaByDate(vendas: VendaDTO[]): any[][] {

@@ -17,11 +17,13 @@
         <div *ngFor="let vendasFromDate of vendasGroupedByDate">
             <ion-list-header>
                 <div *ngIf="vendasFromDate.length === 1; else plural">
-                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} venda
+                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} venda —
+                    R${{calcVlrTotalVendas(vendasFromDate)}}
                 </div>
 
                 <ng-template #plural>
-                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} vendas
+                    {{vendasFromDate[0].data}} — {{vendasFromDate.length}} vendas —
+                    R${{calcVlrTotalVendas(vendasFromDate)}}
                 </ng-template>
 
             </ion-list-header>
@@ -49,7 +51,7 @@
                 <ion-icon name="basket"></ion-icon>
                 {{vendas.length}}
             </h3>
-            <h2 text-center class="vlrTotal">R${{calcVlrTotalVendas()}}</h2>
+            <h2 text-center class="vlrTotal">R${{calcVlrTotalVendas(vendas)}}</h2>
             <p class="qtdVenda" item-end><ion-icon name="shirt"></ion-icon>{{calcQtdTotalPecasVendidas()}}</p>
         </ion-item>
     </ion-row>

@@ -44,8 +44,8 @@ export class FaturamentoDetailsPage {
         }, 0);
     }
 
-    public calcVlrTotalVendas(): string {
-        let valorTotal = this.vendas.reduce(function (acc, venda) {
+    public calcVlrTotalVendas(vendas: VendaDTO[]): string {
+        let valorTotal = vendas.reduce(function (acc, venda) {
             return acc + (venda.preco * venda.quantidade);
         }, 0);
 
