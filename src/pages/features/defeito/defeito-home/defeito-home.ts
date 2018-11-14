@@ -14,7 +14,6 @@ export class DefeitoHomePage {
 
     loading: Loading;
     isLoadingDismissed: boolean = true;
-    itemExpandHeight: number = 35;
     defeitos: DefeitoDTO[];
     defeitosGroupByDate: any;
 
@@ -82,7 +81,12 @@ export class DefeitoHomePage {
         this.defeitoService.findAll()
             .subscribe(response => {
                     this.defeitos = response;
-                    this.defeitosGroupByDate = DefeitoHomePage.splitDefeitoByDate(this.defeitos);
+
+                    if (this.defeitos !== null) {
+                        this.defeitosGroupByDate = DefeitoHomePage.splitDefeitoByDate(this.defeitos);
+                    } else {
+                        this.presentLoading(false);
+                    }
                 },
                 error => {
                     // TODO tratar erros
@@ -105,7 +109,6 @@ export class DefeitoHomePage {
         let defeitosByDate = defeitos
             .reduce((r, v, i, a, k = v.data) => ((r[k] || (r[k] = []))
                 .push(v), r), {});
-
         return Object.values(defeitosByDate);
     }
 

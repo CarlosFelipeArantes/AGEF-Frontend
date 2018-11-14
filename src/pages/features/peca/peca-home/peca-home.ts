@@ -44,7 +44,11 @@ export class PecaHomePage {
     public recuperarDadosPecas(): void {
         this.pecaFeiraService.findAll()
             .subscribe(response => {
-                    this.pecas = response;
+                    if(response !== null) {
+                        this.pecas = response;
+                    } else {
+                        this.mostrarLoading(false);
+                    }
                 },
                 error => {
                     console.log(error);

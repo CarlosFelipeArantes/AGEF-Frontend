@@ -270,6 +270,8 @@ export class VendaHomePage {
         } else {
             console.log("Erro");
         }
+
+        this.mostrarLoading(false);
     }
 
     public recuperarNomePeca(peca: PecaFeiraDTO) {
