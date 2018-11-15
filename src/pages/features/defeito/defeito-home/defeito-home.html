@@ -1,6 +1,4 @@
 <ion-header>
-
-    <!--TODO botão de fechar modal (e.g.: ModalController do Ionic Doc)-->
     <ion-navbar>
         <ion-grid text-center>
             <ion-row>
@@ -17,28 +15,18 @@
 
 <ion-content>
     <ion-list>
-        <div *ngFor="let dataDefeito of defeitosGroupByDate; let lastItem = last;">
-            <ion-list-header>
-                <div *ngIf="dataDefeito.length === 1; else plural">
-                    {{dataDefeito[0].data}} — {{dataDefeito.length}} Defeito
-                </div>
-
-                <ng-template #plural>
-                    {{dataDefeito[0].data}} — {{dataDefeito.length}} Defeitos
-                </ng-template>
-
-            </ion-list-header>
-
-            <ion-item-sliding *ngFor="let defeito of dataDefeito.reverse()">
+        <div *ngFor="let defeitosPorPeca of defeitosAgrupadosPorPeca; let lastItem = last;">
+            <ion-item-sliding>
                 <ion-item>
                     <ion-grid text-center>
                         <ion-row>
                             <ion-col>
-                                <h3>{{defeito.pecaFeira.modelo.nome}} - {{defeito.pecaFeira.modelo.tamanho}}</h3>
+                                <h3>{{defeitosPorPeca[0].pecaFeira.modelo.nome}} -
+                                    {{defeitosPorPeca[0].pecaFeira.modelo.tamanho}}</h3>
                             </ion-col>
 
                             <ion-col>
-                                <h3>{{defeito.quantidade}}</h3>
+                                <h3>{{defeitosPorPeca.length}}</h3>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -46,23 +34,22 @@
                 </ion-item>
 
                 <ion-item-options side="right">
-                    <button ion-button color="danger" (click)="delete(defeito)">
-                        <ion-icon name="trash"></ion-icon>
-                        Apagar
+                    <button ion-button color="primary" (click)="onClickAbrirModalDetalhesDefeitos(defeitosPorPeca)">
+                        <ion-icon name="search"></ion-icon>
+                        Detalhes
                     </button>
                 </ion-item-options>
 
             </ion-item-sliding>
 
             <div *ngIf="lastItem">
-                {{presentLoading(false)}}
+                {{mostrarLoading(false)}}
             </div>
-
         </div>
     </ion-list>
 
     <ion-fab bottom right>
-        <button ion-fab (click)="insert()">
+        <button ion-fab (click)="onClickAbrirModalCadastroDefeito()">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>

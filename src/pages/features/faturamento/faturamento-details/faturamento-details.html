@@ -52,7 +52,10 @@
                 {{vendas.length}}
             </h3>
             <h2 text-center class="vlrTotal">R${{calcVlrTotalVendas(vendas)}}</h2>
-            <p class="qtdVenda" item-end><ion-icon name="shirt"></ion-icon>{{calcQtdTotalPecasVendidas()}}</p>
+            <p class="qtdVenda" item-end>
+                <ion-icon name="shirt"></ion-icon>
+                {{calcQtdTotalPecasVendidas()}}
+            </p>
         </ion-item>
     </ion-row>
 

@@ -1,0 +1,43 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            {{defeitos[0].pecaFeira.modelo.nome}} - {{defeitos[0].pecaFeira.modelo.tamanho}}
+        </ion-title>
+
+        <ion-buttons end>
+            <button ion-button icon-only (click)="onClickFecharModal()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <div *ngFor="let defeitosPorData of defeitosAgrupadosPorData; let lastItem = last;">
+            <ion-item-sliding *ngFor="let defeito of defeitosPorData; let vendaIndex = index;">
+                <ion-item align-items-center>
+                    <h3 ion-text color="primary" item-start>{{vendaIndex + 1}}.</h3>
+                    <p>
+                        <ion-icon ion-text color="danger" name="close"></ion-icon>
+                        {{defeito.data}}
+                    </p>
+                    <p item-end class="qtdVenda">×{{defeito.quantidade}}</p>
+                </ion-item>
+
+                <ion-item-options side="right">
+                    <button ion-button color="danger" (click)="onClickEstornarDefeito(defeito)">
+                        <ion-icon name="trash"></ion-icon>
+                        Apagar
+                    </button>
+                </ion-item-options>
+
+            </ion-item-sliding>
+
+            <div *ngIf="lastItem">
+                {{mostrarLoading(false)}}
+            </div>
+
+        </div>
+    </ion-list>
+</ion-content>

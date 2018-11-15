@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, IonicPage, Loading, ModalController, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, Loading, ModalController, NavController, NavParams} from 'ionic-angular';
 import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
 import {PecaFeiraDTO} from '../../../../models/pecaFeira.dto';
 import {UtilsService} from "../../../../services/utils/utils.service";
@@ -18,7 +18,6 @@ export class PecaHomePage {
     pecas: PecaFeiraDTO[];
 
     constructor(
-        public alertCtrl: AlertController,
         public dialogoProvider: DialogoProvider,
         public loadingProvider: LoadingProvider,
         public modalCtrl: ModalController,
@@ -37,14 +36,14 @@ export class PecaHomePage {
 
     ionViewDidLoad() {
         // Dismiss é feito no *ngFor.
-        this.loading = this.loadingProvider.exibirLoadingPadrao("Carregando as vendas.");
+        this.loading = this.loadingProvider.exibirLoadingPadrao("Carregando as peças.");
         this.mostrarLoading(true);
     }
 
     public recuperarDadosPecas(): void {
         this.pecaFeiraService.findAll()
             .subscribe(response => {
-                    if(response !== null) {
+                    if (response !== null) {
                         this.pecas = response;
                     } else {
                         this.mostrarLoading(false);
@@ -71,7 +70,7 @@ export class PecaHomePage {
                     .subscribe(() => {
                             this.removerPecaDoVetor(pecaFeira);
                             this.mostrarLoading(false);
-                            this.dialogoProvider.exibirToast("Venda apagada com sucesso.");
+                            this.dialogoProvider.exibirToast("Peça apagada com sucesso.");
                         },
                         error => {
                             // TODO tratar erros

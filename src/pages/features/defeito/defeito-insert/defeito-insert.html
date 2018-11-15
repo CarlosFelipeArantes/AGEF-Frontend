@@ -1,10 +1,14 @@
 <ion-header>
-
-    <!--TODO botão de fechar modal (e.g.: ModalController do Ionic Doc)-->
     <ion-navbar>
         <ion-title>
             Dados do Defeito
         </ion-title>
+
+        <ion-buttons end>
+            <button ion-button icon-only (click)="onClickFecharModal()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 

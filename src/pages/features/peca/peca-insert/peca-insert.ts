@@ -75,9 +75,8 @@ export class PecaInsertPage {
                 },
 
                 error => {
-                    //TODO-Urgente tratar erro
                     loading.dismiss();
-                    this.dialogoProvider.exibirToast("Algo deu errado.");
+                    this.dialogoProvider.exibirToast("Já existe uma peça cadastrada com esse modelo.");
                     console.log(error);
                 })
     }

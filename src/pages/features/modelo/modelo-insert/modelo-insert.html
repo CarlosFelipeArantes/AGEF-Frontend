@@ -10,13 +10,14 @@
 
 <ion-content>
     <form [formGroup]="formGroup" (ngSubmit)="insert()">
-    
+
         <ion-item>
             <ion-label color="primary" stacked>Nome do Modelo</ion-label>
             <ion-input formControlName="modelo" type="string"></ion-input>
         </ion-item>
 
-        <div *ngIf="(formGroup.controls.modelo.dirty || formGroup.controls.modelo.touched)" class="error-text" margin-left>
+        <div *ngIf="(formGroup.controls.modelo.dirty || formGroup.controls.modelo.touched)" class="error-text"
+             margin-left>
             <div ion-text color="danger" *ngIf="formGroup.controls.modelo.errors?.required">
                 <p>Campo de preenchimento obrigatório.</p>
             </div>

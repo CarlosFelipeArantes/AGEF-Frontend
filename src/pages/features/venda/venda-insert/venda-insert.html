@@ -24,7 +24,8 @@
 
         <ion-item>
             <ion-label color="primary" stacked>Preço Unitário</ion-label>
-            <ion-input [brmasker]="{money: true, numberAndTousand: true, thousand: '.'}" formControlName="preco" type="text"></ion-input>
+            <ion-input [brmasker]="{money: true, numberAndTousand: true, thousand: '.'}" formControlName="preco"
+                       type="text"></ion-input>
         </ion-item>
 
         <div *ngIf="formGroup.controls.preco.invalid && (formGroup.controls.preco.dirty || formGroup.controls.preco.touched)"

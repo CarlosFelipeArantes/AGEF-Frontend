@@ -5,7 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LoadingProvider} from "../../../../injectables/loading";
 import {DatePipe} from "@angular/common";
 import {ModeloService} from "../../../../services/domain/modelo.service";
-import { ModeloDTO } from '../../../../models/modelo.dto';
+import {ModeloDTO} from '../../../../models/modelo.dto';
 
 @IonicPage()
 @Component({

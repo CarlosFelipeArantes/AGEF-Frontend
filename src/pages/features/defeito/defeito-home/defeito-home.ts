@@ -13,9 +13,9 @@ import {DefeitoDTO} from '../../../../models/defeito.dto';
 export class DefeitoHomePage {
 
     loading: Loading;
-    isLoadingDismissed: boolean = true;
+    loadingEstaPresente: boolean = true;
     defeitos: DefeitoDTO[];
-    defeitosGroupByDate: any;
+    defeitosAgrupadosPorPeca: any;
 
     constructor(
         public dialogo: DialogoProvider,
@@ -29,17 +29,17 @@ export class DefeitoHomePage {
 
     // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
-        this.loadDefeitos();
+        this.recuperarDadosDefeitos();
     }
 
     // noinspection JSUnusedGlobalSymbols
     ionViewDidLoad() {
         // Dismiss é feito no *ngFor.
         this.loading = this.loaderProvider.exibirLoadingPadrao("Carregando os defeitos.");
-        this.presentLoading(true);
+        this.mostrarLoading(true);
     }
 
-    delete(defeito: DefeitoDTO) {
+    public delete(defeito: DefeitoDTO): void {
         let mensagem: string = 'Você realmente quer apagar esse registro de defeito?';
         let titulo: string = 'Confirmar Remoção';
         let alert = this.dialogo.exibirDialogoConfirmacao(mensagem, titulo);
@@ -49,12 +49,12 @@ export class DefeitoHomePage {
         alert.onDidDismiss((confirmado) => {
             if (confirmado) {
                 this.loading = this.loaderProvider.exibirLoadingPadrao("Apagando o defeito.");
-                this.presentLoading(true);
+                this.mostrarLoading(true);
 
                 this.defeitoService.delete(defeito)
                     .subscribe(() => {
-                            this.loadDefeitos();
-                            this.presentLoading(false);
+                            this.recuperarDadosDefeitos();
+                            this.mostrarLoading(false);
                             this.dialogo.exibirToast("Defeito apagado com sucesso.");
                         },
                         error => {
@@ -65,27 +65,28 @@ export class DefeitoHomePage {
         });
     }
 
-    insert() {
+    public onClickAbrirModalCadastroDefeito(): void {
         let modalDadosDefeito = this.modalCtrl.create('DefeitoInsertPage');
 
         modalDadosDefeito.present();
 
         modalDadosDefeito.onDidDismiss(defeituoso => {
             if (defeituoso) {
-                this.loadDefeitos();
+                this.recuperarDadosDefeitos();
             }
         });
     }
 
-    loadDefeitos() {
+    public recuperarDadosDefeitos(): void {
         this.defeitoService.findAll()
             .subscribe(response => {
                     this.defeitos = response;
 
                     if (this.defeitos !== null) {
-                        this.defeitosGroupByDate = DefeitoHomePage.splitDefeitoByDate(this.defeitos);
+                        this.defeitosAgrupadosPorPeca = this.agruparDefeitosPorPeca(this.defeitos);
+
                     } else {
-                        this.presentLoading(false);
+                        this.mostrarLoading(false);
                     }
                 },
                 error => {
@@ -94,22 +95,34 @@ export class DefeitoHomePage {
                 });
     }
 
-    presentLoading(shouldPresent: boolean) {
-        if (shouldPresent && this.isLoadingDismissed) {
+    public mostrarLoading(deveMostrar: boolean): void {
+        if (deveMostrar && this.loadingEstaPresente) {
             this.loading.present();
-            this.isLoadingDismissed = false;
+            this.loadingEstaPresente = false;
 
-        } else if (!shouldPresent && !this.isLoadingDismissed) {
+        } else if (!deveMostrar && !this.loadingEstaPresente) {
             this.loading.dismiss();
-            this.isLoadingDismissed = true;
+            this.loadingEstaPresente = true;
         }
     }
 
-    private static splitDefeitoByDate(defeitos: DefeitoDTO[]): any[][] {
-        let defeitosByDate = defeitos
-            .reduce((r, v, i, a, k = v.data) => ((r[k] || (r[k] = []))
+    private agruparDefeitosPorPeca(defeitos: DefeitoDTO[]): any[][] {
+        let defeitosPorPeca = defeitos
+            .reduce((r, v, i, a, k = (v.pecaFeira.modelo.nome + " - " + v.pecaFeira.modelo.tamanho)) => ((r[k] || (r[k] = []))
                 .push(v), r), {});
-        return Object.values(defeitosByDate);
+
+        return Object.values(defeitosPorPeca);
     }
 
+    public onClickAbrirModalDetalhesDefeitos(defeitos: DefeitoDTO[]): void {
+        let modalDetalhesDefeitos = this.modalCtrl.create('DefeitoDetailsPage', defeitos);
+
+        modalDetalhesDefeitos.present();
+
+        modalDetalhesDefeitos.onDidDismiss(needsReload => {
+            if (needsReload) {
+                this.recuperarDadosDefeitos();
+            }
+        });
+    }
 }

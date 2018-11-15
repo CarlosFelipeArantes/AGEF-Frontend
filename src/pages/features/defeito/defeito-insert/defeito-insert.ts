@@ -100,7 +100,7 @@ export class DefeitoInsertPage {
                 })
     }
 
-    onClickDismissModal() {
+    onClickFecharModal() {
         this.viewCtrl.dismiss(false);
     }
 }

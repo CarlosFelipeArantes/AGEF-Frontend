@@ -26,6 +26,10 @@ export class DefeitoService {
         return this.http.delete(`${API_CONFIG.baseUrl}/defeitos/${defeito.id}`, {});
     }
 
+    estornar(defeito: DefeitoDTO) {
+        return this.http.put(`${API_CONFIG.baseUrl}/defeitos/${defeito.id}/estornar/${defeito.pecaFeira.id}`, {});
+    }
+
     findOne(defeito: string) {
         return this.http.get<DefeitoDTO>(`${API_CONFIG.baseUrl}/defeitos/${defeito}`, {});
     }
