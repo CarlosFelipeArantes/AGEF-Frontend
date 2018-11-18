@@ -12,6 +12,8 @@ import {LoadingProvider} from "../injectables/loading";
 import {DatePipe} from "@angular/common";
 import {UtilsService} from "../services/utils/utils.service";
 import {BrMaskerIonicServices3} from "brmasker-ionic-3";
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
 
 @NgModule({
     declarations: [
@@ -21,6 +23,7 @@ import {BrMaskerIonicServices3} from "brmasker-ionic-3";
         BrowserModule,
         HttpClientModule,
         IonicModule.forRoot(MyApp),
+        SocketIoModule.forRoot(config)
     ],
     bootstrap: [IonicApp],
     entryComponents: [
