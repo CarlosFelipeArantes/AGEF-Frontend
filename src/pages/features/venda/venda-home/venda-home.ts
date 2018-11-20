@@ -16,7 +16,7 @@ import {Socket} from 'ng-socket-io';
 @IonicPage()
 @Component({
     selector: 'page-venda-home',
-    templateUrl: 'venda-home.html'
+    templateUrl: 'venda-home.html',
 })
 
 export class VendaHomePage {
@@ -314,7 +314,7 @@ export class VendaHomePage {
         return qtdVendas;
     }
 
-    public onClickMostrarTodasVendas(): void {
+    public onClickAbrirVendasCompletas(): void {
         this.navCtrl.push(VendaCompletaPage);
     }
 }
