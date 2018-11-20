@@ -26,18 +26,21 @@
 
 <ion-content>
     <ion-list>
-        <ion-item-sliding *ngFor="let peca of pecas; let lastItem = last;">
+        <ion-item-sliding *ngFor="let venda of vendas; let lastItem = last;">
             <ion-item>
                 <ion-grid text-center>
                     <ion-row align-items-center>
 
                         <ion-col>
-                            <h3>{{recuperarNomePeca(peca)}}</h3>
-                            <p>R${{calcValorTotalVendasPorPeca(peca)}}</p>
+                            <h3>{{recuperarNomePeca(venda)}}</h3>
+                            <p>R${{mascaraDinheiro(venda.preco)}}</p>
                             <p ion-text color="primary">
                                 <ion-icon name="basket"></ion-icon>
-                                {{recuperarQtdVendas(peca)}}
+                                {{recuperarQtdVendas(venda)}}
                             </p>
+                        </ion-col>
+                        <ion-col>
+                                <p class="preco">R${{mascaraDinheiro(venda.preco*venda.quantidade)}}</p>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
@@ -45,7 +48,7 @@
             </ion-item>
 
             <ion-item-options side="right">
-                <button ion-button color="primary" (click)="onClickAbrirModalDetalhesVenda(peca)">
+                <button ion-button color="primary" (click)="onClickAbrirModalDetalhesVenda(venda)">
                     <ion-icon name="search"></ion-icon>
                     Detalhes
                 </button>

@@ -19,9 +19,8 @@ export class VendaCompletaPage {
     filtro: string = 'Hoje';
     loading: Loading;
     loadingEstaPresente: boolean = true;
-    pecas: PecaFeiraDTO[];
+    vendas: VendaDTO[];
     qtdTotalVendas: number;
-    vendasAgrupadasPorPeca: any[][];
 
     @ViewChild('selectFiltro') selectRef: Select;
 
@@ -41,7 +40,6 @@ export class VendaCompletaPage {
     // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
         this.recuperarDadosVendas();
-        this.recuperarDadosPecas();
     }
 
     // noinspection JSUnusedGlobalSymbols
@@ -50,38 +48,22 @@ export class VendaCompletaPage {
         this.loading = this.loadingProvider.exibirLoadingPadrao("Carregando as vendas.");
         this.mostrarLoading(true);
     }
-
-    public agruparVendasPorPeca(vendas: VendaDTO[]): any {
-        return vendas.reduce((r, v, i, a, k = (v.pecaFeira.modelo.nome + ' - ' + v.pecaFeira.modelo.tamanho)) => ((r[k] || (r[k] = [])).push(v), r), {});
-    }
-
+    
     public atualizarDadosVendas(vendas: VendaDTO[]): void {
         this.qtdTotalVendas = vendas.length;
-        this.vendasAgrupadasPorPeca = this.agruparVendasPorPeca(vendas);
     }
-
-    public calcValorTotalVendasPorPeca(peca: PecaFeiraDTO): string {
-        let nomePeca: string = this.recuperarNomePeca(peca);
-        let valorTotal: number = 0;
-        let vendas: VendaDTO[] = null;
-
-        if (!this.utilsService.estaVazio(this.vendasAgrupadasPorPeca)) {
-            vendas = this.vendasAgrupadasPorPeca[nomePeca];
-
-            if (vendas !== undefined) {
-                valorTotal = vendas.reduce(function (acc, venda) {
-                    return acc + (venda.preco * venda.quantidade);
-                }, 0);
-            }
-        }
-
-        return this.utilsService.mascaraDinheiro(valorTotal);
-    }
-
+    
     public findAllVendas(): void {
         this.vendaService.findAll()
             .subscribe(response => {
-                    this.atualizarDadosVendas(response);
+                this.vendas = response;
+
+                if (this.vendas !== null) {
+                    this.atualizarDadosVendas(this.vendas);
+
+                } else {
+                    this.mostrarLoading(false);
+                }
                 },
 
                 error => {
@@ -97,7 +79,14 @@ export class VendaCompletaPage {
 
         this.vendaService.findByDataBetween(dataInicial, dataFinal)
             .subscribe(response => {
-                    this.atualizarDadosVendas(response);
+                this.vendas = response;
+
+                if (this.vendas !== null) {
+                    this.atualizarDadosVendas(this.vendas);
+
+                } else {
+                    this.mostrarLoading(false);
+                }
                 },
 
                 error => {
@@ -110,20 +99,11 @@ export class VendaCompletaPage {
         this.findVendasByDataBetween(dia, dia);
     }
 
-    public findUltimaVendaQuantidadeIgualUm(vendas: VendaDTO[]): VendaDTO {
-        return vendas
-            .reverse()
-            .find(function (venda) {
-                return venda.quantidade === 1;
-            });
-    }
+    public onClickAbrirModalDetalhesVenda(venda: VendaDTO): void {
+        let nomePeca = this.recuperarNomePeca(venda);
 
-    public onClickAbrirModalDetalhesVenda(peca: PecaFeiraDTO): void {
-        let nomePeca = this.recuperarNomePeca(peca);
-        let vendas = this.vendasAgrupadasPorPeca[nomePeca];
-
-        if (vendas !== undefined) {
-            let modalDetalhesVenda = this.modalCtrl.create('VendaDetailsPage', vendas);
+        if (this.vendas !== undefined) {
+            let modalDetalhesVenda = this.modalCtrl.create('VendaDetailsPage', this.vendas);
 
             modalDetalhesVenda.present();
 
@@ -160,17 +140,6 @@ export class VendaCompletaPage {
         }
     }
 
-    public recuperarDadosPecas(): void {
-        this.pecaFeiraService.findAll()
-            .subscribe(response => {
-                    this.pecas = response;
-                },
-                error => {
-                    console.log(error);
-                });
-
-    }
-
     public recuperarDadosVendas(): void {
         let hoje = new Date();
 
@@ -196,22 +165,15 @@ export class VendaCompletaPage {
         this.mostrarLoading(false);
     }
 
-    public recuperarNomePeca(peca: PecaFeiraDTO) {
-        return peca.modelo.nome + ' - ' + peca.modelo.tamanho;
+    public recuperarNomePeca(venda: VendaDTO) {
+        return venda.pecaFeira.modelo.nome + ' - ' + venda.pecaFeira.modelo.tamanho;
     }
 
-    public recuperarQtdVendas(peca: PecaFeiraDTO): number {
-        let nomePeca = this.recuperarNomePeca(peca);
-        let qtdVendas = 0;
-
-        if (!this.utilsService.estaVazio(this.vendasAgrupadasPorPeca)) {
-            let vendas = this.vendasAgrupadasPorPeca[nomePeca];
-
-            if (vendas !== undefined) {
-                qtdVendas = vendas.length;
-            }
-        }
-
-        return qtdVendas;
+    public recuperarQtdVendas(venda: VendaDTO): number {
+        return venda.quantidade;
+    }
+    
+    public mascaraDinheiro(valor: number): string {
+        return this.utilsService.mascaraDinheiro(valor);
     }
 }
