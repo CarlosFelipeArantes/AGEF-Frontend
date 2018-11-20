@@ -9,9 +9,6 @@
         </ng-template>
 
         <ion-buttons end>
-                <button ion-button (click)="onClickAbrirVendasCompletas()" clear icon-only>
-                        <ion-icon name="basket"></ion-icon>
-                </button>
             <button ion-button (click)="onClickAbrirOpcoesFiltro()" clear icon-only>
                 <ion-icon name="funnel">
                     <ion-select [(ngModel)]="filtro" (ionChange)="onChangeRcprVendasComFiltro()" cancelText="Cancelar"
@@ -21,10 +18,6 @@
                         <ion-option>Total</ion-option>
                     </ion-select>
                 </ion-icon>
-            </button>
-
-            <button ion-button (click)="onClickAbrirModalCadastroVenda()" clear icon-only>
-                <ion-icon name="cart"></ion-icon>
             </button>
         </ion-buttons>
 
@@ -37,14 +30,6 @@
             <ion-item>
                 <ion-grid text-center>
                     <ion-row align-items-center>
-                        <ion-col>
-                            <button ion-button
-                                    (click)="onClickEstornarVenda(peca)"
-                                    class="circle-button" color="primary"
-                                    icon-only>
-                                <ion-icon name="remove"></ion-icon>
-                            </button>
-                        </ion-col>
 
                         <ion-col>
                             <h3>{{recuperarNomePeca(peca)}}</h3>
@@ -53,14 +38,6 @@
                                 <ion-icon name="basket"></ion-icon>
                                 {{recuperarQtdVendas(peca)}}
                             </p>
-                        </ion-col>
-
-                        <ion-col>
-                            <button ion-button (click)="onClickCadastrarUmaVenda(peca)" class="circle-button"
-                                    color="primary"
-                                    icon-only>
-                                <ion-icon name="add"></ion-icon>
-                            </button>
                         </ion-col>
                     </ion-row>
                 </ion-grid>

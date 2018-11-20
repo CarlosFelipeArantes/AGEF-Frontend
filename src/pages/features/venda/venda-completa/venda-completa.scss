@@ -1,10 +1,12 @@
-page-modelo-home{
+page-venda-completa {
+
   ion-list-header {
     .label {
       color: white;
       font-size: 1em;
     }
   }
+
   ion-navbar {
     .toolbar-content {
       color: white;
@@ -22,13 +24,15 @@ page-modelo-home{
       margin-right: 3px;
     }
   }
+
+  page-venda-completa {
     .vertical-center-text {
       padding-top: 30%;
     }
     .master {
       background-color: #dddddd;
     }
-  
+  }
 
   .button-clear-md {
     color: white;
