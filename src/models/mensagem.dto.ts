@@ -2,6 +2,5 @@ import {VendaDTO} from "./venda.dto";
 
 export interface MensagemDTO {
     venda: VendaDTO,
-    operacao: string,
-    nickname: string
+    operacao: string
 }

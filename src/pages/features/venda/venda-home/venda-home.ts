@@ -49,6 +49,8 @@ export class VendaHomePage {
         this.recuperarDadosVendas();
         this.recuperarDadosPecas();
         this.socket.connect();
+        this.socket.emit('nome',API_CONFIG.nome);
+        this.socket.emit('entrei', API_CONFIG.baseUrl);
     }
 
     ionViewWillLeave(){
@@ -187,7 +189,6 @@ export class VendaHomePage {
                     let mensagem: MensagemDTO = { 
                         operacao:"venda",
                         venda:venda,
-                        nickname:API_CONFIG.nome
                     };
                     
                     this.socket.emit('vendi', mensagem);
@@ -229,13 +230,12 @@ export class VendaHomePage {
 
         } else {
             this.vendaService.estornar(venda)
-                .subscribe(() => {
+                    .subscribe(() => {
                         this.recuperarDadosVendas();
                         this.dialogo.exibirToast("Venda apagada com sucesso.");
                         let mensagem: MensagemDTO = { 
                             operacao:"estorno",
                             venda:venda,
-                            nickname:API_CONFIG.nome
                         };
                         
                         this.socket.emit('vendi', mensagem);
@@ -321,4 +321,5 @@ export class VendaHomePage {
     public onClickAbrirVendasCompletas(): void {
         this.navCtrl.push(VendaCompletaPage);
     }
+
 }

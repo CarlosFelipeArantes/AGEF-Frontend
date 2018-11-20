@@ -87,11 +87,9 @@ export class VendaInsertPage {
                     loading.dismiss();
                     this.dialogoProvider.exibirToast("Venda registrada com sucesso.");
                     this.viewCtrl.dismiss(true);
-
                     let mensagem: MensagemDTO = { 
                         operacao:"venda",
-                        venda:venda,
-                        nickname:API_CONFIG.nome
+                        venda:venda
                     };
                     
                     this.socket.emit('vendi', mensagem);

@@ -211,7 +211,6 @@ export class VendaCompletaPage {
                 qtdVendas = vendas.length;
             }
         }
-
         return qtdVendas;
     }
 }
