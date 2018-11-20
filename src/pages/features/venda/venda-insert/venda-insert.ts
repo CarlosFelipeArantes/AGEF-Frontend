@@ -8,6 +8,7 @@ import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
 import {DatePipe} from "@angular/common";
 import {VendaService} from "../../../../services/domain/venda.service";
 import {UtilsService} from "../../../../services/utils/utils.service";
+import{Socket} from 'ng-socket-io'
 
 @IonicPage()
 @Component({
@@ -30,7 +31,8 @@ export class VendaInsertPage {
         public pecaFeiraService: PecaFeiraService,
         public utilsService: UtilsService,
         public vendaService: VendaService,
-        public viewCtrl: ViewController) {
+        public viewCtrl: ViewController,
+        private socket: Socket) {
 
         this.formGroup = this.formBuilder.group({
             data: [new Date().toISOString(), [Validators.required]],
@@ -80,6 +82,8 @@ export class VendaInsertPage {
                     loading.dismiss();
                     this.dialogoProvider.exibirToast("Venda registrada com sucesso.");
                     this.viewCtrl.dismiss(true);
+                    this.socket.connect();
+                    this.socket.emit('venda', venda);
                 },
                 error => {
                     if (error.status === 400) {
