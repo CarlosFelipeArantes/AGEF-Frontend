@@ -4,6 +4,8 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {NetworkInjector} from '../injectables/network';
 import {Network} from '@ionic-native/network';
+import {API_CONFIG} from '../config/api.config';
+import {Socket} from 'ng-socket-io';
 
 @Component({
     templateUrl: 'app.html'
@@ -21,6 +23,7 @@ export class MyApp {
         public splashScreen: SplashScreen,
         public network: Network,
         public networkInjector: NetworkInjector,
+        private socket: Socket,
         public events: Events,
         private alertCtrl: AlertController
     ) {
@@ -34,6 +37,9 @@ export class MyApp {
 
     initializeApp() {
         this.platform.ready().then(() => {
+            this.socket.connect();
+            this.socket.emit('nome',API_CONFIG.nome);
+            this.socket.emit('entrei', API_CONFIG.baseUrl);
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
             this.statusBar.styleDefault();
@@ -51,6 +57,7 @@ export class MyApp {
                 this.alertInternet();
             });
 
+            this.socket.disconnect();
         });
     }
 

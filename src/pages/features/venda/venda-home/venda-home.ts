@@ -49,8 +49,7 @@ export class VendaHomePage {
         this.recuperarDadosVendas();
         this.recuperarDadosPecas();
         this.socket.connect();
-        this.socket.emit('nome',API_CONFIG.nome);
-        this.socket.emit('entrei', API_CONFIG.baseUrl);
+
     }
 
     ionViewWillLeave(){
