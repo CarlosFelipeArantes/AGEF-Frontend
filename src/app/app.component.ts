@@ -38,7 +38,7 @@ export class MyApp {
     initializeApp() {
         this.platform.ready().then(() => {
             this.socket.connect();
-            this.socket.emit('nome',API_CONFIG.nome);
+            this.socket.emit('nome',API_CONFIG.baseUrl.split('/')[2].split('.')[0]);
             this.socket.emit('entrei', API_CONFIG.baseUrl);
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
