@@ -184,11 +184,13 @@ export class VendaHomePage {
             .subscribe(() => {
                     this.dialogo.exibirToast("Venda registrada com sucesso.");
                     this.recuperarDadosVendas();
-                    let mensagem: MensagemDTO;
-                    mensagem.operacao="venda";
-                    mensagem.url=API_CONFIG.baseUrl;
-                    mensagem.venda=venda;
-                    this.socket.emit('nome da loja', mensagem);
+                    let mensagem: MensagemDTO = { 
+                        operacao:"venda",
+                        venda:venda,
+                        nickname:API_CONFIG.nome
+                    };
+                    
+                    this.socket.emit('vendi', mensagem);
                 },
                 error => {
                     if (error.status === 400) {
@@ -230,11 +232,13 @@ export class VendaHomePage {
                 .subscribe(() => {
                         this.recuperarDadosVendas();
                         this.dialogo.exibirToast("Venda apagada com sucesso.");
-                        let mensagem: MensagemDTO;
-                        mensagem.operacao="estorno";
-                        mensagem.url=API_CONFIG.baseUrl;
-                        mensagem.venda=venda;
-                    this.socket.emit('nome da loja', mensagem);
+                        let mensagem: MensagemDTO = { 
+                            operacao:"estorno",
+                            venda:venda,
+                            nickname:API_CONFIG.nome
+                        };
+                        
+                        this.socket.emit('vendi', mensagem);
                     },
                     error => {
                         // TODO tratar erros
