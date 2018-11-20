@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LoadingProvider} from "../../../../injectables/loading";
 import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
 import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
+import {MensagemDTO} from "../../../../models/mensagem.dto";
 import {DatePipe} from "@angular/common";
 import {VendaService} from "../../../../services/domain/venda.service";
 import {UtilsService} from "../../../../services/utils/utils.service";
@@ -88,9 +89,11 @@ export class VendaInsertPage {
                     loading.dismiss();
                     this.dialogoProvider.exibirToast("Venda registrada com sucesso.");
                     this.viewCtrl.dismiss(true);
-                    let cabecalho;
-                    cabecalho = "venda "+API_CONFIG.baseUrl.substring(8, API_CONFIG.baseUrl.indexOf('.'));
-                    this.socket.emit(cabecalho, venda);
+                    let mensagem: MensagemDTO;
+                    mensagem.operacao="venda";
+                    mensagem.url=API_CONFIG.baseUrl;
+                    mensagem.venda=venda;
+                    this.socket.emit('nome da loja', mensagem);
                 },
                 error => {
                     if (error.status === 400) {

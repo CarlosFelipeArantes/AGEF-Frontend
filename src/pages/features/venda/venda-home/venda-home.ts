@@ -5,6 +5,7 @@ import {LoadingProvider} from "../../../../injectables/loading";
 import {VendaDTO} from '../../../../models/venda.dto';
 import {VendaService} from '../../../../services/domain/venda.service';
 import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
+import {MensagemDTO} from "../../../../models/mensagem.dto";
 import {DatePipe} from "@angular/common";
 import {UtilsService} from "../../../../services/utils/utils.service";
 import {PecaFeiraService} from "../../../../services/domain/peca-feira.service";
@@ -183,9 +184,11 @@ export class VendaHomePage {
             .subscribe(() => {
                     this.dialogo.exibirToast("Venda registrada com sucesso.");
                     this.recuperarDadosVendas();
-                    let cabecalho;
-                    cabecalho = "venda "+API_CONFIG.baseUrl.substring(8, API_CONFIG.baseUrl.indexOf('.'));
-                    this.socket.emit(cabecalho, venda);
+                    let mensagem: MensagemDTO;
+                    mensagem.operacao="venda";
+                    mensagem.url=API_CONFIG.baseUrl;
+                    mensagem.venda=venda;
+                    this.socket.emit('nome da loja', mensagem);
                 },
                 error => {
                     if (error.status === 400) {
@@ -227,9 +230,11 @@ export class VendaHomePage {
                 .subscribe(() => {
                         this.recuperarDadosVendas();
                         this.dialogo.exibirToast("Venda apagada com sucesso.");
-                        let cabecalho;
-                    cabecalho = "estorno "+API_CONFIG.baseUrl.substring(8, API_CONFIG.baseUrl.indexOf('.'));
-                    this.socket.emit(cabecalho, venda);
+                        let mensagem: MensagemDTO;
+                        mensagem.operacao="estorno";
+                        mensagem.url=API_CONFIG.baseUrl;
+                        mensagem.venda=venda;
+                    this.socket.emit('nome da loja', mensagem);
                     },
                     error => {
                         // TODO tratar erros
