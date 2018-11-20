@@ -8,17 +8,13 @@ import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
 import {DatePipe} from "@angular/common";
 import {UtilsService} from "../../../../services/utils/utils.service";
 import {PecaFeiraService} from "../../../../services/domain/peca-feira.service";
-import {VendaCompletaPage} from '../venda-completa/venda-completa';
-import { API_CONFIG } from '../../../../config/api.config';
-import {Socket} from 'ng-socket-io';
 
 @IonicPage()
 @Component({
-    selector: 'page-venda-home',
-    templateUrl: 'venda-home.html'
+    selector: 'page-venda-completa',
+    templateUrl: 'venda-completa.html'
 })
-
-export class VendaHomePage {
+export class VendaCompletaPage {
 
     filtro: string = 'Hoje';
     loading: Loading;
@@ -39,19 +35,13 @@ export class VendaHomePage {
         public navParams: NavParams,
         public pecaFeiraService: PecaFeiraService,
         public utilsService: UtilsService,
-        public vendaService: VendaService,
-        private socket: Socket) {
+        public vendaService: VendaService) {
     }
 
     // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
         this.recuperarDadosVendas();
         this.recuperarDadosPecas();
-        this.socket.connect();
-    }
-
-    ionViewWillLeave(){
-        this.socket.disconnect();
     }
 
     // noinspection JSUnusedGlobalSymbols
@@ -128,18 +118,6 @@ export class VendaHomePage {
             });
     }
 
-    public onClickAbrirModalCadastroVenda(): void {
-        let modalDadosVenda = this.modalCtrl.create('VendaInsertPage');
-
-        modalDadosVenda.present();
-
-        modalDadosVenda.onDidDismiss(vendido => {
-            if (vendido) {
-                this.recuperarDadosVendas();
-            }
-        });
-    }
-
     public onClickAbrirModalDetalhesVenda(peca: PecaFeiraDTO): void {
         let nomePeca = this.recuperarNomePeca(peca);
         let vendas = this.vendasAgrupadasPorPeca[nomePeca];
@@ -165,78 +143,6 @@ export class VendaHomePage {
 
     public onClickAbrirOpcoesFiltro(): void {
         this.selectRef.open();
-    }
-
-    public onClickCadastrarUmaVenda(pecaArg: PecaFeiraDTO): void {
-        let data = new Date().toISOString();
-        let peca = pecaArg;
-        let preco = pecaArg.preco;
-        let quantidade = 1;
-        let venda: any = {
-            data: this.datePipe.transform(data, 'dd/MM/yyyy'),
-            pecaFeira: peca,
-            preco: preco,
-            quantidade: quantidade
-        };
-
-        this.vendaService.insert(venda)
-            .subscribe(() => {
-                    this.dialogo.exibirToast("Venda registrada com sucesso.");
-                    this.recuperarDadosVendas();
-                    let cabecalho;
-                    cabecalho = "venda "+API_CONFIG.baseUrl.substring(8, API_CONFIG.baseUrl.indexOf('.'));
-                    this.socket.emit(cabecalho, venda);
-                },
-                error => {
-                    if (error.status === 400) {
-                        let mensagem = "Não existem mais peças no estoque.";
-                        let titulo = "Estoque vazio";
-
-                        this.dialogo.exibirDialogoInformacao(mensagem, titulo);
-                    }
-
-                    console.log(error);
-                })
-    }
-
-    public onClickEstornarVenda(peca: PecaFeiraDTO): void {
-        let nomePeca = this.recuperarNomePeca(peca);
-        let qtdVendasPeca = 0;
-        let venda = undefined;
-        let vendas = this.vendasAgrupadasPorPeca[nomePeca];
-
-        if (vendas !== undefined) {
-            qtdVendasPeca = vendas.length;
-            venda = this.findUltimaVendaQuantidadeIgualUm(vendas);
-        }
-
-        if (qtdVendasPeca === 0) {
-            let mensagem = "Não existem mais vendas deste produto nesta data.";
-            let titulo = "Não existem vendas";
-
-            this.dialogo.exibirDialogoInformacao(mensagem, titulo);
-
-        } else if (venda === undefined) {
-            let mensagem = "Para remover vendas com quantidades de peças vendidas diferentes de 1, entre na tela de detalhes.";
-            let titulo = "Remova na Tela de Detalhes";
-
-            this.dialogo.exibirDialogoInformacao(mensagem, titulo);
-
-        } else {
-            this.vendaService.estornar(venda)
-                .subscribe(() => {
-                        this.recuperarDadosVendas();
-                        this.dialogo.exibirToast("Venda apagada com sucesso.");
-                        let cabecalho;
-                    cabecalho = "estorno "+API_CONFIG.baseUrl.substring(8, API_CONFIG.baseUrl.indexOf('.'));
-                    this.socket.emit(cabecalho, venda);
-                    },
-                    error => {
-                        // TODO tratar erros
-                        console.log(error);
-                    });
-
-        }
     }
 
     public onChangeRcprVendasComFiltro(): void {
@@ -307,9 +213,5 @@ export class VendaHomePage {
         }
 
         return qtdVendas;
-    }
-
-    public onClickMostrarTodasVendas(): void {
-        this.navCtrl.push(VendaCompletaPage);
     }
 }

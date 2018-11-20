@@ -8,7 +8,8 @@ import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
 import {DatePipe} from "@angular/common";
 import {VendaService} from "../../../../services/domain/venda.service";
 import {UtilsService} from "../../../../services/utils/utils.service";
-import{Socket} from 'ng-socket-io'
+import {Socket} from 'ng-socket-io';
+import { API_CONFIG } from '../../../../config/api.config';
 
 @IonicPage()
 @Component({
@@ -45,6 +46,11 @@ export class VendaInsertPage {
     // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
         this.loadPecas();
+        this.socket.connect();
+    }
+
+    ionViewWillLeave(){
+        this.socket.disconnect();
     }
 
     decrement() {
@@ -82,8 +88,9 @@ export class VendaInsertPage {
                     loading.dismiss();
                     this.dialogoProvider.exibirToast("Venda registrada com sucesso.");
                     this.viewCtrl.dismiss(true);
-                    this.socket.connect();
-                    this.socket.emit('venda', venda);
+                    let cabecalho;
+                    cabecalho = "venda "+API_CONFIG.baseUrl.substring(8, API_CONFIG.baseUrl.indexOf('.'));
+                    this.socket.emit(cabecalho, venda);
                 },
                 error => {
                     if (error.status === 400) {
