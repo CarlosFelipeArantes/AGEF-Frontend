@@ -5,15 +5,20 @@ import {LoadingProvider} from "../../../../injectables/loading";
 import {VendaDTO} from '../../../../models/venda.dto';
 import {VendaService} from '../../../../services/domain/venda.service';
 import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
+import {MensagemDTO} from "../../../../models/mensagem.dto";
 import {DatePipe} from "@angular/common";
 import {UtilsService} from "../../../../services/utils/utils.service";
 import {PecaFeiraService} from "../../../../services/domain/peca-feira.service";
+import {VendaCompletaPage} from '../venda-completa/venda-completa';
+import { API_CONFIG } from '../../../../config/api.config';
+import {Socket} from 'ng-socket-io';
 
 @IonicPage()
 @Component({
     selector: 'page-venda-home',
-    templateUrl: 'venda-home.html'
+    templateUrl: 'venda-home.html',
 })
+
 export class VendaHomePage {
 
     filtro: string = 'Hoje';
@@ -22,6 +27,7 @@ export class VendaHomePage {
     pecas: PecaFeiraDTO[];
     qtdTotalVendas: number;
     vendasAgrupadasPorPeca: any[][];
+    vendasCompletas: VendaCompletaPage
 
     @ViewChild('selectFiltro') selectRef: Select;
 
@@ -35,13 +41,19 @@ export class VendaHomePage {
         public navParams: NavParams,
         public pecaFeiraService: PecaFeiraService,
         public utilsService: UtilsService,
-        public vendaService: VendaService) {
+        public vendaService: VendaService,
+        private socket: Socket) {
     }
 
     // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
         this.recuperarDadosVendas();
         this.recuperarDadosPecas();
+        this.socket.connect();
+    }
+
+    ionViewWillLeave(){
+        this.socket.disconnect();
     }
 
     // noinspection JSUnusedGlobalSymbols
@@ -173,6 +185,11 @@ export class VendaHomePage {
             .subscribe(() => {
                     this.dialogo.exibirToast("Venda registrada com sucesso.");
                     this.recuperarDadosVendas();
+                    let mensagem: MensagemDTO;
+                    mensagem.operacao="venda";
+                    mensagem.url=API_CONFIG.baseUrl;
+                    mensagem.venda=venda;
+                    this.socket.emit('nome da loja', mensagem);
                 },
                 error => {
                     if (error.status === 400) {
@@ -214,6 +231,11 @@ export class VendaHomePage {
                 .subscribe(() => {
                         this.recuperarDadosVendas();
                         this.dialogo.exibirToast("Venda apagada com sucesso.");
+                        let mensagem: MensagemDTO;
+                        mensagem.operacao="estorno";
+                        mensagem.url=API_CONFIG.baseUrl;
+                        mensagem.venda=venda;
+                    this.socket.emit('nome da loja', mensagem);
                     },
                     error => {
                         // TODO tratar erros
@@ -291,5 +313,11 @@ export class VendaHomePage {
         }
 
         return qtdVendas;
+    }
+
+    public onClickAbrirVendasCompletas(): void {
+        let modalVendaCompleta = this.modalCtrl.create('VendaCompletaPage');
+
+        modalVendaCompleta.present();
     }
 }

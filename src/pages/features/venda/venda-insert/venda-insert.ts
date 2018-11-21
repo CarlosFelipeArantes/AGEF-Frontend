@@ -5,9 +5,12 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LoadingProvider} from "../../../../injectables/loading";
 import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
 import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
+import {MensagemDTO} from "../../../../models/mensagem.dto";
 import {DatePipe} from "@angular/common";
 import {VendaService} from "../../../../services/domain/venda.service";
 import {UtilsService} from "../../../../services/utils/utils.service";
+import {Socket} from 'ng-socket-io';
+import { API_CONFIG } from '../../../../config/api.config';
 
 @IonicPage()
 @Component({
@@ -30,7 +33,8 @@ export class VendaInsertPage {
         public pecaFeiraService: PecaFeiraService,
         public utilsService: UtilsService,
         public vendaService: VendaService,
-        public viewCtrl: ViewController) {
+        public viewCtrl: ViewController,
+        private socket: Socket) {
 
         this.formGroup = this.formBuilder.group({
             data: [new Date().toISOString(), [Validators.required]],
@@ -43,6 +47,11 @@ export class VendaInsertPage {
     // noinspection JSUnusedGlobalSymbols
     ionViewWillEnter() {
         this.loadPecas();
+        this.socket.connect();
+    }
+
+    ionViewWillLeave(){
+        this.socket.disconnect();
     }
 
     decrement() {
@@ -80,6 +89,11 @@ export class VendaInsertPage {
                     loading.dismiss();
                     this.dialogoProvider.exibirToast("Venda registrada com sucesso.");
                     this.viewCtrl.dismiss(true);
+                    let mensagem: MensagemDTO;
+                    mensagem.operacao="venda";
+                    mensagem.url=API_CONFIG.baseUrl;
+                    mensagem.venda=venda;
+                    this.socket.emit('nome da loja', mensagem);
                 },
                 error => {
                     if (error.status === 400) {
