@@ -27,6 +27,7 @@ export class VendaHomePage {
     pecas: PecaFeiraDTO[];
     qtdTotalVendas: number;
     vendasAgrupadasPorPeca: any[][];
+    vendasCompletas: VendaCompletaPage
 
     @ViewChild('selectFiltro') selectRef: Select;
 
@@ -318,7 +319,9 @@ export class VendaHomePage {
     }
 
     public onClickAbrirVendasCompletas(): void {
-        this.navCtrl.push(VendaCompletaPage);
+        let modalVendaCompleta = this.modalCtrl.create('VendaCompletaPage');
+
+        modalVendaCompleta.present();
     }
 
 }
