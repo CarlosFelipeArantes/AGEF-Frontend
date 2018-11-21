@@ -12,7 +12,7 @@ import {LoadingProvider} from "../injectables/loading";
 import {DatePipe} from "@angular/common";
 import {UtilsService} from "../services/utils/utils.service";
 import {BrMaskerIonicServices3} from "brmasker-ionic-3";
-import {SocketIoModule, SocketIoConfig} from 'ng-socket-io';
+import {SocketIoModule} from 'ng-socket-io';
 import {SOCKET_IO_CONFIG} from '../config/socket.io.config'
 
 @NgModule({

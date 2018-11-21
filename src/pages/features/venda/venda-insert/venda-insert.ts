@@ -10,7 +10,6 @@ import {DatePipe} from "@angular/common";
 import {VendaService} from "../../../../services/domain/venda.service";
 import {UtilsService} from "../../../../services/utils/utils.service";
 import {Socket} from 'ng-socket-io';
-import { API_CONFIG } from '../../../../config/api.config';
 
 @IonicPage()
 @Component({

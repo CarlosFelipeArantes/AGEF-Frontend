@@ -10,7 +10,6 @@ import {DatePipe} from "@angular/common";
 import {UtilsService} from "../../../../services/utils/utils.service";
 import {PecaFeiraService} from "../../../../services/domain/peca-feira.service";
 import {VendaCompletaPage} from '../venda-completa/venda-completa';
-import { API_CONFIG } from '../../../../config/api.config';
 import {Socket} from 'ng-socket-io';
 
 @IonicPage()

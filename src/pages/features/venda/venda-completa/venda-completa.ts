@@ -104,7 +104,6 @@ export class VendaCompletaPage {
     }
 
     public onClickAbrirModalDetalhesVenda(venda: VendaDTO): void {
-        let nomePeca = this.recuperarNomePeca(venda);
 
         if (this.vendas !== undefined) {
             let modalDetalhesVenda = this.modalCtrl.create('VendaDetailsPage', this.vendas);
