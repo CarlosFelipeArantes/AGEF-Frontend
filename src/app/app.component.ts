@@ -1,11 +1,11 @@
-import {Component, ViewChild} from '@angular/core';
-import {AlertController, Events, Nav, Platform} from 'ionic-angular';
-import {StatusBar} from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
-import {NetworkInjector} from '../injectables/network';
-import {Network} from '@ionic-native/network';
-import {API_CONFIG} from '../config/api.config';
-import {Socket} from 'ng-socket-io';
+import { Component, ViewChild } from '@angular/core';
+import { AlertController, Events, Nav, Platform } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { NetworkInjector } from '../injectables/network';
+import { Network } from '@ionic-native/network';
+import { API_CONFIG } from '../config/api.config';
+import { Socket } from 'ng-socket-io';
 
 @Component({
     templateUrl: 'app.html'
@@ -30,7 +30,7 @@ export class MyApp {
         this.initializeApp();
         // used for an example of ngFor and navigation
         this.pages = [
-            {title: 'Home', component: 'HomePage'}
+            { title: 'Home', component: 'HomePage' }
         ];
 
     }
@@ -38,8 +38,8 @@ export class MyApp {
     initializeApp() {
         this.platform.ready().then(() => {
             this.socket.connect();
-            this.socket.emit('nome',API_CONFIG.baseUrl.split('/')[2].split('.')[0]);
             this.socket.emit('entrei', API_CONFIG.baseUrl);
+            this.socket.disconnect();
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
             this.statusBar.styleDefault();
@@ -56,8 +56,6 @@ export class MyApp {
             this.events.subscribe('network:online', () => {
                 this.alertInternet();
             });
-
-            this.socket.disconnect();
         });
     }
 
