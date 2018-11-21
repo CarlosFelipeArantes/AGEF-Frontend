@@ -1,6 +1,7 @@
-import {VendaDTO} from "./venda.dto";
+import { VendaDTO } from "./venda.dto";
 
 export interface MensagemDTO {
-    venda: VendaDTO,
-    operacao: string
+    baseUrl: string;
+    venda: VendaDTO;
+    operacao: string;
 }

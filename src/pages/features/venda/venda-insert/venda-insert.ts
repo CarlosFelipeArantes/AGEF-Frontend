@@ -1,15 +1,16 @@
-import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
-import {Component} from '@angular/core';
-import {DialogoProvider} from "../../../../injectables/dialogo";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {LoadingProvider} from "../../../../injectables/loading";
-import {PecaFeiraService} from '../../../../services/domain/peca-feira.service';
-import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
-import {MensagemDTO} from "../../../../models/mensagem.dto";
-import {DatePipe} from "@angular/common";
-import {VendaService} from "../../../../services/domain/venda.service";
-import {UtilsService} from "../../../../services/utils/utils.service";
-import {Socket} from 'ng-socket-io';
+import { API_CONFIG } from "../../../../config/api.config";
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { DialogoProvider } from "../../../../injectables/dialogo";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { LoadingProvider } from "../../../../injectables/loading";
+import { PecaFeiraService } from '../../../../services/domain/peca-feira.service';
+import { PecaFeiraDTO } from "../../../../models/pecaFeira.dto";
+import { MensagemDTO } from "../../../../models/mensagem.dto";
+import { DatePipe } from "@angular/common";
+import { VendaService } from "../../../../services/domain/venda.service";
+import { UtilsService } from "../../../../services/utils/utils.service";
+import { Socket } from 'ng-socket-io';
 
 @IonicPage()
 @Component({
@@ -48,7 +49,7 @@ export class VendaInsertPage {
         this.loadPecas();
     }
 
-    ionViewWillLeave(){
+    ionViewWillLeave() {
     }
 
     decrement() {
@@ -83,16 +84,17 @@ export class VendaInsertPage {
 
         this.vendaService.insert(venda)
             .subscribe(() => {
-                    loading.dismiss();
-                    this.dialogoProvider.exibirToast("Venda registrada com sucesso.");
-                    this.viewCtrl.dismiss(true);
-                    let mensagem: MensagemDTO = { 
-                        operacao:"venda",
-                        venda:venda
-                    };
-                    
-                    this.socket.emit('vendi', mensagem);
-                },
+                loading.dismiss();
+                this.dialogoProvider.exibirToast("Venda registrada com sucesso.");
+                this.viewCtrl.dismiss(true);
+                let mensagem: MensagemDTO = {
+                    baseUrl: API_CONFIG.baseUrl,
+                    operacao: "venda",
+                    venda: venda
+                };
+
+                this.socket.emit('vendi', mensagem);
+            },
                 error => {
                     if (error.status === 400) {
                         loading.dismiss();
@@ -110,8 +112,8 @@ export class VendaInsertPage {
     loadPecas() {
         this.pecaFeiraService.findAll()
             .subscribe(pecas => {
-                    this.pecas = pecas;
-                },
+                this.pecas = pecas;
+            },
                 error => {
                     //TODO tratar erros
                     console.log(error);

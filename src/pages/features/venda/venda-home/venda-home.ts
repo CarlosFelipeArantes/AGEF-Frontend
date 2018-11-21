@@ -1,16 +1,17 @@
-import {Events, IonicPage, Loading, ModalController, NavController, NavParams, Select} from 'ionic-angular';
-import {Component, ViewChild} from '@angular/core';
-import {DialogoProvider} from "../../../../injectables/dialogo";
-import {LoadingProvider} from "../../../../injectables/loading";
-import {VendaDTO} from '../../../../models/venda.dto';
-import {VendaService} from '../../../../services/domain/venda.service';
-import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
-import {MensagemDTO} from "../../../../models/mensagem.dto";
-import {DatePipe} from "@angular/common";
-import {UtilsService} from "../../../../services/utils/utils.service";
-import {PecaFeiraService} from "../../../../services/domain/peca-feira.service";
-import {VendaCompletaPage} from '../venda-completa/venda-completa';
-import {Socket} from 'ng-socket-io';
+import { API_CONFIG } from "../../../../config/api.config";
+import { Events, IonicPage, Loading, ModalController, NavController, NavParams, Select } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { DialogoProvider } from "../../../../injectables/dialogo";
+import { LoadingProvider } from "../../../../injectables/loading";
+import { VendaDTO } from '../../../../models/venda.dto';
+import { VendaService } from '../../../../services/domain/venda.service';
+import { PecaFeiraDTO } from "../../../../models/pecaFeira.dto";
+import { MensagemDTO } from "../../../../models/mensagem.dto";
+import { DatePipe } from "@angular/common";
+import { UtilsService } from "../../../../services/utils/utils.service";
+import { PecaFeiraService } from "../../../../services/domain/peca-feira.service";
+import { VendaCompletaPage } from '../venda-completa/venda-completa';
+import { Socket } from 'ng-socket-io';
 
 @IonicPage()
 @Component({
@@ -52,7 +53,7 @@ export class VendaHomePage {
 
     }
 
-    ionViewWillLeave(){
+    ionViewWillLeave() {
         this.socket.disconnect();
     }
 
@@ -93,8 +94,8 @@ export class VendaHomePage {
     public findAllVendas(): void {
         this.vendaService.findAll()
             .subscribe(response => {
-                    this.atualizarDadosVendas(response);
-                },
+                this.atualizarDadosVendas(response);
+            },
 
                 error => {
                     // TODO tratar erros
@@ -109,8 +110,8 @@ export class VendaHomePage {
 
         this.vendaService.findByDataBetween(dataInicial, dataFinal)
             .subscribe(response => {
-                    this.atualizarDadosVendas(response);
-                },
+                this.atualizarDadosVendas(response);
+            },
 
                 error => {
                     // TODO tratar erros
@@ -183,15 +184,16 @@ export class VendaHomePage {
 
         this.vendaService.insert(venda)
             .subscribe(() => {
-                    this.dialogo.exibirToast("Venda registrada com sucesso.");
-                    this.recuperarDadosVendas();
-                    let mensagem: MensagemDTO = { 
-                        operacao:"venda",
-                        venda:venda,
-                    };
-                    
-                    this.socket.emit('vendi', mensagem);
-                },
+                this.dialogo.exibirToast("Venda registrada com sucesso.");
+                this.recuperarDadosVendas();
+                let mensagem: MensagemDTO = {
+                    baseUrl: API_CONFIG.baseUrl,
+                    operacao: "venda",
+                    venda: venda,
+                };
+
+                this.socket.emit('vendi', mensagem);
+            },
                 error => {
                     if (error.status === 400) {
                         let mensagem = "Não existem mais peças no estoque.";
@@ -229,16 +231,17 @@ export class VendaHomePage {
 
         } else {
             this.vendaService.estornar(venda)
-                    .subscribe(() => {
-                        this.recuperarDadosVendas();
-                        this.dialogo.exibirToast("Venda apagada com sucesso.");
-                        let mensagem: MensagemDTO = { 
-                            operacao:"estorno",
-                            venda:venda,
-                        };
-                        
-                        this.socket.emit('vendi', mensagem);
-                    },
+                .subscribe(() => {
+                    this.recuperarDadosVendas();
+                    this.dialogo.exibirToast("Venda apagada com sucesso.");
+                    let mensagem: MensagemDTO = {
+                        baseUrl: API_CONFIG.baseUrl,
+                        operacao: "estorno",
+                        venda: venda,
+                    };
+
+                    this.socket.emit('vendi', mensagem);
+                },
                     error => {
                         // TODO tratar erros
                         console.log(error);
@@ -265,8 +268,8 @@ export class VendaHomePage {
     public recuperarDadosPecas(): void {
         this.pecaFeiraService.findAll()
             .subscribe(response => {
-                    this.pecas = response;
-                },
+                this.pecas = response;
+            },
                 error => {
                     console.log(error);
                 });
