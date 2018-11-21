@@ -62,9 +62,12 @@ export class ModeloHomePage {
         }
     }
 
-    // noinspection JSUnusedGlobalSymbols
     ionViewDidLoad() {
         this.presentLoading(true);
+    }
+
+    // noinspection JSUnusedGlobalSymbols
+    ionViewWillEnter() {
         this.modeloService.findAll()
             .subscribe(response => {
                     this.items = response;
@@ -245,9 +248,7 @@ export class ModeloHomePage {
         modalModelo.present();
 
         modalModelo.onDidDismiss(vendido => {
-            if (vendido) {
-                this.updateModelo;
-            }
+            this.events.publish('updateScreen');
         });
     }
 

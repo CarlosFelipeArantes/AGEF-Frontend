@@ -1,10 +1,9 @@
-import {Events, IonicPage, Loading, ModalController, NavController, NavParams, Select} from 'ionic-angular';
+import {Events, IonicPage, Loading, ModalController, NavController, NavParams, Select, ViewController} from 'ionic-angular';
 import {Component, ViewChild} from '@angular/core';
 import {DialogoProvider} from "../../../../injectables/dialogo";
 import {LoadingProvider} from "../../../../injectables/loading";
 import {VendaDTO} from '../../../../models/venda.dto';
 import {VendaService} from '../../../../services/domain/venda.service';
-import {PecaFeiraDTO} from "../../../../models/pecaFeira.dto";
 import {DatePipe} from "@angular/common";
 import {UtilsService} from "../../../../services/utils/utils.service";
 import {PecaFeiraService} from "../../../../services/domain/peca-feira.service";
@@ -32,6 +31,7 @@ export class VendaCompletaPage {
         public modalCtrl: ModalController,
         public navCtrl: NavController,
         public navParams: NavParams,
+        public viewCtrl: ViewController,
         public pecaFeiraService: PecaFeiraService,
         public utilsService: UtilsService,
         public vendaService: VendaService) {
@@ -51,6 +51,10 @@ export class VendaCompletaPage {
     
     public atualizarDadosVendas(vendas: VendaDTO[]): void {
         this.qtdTotalVendas = vendas.length;
+    }
+
+    onClickFecharModal() {
+        this.viewCtrl.dismiss(false);
     }
     
     public findAllVendas(): void {
