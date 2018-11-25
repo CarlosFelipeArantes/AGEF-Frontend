@@ -113,6 +113,7 @@ export class VendaInsertPage {
         this.pecaFeiraService.findAll()
             .subscribe(pecas => {
                 this.pecas = pecas;
+                this.pecas = this.pecas.filter(peca => peca.quantidade>0);
             },
                 error => {
                     //TODO tratar erros

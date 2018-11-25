@@ -10,7 +10,6 @@ import { MensagemDTO } from "../../../../models/mensagem.dto";
 import { DatePipe } from "@angular/common";
 import { UtilsService } from "../../../../services/utils/utils.service";
 import { PecaFeiraService } from "../../../../services/domain/peca-feira.service";
-import { VendaCompletaPage } from '../venda-completa/venda-completa';
 import { Socket } from 'ng-socket-io';
 
 @IonicPage()
@@ -27,7 +26,6 @@ export class VendaHomePage {
     pecas: PecaFeiraDTO[];
     qtdTotalVendas: number;
     vendasAgrupadasPorPeca: any[][];
-    vendasCompletas: VendaCompletaPage
 
     constructor(
         public datePipe: DatePipe,
@@ -294,19 +292,21 @@ export class VendaHomePage {
         return peca.modelo.nome + ' - ' + peca.modelo.tamanho;
     }
 
-    public recuperarQtdVendas(peca: PecaFeiraDTO): number {
+    public recuperarQtdPecasVendidas(peca: PecaFeiraDTO): number {
         let nomePeca = this.recuperarNomePeca(peca);
-        let qtdVendas = 0;
+        let qtdVendida = 0;
 
         if (!this.utilsService.estaVazio(this.vendasAgrupadasPorPeca)) {
             let vendas = this.vendasAgrupadasPorPeca[nomePeca];
 
             if (vendas !== undefined) {
-                qtdVendas = vendas.length;
+                for(let i of vendas){
+                    qtdVendida = qtdVendida+i.quantidade;
+                }
             }
         }
 
-        return qtdVendas;
+        return qtdVendida;
     }
 
     public onClickAbrirVendasCompletas(): void {
