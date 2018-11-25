@@ -42,17 +42,13 @@
                         <ion-col>
                             <p class="preco">R${{mascaraDinheiro(venda.preco*venda.quantidade)}}</p>
                         </ion-col>
+                        <ion-col>
+                            <p>{{venda.data}}</p>
+                        </ion-col>
                     </ion-row>
                 </ion-grid>
 
             </ion-item>
-
-            <ion-item-options side="right">
-                <button ion-button color="primary" (click)="onClickAbrirModalDetalhesVenda(venda)">
-                    <ion-icon name="search"></ion-icon>
-                    Detalhes
-                </button>
-            </ion-item-options>
 
             <div *ngIf="lastItem">
                 {{mostrarLoading(false)}}
