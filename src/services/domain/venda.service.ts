@@ -1,8 +1,11 @@
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {API_CONFIG} from "../../config/api.config";
-import {VendaDTO} from "../../models/venda.dto";
-import {Observable} from "rxjs/Observable";
-import {Injectable} from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { API_CONFIG } from "../../config/api.config";
+import { VendaDTO } from "../../models/venda.dto";
+import { Observable } from "rxjs/Observable";
+import { Injectable } from "@angular/core";
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/retryWhen';
+import 'rxjs/add/operator/timeout';
 
 @Injectable()
 export class VendaService {
@@ -13,17 +16,21 @@ export class VendaService {
     }
 
     findAll(): Observable<any> {
-        return this.http.get<VendaDTO[]>(`${API_CONFIG.baseUrl}/vendas/`);
+        return this.http.get<VendaDTO[]>(`${API_CONFIG.baseUrl}/vendas/`)
+            .retryWhen(error => error.delay(500))
+            .timeout(2000)
     }
 
     findByDataBetween(dataInicial: string, dataFinal: string): Observable<any> {
-        return this.http.get<VendaDTO[]>(`${API_CONFIG.baseUrl}/vendas?dataInicial=${dataInicial}&dataFinal=${dataFinal}`);
+        return this.http.get<VendaDTO[]>(`${API_CONFIG.baseUrl}/vendas?dataInicial=${dataInicial}&dataFinal=${dataFinal}`)
+            .retryWhen(error => error.delay(500))
+            .timeout(2000);
     }
 
     insert(venda: VendaDTO) {
         this.headers = new HttpHeaders();
         this.headers.set('Content-Type', 'application/json');
-        return this.http.post(`${API_CONFIG.baseUrl}/vendas/`, venda, {headers: this.headers});
+        return this.http.post(`${API_CONFIG.baseUrl}/vendas/`, venda, { headers: this.headers });
     }
 
     delete(venda: VendaDTO) {
@@ -37,6 +44,6 @@ export class VendaService {
     update(venda: VendaDTO) {
         this.headers = new HttpHeaders();
         this.headers.set('Content-Type', 'application/json');
-        return this.http.put(`${API_CONFIG.baseUrl}/vendas/${venda.id}`, venda, {headers: this.headers});
+        return this.http.put(`${API_CONFIG.baseUrl}/vendas/${venda.id}`, venda, { headers: this.headers });
     }
 }
