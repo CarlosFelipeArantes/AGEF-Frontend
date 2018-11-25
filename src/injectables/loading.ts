@@ -1,5 +1,5 @@
-import {LoadingController} from 'ionic-angular';
-import {Injectable} from "@angular/core";
+import { LoadingController } from 'ionic-angular';
+import { Injectable } from "@angular/core";
 
 @Injectable()
 export class LoadingProvider {
@@ -11,7 +11,6 @@ export class LoadingProvider {
     exibirLoadingPadrao(mensagem: string) {
         return this.loadingCtrl.create({
             content: mensagem,
-            enableBackdropDismiss: true,
             spinner: 'circles'
         });
     }
