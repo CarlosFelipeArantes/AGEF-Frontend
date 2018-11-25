@@ -1,6 +1,6 @@
 import { API_CONFIG } from "../../../../config/api.config";
-import { Events, IonicPage, Loading, ModalController, NavController, NavParams, Select } from 'ionic-angular';
-import { Component, ViewChild } from '@angular/core';
+import { Events, IonicPage, Loading, ModalController, NavController, NavParams} from 'ionic-angular';
+import { Component} from '@angular/core';
 import { DialogoProvider } from "../../../../injectables/dialogo";
 import { LoadingProvider } from "../../../../injectables/loading";
 import { VendaDTO } from '../../../../models/venda.dto';
@@ -28,8 +28,6 @@ export class VendaHomePage {
     qtdTotalVendas: number;
     vendasAgrupadasPorPeca: any[][];
     vendasCompletas: VendaCompletaPage
-
-    @ViewChild('selectFiltro') selectRef: Select;
 
     constructor(
         public datePipe: DatePipe,
@@ -166,10 +164,6 @@ export class VendaHomePage {
         }
     }
 
-    public onClickAbrirOpcoesFiltro(): void {
-        this.selectRef.open();
-    }
-
     public onClickCadastrarUmaVenda(pecaArg: PecaFeiraDTO): void {
         let data = new Date().toISOString();
         let peca = pecaArg;
@@ -248,10 +242,6 @@ export class VendaHomePage {
                     });
 
         }
-    }
-
-    public onChangeRcprVendasComFiltro(): void {
-        this.recuperarDadosVendas();
     }
 
     public mostrarLoading(deveMostrar: boolean): void {

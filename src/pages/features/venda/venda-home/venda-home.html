@@ -9,18 +9,8 @@
         </ng-template>
 
         <ion-buttons end>
-                <button ion-button (click)="onClickAbrirVendasCompletas()" clear icon-only>
-                        <ion-icon name="basket"></ion-icon>
-                </button>
-            <button ion-button (click)="onClickAbrirOpcoesFiltro()" clear icon-only>
-                <ion-icon name="funnel">
-                    <ion-select [(ngModel)]="filtro" (ionChange)="onChangeRcprVendasComFiltro()" cancelText="Cancelar"
-                                okText="Confirmar" hidden #selectFiltro>
-                        <ion-option>Hoje</ion-option>
-                        <ion-option>Mês</ion-option>
-                        <ion-option>Total</ion-option>
-                    </ion-select>
-                </ion-icon>
+            <button ion-button (click)="onClickAbrirVendasCompletas()" clear icon-only>
+                <ion-icon name="basket"></ion-icon>
             </button>
 
             <button ion-button (click)="onClickAbrirModalCadastroVenda()" clear icon-only>
