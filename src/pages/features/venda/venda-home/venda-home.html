@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <div *ngIf="qtdTotalVendas > 1; else showTextSingular">
+        <div *ngIf="qtdTotalVendas > 1 || qtdTotalVendas == 0; else showTextSingular">
             <p margin>{{filtro}} — {{qtdTotalVendas}} vendas</p>
         </div>
 
@@ -28,10 +28,8 @@
                 <ion-grid text-center>
                     <ion-row align-items-center>
                         <ion-col>
-                            <button ion-button
-                                    (click)="onClickEstornarVenda(peca)"
-                                    class="circle-button" color="primary"
-                                    icon-only>
+                            <button ion-button (click)="onClickEstornarVenda(peca)" class="circle-button" color="primary"
+                                icon-only>
                                 <ion-icon name="remove"></ion-icon>
                             </button>
                         </ion-col>
@@ -46,9 +44,8 @@
                         </ion-col>
 
                         <ion-col>
-                            <button ion-button (click)="onClickCadastrarUmaVenda(peca)" class="circle-button"
-                                    color="primary"
-                                    icon-only>
+                            <button ion-button (click)="onClickCadastrarUmaVenda(peca)" class="circle-button" color="primary"
+                                icon-only>
                                 <ion-icon name="add"></ion-icon>
                             </button>
                         </ion-col>
@@ -71,5 +68,3 @@
 
     </ion-list>
 </ion-content>
-
-
