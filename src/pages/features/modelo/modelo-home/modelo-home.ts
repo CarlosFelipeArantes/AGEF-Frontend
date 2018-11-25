@@ -66,7 +66,7 @@ export class ModeloHomePage {
         this.presentLoading(true);
     }
 
-    // noinspection JSUnusedGlobalSymbols
+    
     ionViewWillEnter() {
         this.modeloService.findAll()
             .subscribe(response => {

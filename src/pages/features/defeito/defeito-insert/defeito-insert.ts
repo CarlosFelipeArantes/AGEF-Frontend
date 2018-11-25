@@ -37,7 +37,7 @@ export class DefeitoInsertPage {
         })
     }
 
-    // noinspection JSUnusedGlobalSymbols
+    
     ionViewWillEnter() {
         this.loadPecas();
     }

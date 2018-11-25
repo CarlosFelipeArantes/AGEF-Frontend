@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, Renderer, ViewChild} from '@angular/core';
+import { Component, ElementRef, Input, Renderer, ViewChild } from '@angular/core';
 
 @Component({
     selector: 'expandable',
@@ -6,14 +6,14 @@ import {Component, ElementRef, Input, Renderer, ViewChild} from '@angular/core';
 })
 export class ExpandableComponent {
 
-    @ViewChild('expandWrapper', {read: ElementRef}) expandWrapper;
+    @ViewChild('expandWrapper', { read: ElementRef }) expandWrapper;
     @Input('expanded') expanded;
     @Input('expandHeight') expandHeight;
 
     constructor(public renderer: Renderer) {
     }
 
-    // noinspection JSUnusedGlobalSymbols
+
     ngAfterViewInit() {
         this.renderer.setElementStyle(this.expandWrapper.nativeElement, 'height', this.expandHeight + 'px');
     }

@@ -1,9 +1,9 @@
-import {Events, IonicPage, Loading, ModalController, NavController, NavParams} from 'ionic-angular';
-import {Component} from '@angular/core';
-import {DialogoProvider} from "../../../../injectables/dialogo";
-import {LoadingProvider} from "../../../../injectables/loading";
-import {DefeitoService} from '../../../../services/domain/defeito.service';
-import {DefeitoDTO} from '../../../../models/defeito.dto';
+import { Events, IonicPage, Loading, ModalController, NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { DialogoProvider } from "../../../../injectables/dialogo";
+import { LoadingProvider } from "../../../../injectables/loading";
+import { DefeitoService } from '../../../../services/domain/defeito.service';
+import { DefeitoDTO } from '../../../../models/defeito.dto';
 
 @IonicPage()
 @Component({
@@ -27,12 +27,12 @@ export class DefeitoHomePage {
         public defeitoService: DefeitoService) {
     }
 
-    // noinspection JSUnusedGlobalSymbols
+
     ionViewWillEnter() {
         this.recuperarDadosDefeitos();
     }
 
-    // noinspection JSUnusedGlobalSymbols
+
     ionViewDidLoad() {
         // Dismiss é feito no *ngFor.
         this.loading = this.loaderProvider.exibirLoadingPadrao("Carregando os defeitos.");
@@ -53,10 +53,10 @@ export class DefeitoHomePage {
 
                 this.defeitoService.delete(defeito)
                     .subscribe(() => {
-                            this.recuperarDadosDefeitos();
-                            this.mostrarLoading(false);
-                            this.dialogo.exibirToast("Defeito apagado com sucesso.");
-                        },
+                        this.recuperarDadosDefeitos();
+                        this.mostrarLoading(false);
+                        this.dialogo.exibirToast("Defeito apagado com sucesso.");
+                    },
                         error => {
                             // TODO tratar erros
                             console.log(error);
@@ -80,15 +80,15 @@ export class DefeitoHomePage {
     public recuperarDadosDefeitos(): void {
         this.defeitoService.findAll()
             .subscribe(response => {
-                    this.defeitos = response;
+                this.defeitos = response;
 
-                    if (this.defeitos !== null) {
-                        this.defeitosAgrupadosPorPeca = this.agruparDefeitosPorPeca(this.defeitos);
+                if (this.defeitos !== null) {
+                    this.defeitosAgrupadosPorPeca = this.agruparDefeitosPorPeca(this.defeitos);
 
-                    } else {
-                        this.mostrarLoading(false);
-                    }
-                },
+                } else {
+                    this.mostrarLoading(false);
+                }
+            },
                 error => {
                     // TODO tratar erros
                     console.log(error);

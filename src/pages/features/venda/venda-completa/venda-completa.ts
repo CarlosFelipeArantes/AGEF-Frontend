@@ -37,12 +37,12 @@ export class VendaCompletaPage {
         public vendaService: VendaService) {
     }
 
-    // noinspection JSUnusedGlobalSymbols
+    
     ionViewWillEnter() {
         this.recuperarDadosVendas();
     }
 
-    // noinspection JSUnusedGlobalSymbols
+    
     ionViewDidLoad() {
         // Dismiss é feito no *ngFor.
         this.loading = this.loadingProvider.exibirLoadingPadrao("Carregando as vendas.");

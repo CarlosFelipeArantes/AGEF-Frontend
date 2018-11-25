@@ -36,7 +36,7 @@ export class PecaInsertPage {
         })
     }
 
-    // noinspection JSUnusedGlobalSymbols
+    
     ionViewWillEnter() {
         this.recuperarModelos();
     }

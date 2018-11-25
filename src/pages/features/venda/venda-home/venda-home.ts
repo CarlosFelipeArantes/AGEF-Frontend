@@ -45,7 +45,7 @@ export class VendaHomePage {
         private socket: Socket) {
     }
 
-    // noinspection JSUnusedGlobalSymbols
+    
     ionViewWillEnter() {
         this.recuperarDadosVendas();
         this.recuperarDadosPecas();
@@ -57,7 +57,7 @@ export class VendaHomePage {
         this.socket.disconnect();
     }
 
-    // noinspection JSUnusedGlobalSymbols
+    
     ionViewDidLoad() {
         // Dismiss é feito no *ngFor.
         this.loading = this.loadingProvider.exibirLoadingPadrao("Carregando as vendas.");

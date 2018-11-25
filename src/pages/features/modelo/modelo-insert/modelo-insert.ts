@@ -33,7 +33,7 @@ export class ModeloInsertPage {
         })
     }
 
-    // noinspection JSUnusedGlobalSymbols
+    
     ionViewWillEnter() {
         this.loadModelos();
     }

@@ -1,3 +1,7 @@
-export const API_CONFIG = {
-    baseUrl: "https://agef-mercurio.herokuapp.com",
+// Servidor da aplicação.
+// Este arquivo não deve ser alterado. 
+// Os servidores disponíveis devem ser inseridos no arquivo "server.config.ts".
+
+export var API_CONFIG = {
+    baseUrl: "",
 };

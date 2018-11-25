@@ -33,7 +33,7 @@ export class FaturamentoDetailsPage {
         this.vendas = this.navParams.get("vendas");
     }
 
-    // noinspection JSUnusedGlobalSymbols
+    
     ionViewWillEnter() {
         this.vendasGroupedByDate = this.splitVendaByDate(this.vendas);
     }

@@ -38,12 +38,12 @@ export class VendaDetailsPage {
         this.vendas = this.navParams.data;
     }
 
-    // noinspection JSUnusedGlobalSymbols
+    
     ionViewWillEnter() {
         this.vendasGroupedByDate = this.splitVendaByDate(this.vendas);
     }
 
-    // noinspection JSUnusedGlobalSymbols
+    
     ionViewDidLoad() {
         this.loading = this.loadingProvider.exibirLoadingPadrao("Carregando as vendas.");
         this.presentLoading(true);

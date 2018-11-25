@@ -29,7 +29,7 @@ export class PecaHomePage {
 
     pecaFeira: PecaFeiraDTO;
 
-    // noinspection JSUnusedGlobalSymbols
+    
     ionViewWillEnter() {
         this.recuperarDadosPecas();
     }

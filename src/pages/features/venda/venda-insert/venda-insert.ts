@@ -44,7 +44,7 @@ export class VendaInsertPage {
         })
     }
 
-    // noinspection JSUnusedGlobalSymbols
+    
     ionViewWillEnter() {
         this.loadPecas();
     }
