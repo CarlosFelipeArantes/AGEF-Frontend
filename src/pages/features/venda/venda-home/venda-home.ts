@@ -45,7 +45,7 @@ export class VendaHomePage {
         private socket: Socket) {
     }
 
-    
+
     ionViewWillEnter() {
         this.recuperarDadosVendas();
         this.recuperarDadosPecas();
@@ -57,7 +57,7 @@ export class VendaHomePage {
         this.socket.disconnect();
     }
 
-    
+
     ionViewDidLoad() {
         // Dismiss é feito no *ngFor.
         this.loading = this.loadingProvider.exibirLoadingPadrao("Carregando as vendas.");
@@ -96,7 +96,6 @@ export class VendaHomePage {
             .subscribe(response => {
                 this.atualizarDadosVendas(response);
             },
-
                 error => {
                     // TODO tratar erros
                     console.log(error);

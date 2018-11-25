@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <div *ngIf="qtdTotalVendas > 1; else showTextSingular">
+        <div *ngIf="qtdTotalVendas > 1 || qtdTotalVendas == 0; else showTextSingular">
             <p margin>{{filtro}} — {{qtdTotalVendas}} vendas</p>
         </div>
 
@@ -9,13 +9,13 @@
         </ng-template>
 
         <ion-buttons end>
-                <button ion-button (click)="onClickAbrirVendasCompletas()" clear icon-only>
-                        <ion-icon name="basket"></ion-icon>
-                </button>
+            <button ion-button (click)="onClickAbrirVendasCompletas()" clear icon-only>
+                <ion-icon name="basket"></ion-icon>
+            </button>
             <button ion-button (click)="onClickAbrirOpcoesFiltro()" clear icon-only>
                 <ion-icon name="funnel">
                     <ion-select [(ngModel)]="filtro" (ionChange)="onChangeRcprVendasComFiltro()" cancelText="Cancelar"
-                                okText="Confirmar" hidden #selectFiltro>
+                        okText="Confirmar" hidden #selectFiltro>
                         <ion-option>Hoje</ion-option>
                         <ion-option>Mês</ion-option>
                         <ion-option>Total</ion-option>
@@ -38,10 +38,8 @@
                 <ion-grid text-center>
                     <ion-row align-items-center>
                         <ion-col>
-                            <button ion-button
-                                    (click)="onClickEstornarVenda(peca)"
-                                    class="circle-button" color="primary"
-                                    icon-only>
+                            <button ion-button (click)="onClickEstornarVenda(peca)" class="circle-button" color="primary"
+                                icon-only>
                                 <ion-icon name="remove"></ion-icon>
                             </button>
                         </ion-col>
@@ -56,9 +54,8 @@
                         </ion-col>
 
                         <ion-col>
-                            <button ion-button (click)="onClickCadastrarUmaVenda(peca)" class="circle-button"
-                                    color="primary"
-                                    icon-only>
+                            <button ion-button (click)="onClickCadastrarUmaVenda(peca)" class="circle-button" color="primary"
+                                icon-only>
                                 <ion-icon name="add"></ion-icon>
                             </button>
                         </ion-col>
@@ -81,5 +78,3 @@
 
     </ion-list>
 </ion-content>
-
-
