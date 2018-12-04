@@ -1,6 +1,6 @@
 import { API_CONFIG } from "../../../../config/api.config";
-import { Events, IonicPage, Loading, ModalController, NavController, NavParams, Select } from 'ionic-angular';
-import { Component, ViewChild } from '@angular/core';
+import { Events, IonicPage, Loading, ModalController, NavController, NavParams} from 'ionic-angular';
+import { Component} from '@angular/core';
 import { DialogoProvider } from "../../../../injectables/dialogo";
 import { LoadingProvider } from "../../../../injectables/loading";
 import { VendaDTO } from '../../../../models/venda.dto';
@@ -10,7 +10,6 @@ import { MensagemDTO } from "../../../../models/mensagem.dto";
 import { DatePipe } from "@angular/common";
 import { UtilsService } from "../../../../services/utils/utils.service";
 import { PecaFeiraService } from "../../../../services/domain/peca-feira.service";
-import { VendaCompletaPage } from '../venda-completa/venda-completa';
 import { Socket } from 'ng-socket-io';
 
 @IonicPage()
@@ -27,9 +26,6 @@ export class VendaHomePage {
     pecas: PecaFeiraDTO[];
     qtdTotalVendas: number;
     vendasAgrupadasPorPeca: any[][];
-    vendasCompletas: VendaCompletaPage
-
-    @ViewChild('selectFiltro') selectRef: Select;
 
     constructor(
         public datePipe: DatePipe,
@@ -165,10 +161,6 @@ export class VendaHomePage {
         }
     }
 
-    public onClickAbrirOpcoesFiltro(): void {
-        this.selectRef.open();
-    }
-
     public onClickCadastrarUmaVenda(pecaArg: PecaFeiraDTO): void {
         let data = new Date().toISOString();
         let peca = pecaArg;
@@ -249,10 +241,6 @@ export class VendaHomePage {
         }
     }
 
-    public onChangeRcprVendasComFiltro(): void {
-        this.recuperarDadosVendas();
-    }
-
     public mostrarLoading(deveMostrar: boolean): void {
         if (deveMostrar && this.loadingEstaPresente) {
             this.loading.present();
@@ -304,19 +292,21 @@ export class VendaHomePage {
         return peca.modelo.nome + ' - ' + peca.modelo.tamanho;
     }
 
-    public recuperarQtdVendas(peca: PecaFeiraDTO): number {
+    public recuperarQtdPecasVendidas(peca: PecaFeiraDTO): number {
         let nomePeca = this.recuperarNomePeca(peca);
-        let qtdVendas = 0;
+        let qtdVendida = 0;
 
         if (!this.utilsService.estaVazio(this.vendasAgrupadasPorPeca)) {
             let vendas = this.vendasAgrupadasPorPeca[nomePeca];
 
             if (vendas !== undefined) {
-                qtdVendas = vendas.length;
+                for(let i of vendas){
+                    qtdVendida = qtdVendida+i.quantidade;
+                }
             }
         }
 
-        return qtdVendas;
+        return qtdVendida;
     }
 
     public onClickAbrirVendasCompletas(): void {

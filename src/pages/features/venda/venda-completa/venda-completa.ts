@@ -103,27 +103,6 @@ export class VendaCompletaPage {
         this.findVendasByDataBetween(dia, dia);
     }
 
-    public onClickAbrirModalDetalhesVenda(venda: VendaDTO): void {
-
-        if (this.vendas !== undefined) {
-            let modalDetalhesVenda = this.modalCtrl.create('VendaDetailsPage', this.vendas);
-
-            modalDetalhesVenda.present();
-
-            modalDetalhesVenda.onDidDismiss(needsReload => {
-                if (needsReload) {
-                    this.recuperarDadosVendas();
-                }
-            });
-
-        } else {
-            let mensagem = "Não existem vendas desta peça.";
-            let titulo = "Nenhuma venda";
-
-            this.dialogo.exibirDialogoInformacao(mensagem, titulo);
-        }
-    }
-
     public onClickAbrirOpcoesFiltro(): void {
         this.selectRef.open();
     }

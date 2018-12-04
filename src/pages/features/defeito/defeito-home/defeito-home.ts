@@ -39,32 +39,6 @@ export class DefeitoHomePage {
         this.mostrarLoading(true);
     }
 
-    public delete(defeito: DefeitoDTO): void {
-        let mensagem: string = 'Você realmente quer apagar esse registro de defeito?';
-        let titulo: string = 'Confirmar Remoção';
-        let alert = this.dialogo.exibirDialogoConfirmacao(mensagem, titulo);
-
-        alert.present();
-
-        alert.onDidDismiss((confirmado) => {
-            if (confirmado) {
-                this.loading = this.loaderProvider.exibirLoadingPadrao("Apagando o defeito.");
-                this.mostrarLoading(true);
-
-                this.defeitoService.delete(defeito)
-                    .subscribe(() => {
-                        this.recuperarDadosDefeitos();
-                        this.mostrarLoading(false);
-                        this.dialogo.exibirToast("Defeito apagado com sucesso.");
-                    },
-                        error => {
-                            // TODO tratar erros
-                            console.log(error);
-                        })
-            }
-        });
-    }
-
     public onClickAbrirModalCadastroDefeito(): void {
         let modalDadosDefeito = this.modalCtrl.create('DefeitoInsertPage');
 
