@@ -17,8 +17,10 @@ export class DefeitoService {
 
     findAll(): Observable<DefeitoDTO[]> {
         return this.http.get<DefeitoDTO[]>(`${API_CONFIG.baseUrl}/defeitos/`)
-            .retryWhen(error => error.delay(500))
-            .timeout(2000);
+        .timeout(3000)
+        .retryWhen(error => error.delay(1000)
+        .take(50)
+        );
     }
 
     insert(defeito: DefeitoDTO) {
@@ -28,7 +30,11 @@ export class DefeitoService {
     }
 
     delete(defeito: DefeitoDTO) {
-        return this.http.delete(`${API_CONFIG.baseUrl}/defeitos/${defeito.id}`, {});
+        return this.http.delete(`${API_CONFIG.baseUrl}/defeitos/${defeito.id}`, {})
+        .timeout(3000)
+        .retryWhen(error => error.delay(1000)
+        .take(50)
+        );
     }
 
     estornar(defeito: DefeitoDTO) {
@@ -37,14 +43,18 @@ export class DefeitoService {
 
     findOne(defeito: string) {
         return this.http.get<DefeitoDTO>(`${API_CONFIG.baseUrl}/defeitos/${defeito}`, {})
-            .retryWhen(error => error.delay(500))
-            .timeout(2000);
+        .timeout(3000)
+        .retryWhen(error => error.delay(1000)
+        .take(50)
+        );
     }
 
     findByDateBetween(inicio, fim) {
         return this.http.get<DefeitoDTO>(`${API_CONFIG.baseUrl}/defeitos/?dataInicial=${inicio}&dataFinal=${fim}`, {})
-            .retryWhen(error => error.delay(500))
-            .timeout(2000);
+        .timeout(3000)
+        .retryWhen(error => error.delay(1000)
+        .take(50)
+        );
     }
 
     update(defeito: DefeitoDTO) {

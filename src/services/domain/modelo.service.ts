@@ -21,8 +21,10 @@ export class ModeloService {
         this.headers = new HttpHeaders();
         this.headers.set('Content-Type', 'application/json');
         return this.http.get<ModeloDTO[]>(`${API_CONFIG.baseUrl}/modelos/`, { headers: this.headers })
-            .retryWhen(error => error.delay(500))
-            .timeout(2000);
+        .timeout(3000)
+        .retryWhen(error => error.delay(1000)
+        .take(50)
+        );
     }
 
     save(modelo: ModeloDTO) {
@@ -32,7 +34,11 @@ export class ModeloService {
     }
 
     remove(modelo: ModeloDTO) {
-        return this.http.delete(`${API_CONFIG.baseUrl}/modelos/${modelo.id}`, {});
+        return this.http.delete(`${API_CONFIG.baseUrl}/modelos/${modelo.id}`, {})
+        .timeout(3000)
+        .retryWhen(error => error.delay(1000)
+        .take(50)
+        );
     }
 
     update(modelo: ModeloDTO) {

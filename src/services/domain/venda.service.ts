@@ -6,6 +6,12 @@ import { Injectable } from "@angular/core";
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/retryWhen';
 import 'rxjs/add/operator/timeout';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/concat';
+import 'rxjs/add/operator/last';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/scan';
+
 
 @Injectable()
 export class VendaService {
@@ -17,14 +23,33 @@ export class VendaService {
 
     findAll(): Observable<any> {
         return this.http.get<VendaDTO[]>(`${API_CONFIG.baseUrl}/vendas/`)
-            .retryWhen(error => error.delay(500))
-            .timeout(2000)
+        .timeout(3000)
+        .retryWhen(error => error.delay(1000)
+        .take(50)
+        );
     }
 
     findByDataBetween(dataInicial: string, dataFinal: string): Observable<any> {
         return this.http.get<VendaDTO[]>(`${API_CONFIG.baseUrl}/vendas?dataInicial=${dataInicial}&dataFinal=${dataFinal}`)
-            .retryWhen(error => error.delay(500))
-            .timeout(2000);
+        .timeout(3000)
+        .retryWhen(error => error.delay(1000)
+        .take(50)
+        );
+        // .retryWhen((err)=>
+        // {
+        //   return err.scan((retryCount)=>{
+        //     retryCount+=1;
+        //     if(retryCount<11)
+        //     {
+        //       console.log("retrying attemp: "+ retryCount);
+        //       return retryCount
+        //     }
+        //     else
+        //     {
+        //       throw(err)
+        //     }
+        //   },0).delay(1000)
+        // })
     }
 
     insert(venda: VendaDTO) {
@@ -34,7 +59,11 @@ export class VendaService {
     }
 
     delete(venda: VendaDTO) {
-        return this.http.delete(`${API_CONFIG.baseUrl}/vendas/${venda.id}`, {});
+        return this.http.delete(`${API_CONFIG.baseUrl}/vendas/${venda.id}`, {})
+            .timeout(3000)
+            .retryWhen(error => error.delay(1000)
+            .take(50)
+            );
     }
 
     estornar(venda: VendaDTO) {
@@ -44,6 +73,10 @@ export class VendaService {
     update(venda: VendaDTO) {
         this.headers = new HttpHeaders();
         this.headers.set('Content-Type', 'application/json');
-        return this.http.put(`${API_CONFIG.baseUrl}/vendas/${venda.id}`, venda, { headers: this.headers });
+        return this.http.put(`${API_CONFIG.baseUrl}/vendas/${venda.id}`, venda, { headers: this.headers })
+            .timeout(3000)
+            .retryWhen(error => error.delay(1000)
+            .take(50)
+        );
     }
 }

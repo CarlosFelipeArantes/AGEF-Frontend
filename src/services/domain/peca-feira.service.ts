@@ -17,8 +17,10 @@ export class PecaFeiraService {
 
     findAll(): Observable<PecaFeiraDTO[]> {
         return this.http.get<PecaFeiraDTO[]>(`${API_CONFIG.baseUrl}/pecasfeira/`)
-            .retryWhen(error => error.delay(500))
-            .timeout(2000);
+        .timeout(3000)
+        .retryWhen(error => error.delay(1000)
+        .take(50)
+        );
     }
 
     save(pecaFeira: PecaFeiraDTO) {
@@ -28,13 +30,19 @@ export class PecaFeiraService {
     }
 
     remove(pecaFeira: PecaFeiraDTO) {
-        return this.http.delete(`${API_CONFIG.baseUrl}/pecasfeira/${pecaFeira.id}`, {});
+        return this.http.delete(`${API_CONFIG.baseUrl}/pecasfeira/${pecaFeira.id}`, {})
+        .timeout(3000)
+        .retryWhen(error => error.delay(1000)
+        .take(50)
+        );
     }
 
     get(pecaFeira: string) {
         return this.http.get<PecaFeiraDTO>(`${API_CONFIG.baseUrl}/pecasfeira/${pecaFeira}`)
-            .retryWhen(error => error.delay(500))
-            .timeout(2000);
+            .timeout(3000)
+            .retryWhen(error => error.delay(1000)
+            .take(50)
+        );
     }
 
     update(pecaFeira: PecaFeiraDTO) {
